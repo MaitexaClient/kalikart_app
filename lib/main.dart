@@ -5,31 +5,30 @@ import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/features/auth/controller/auth_controller.dart';
 import 'package:provider/provider.dart';
 
-void main(){
-
-  runApp(MultiProvider(providers:  [
-    ChangeNotifierProvider(create: (_) => AuthController()),
-
-  ]));
+void main() {
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthController()),
+      ],
+      child:const Myapp(),
+    ),
+  );
 }
-
 
 class Myapp extends StatelessWidget {
   const Myapp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  ScreenUtilInit(
-      designSize: const Size(414,896),
+    return ScreenUtilInit(
+      designSize: const Size(414, 896),
       child: MaterialApp(
-      
         theme: ThemeData(
-          scaffoldBackgroundColor: AppColor.kWhiteColor,
-          fontFamily: 'Plus Jakarta Sans'
-        ),
+            scaffoldBackgroundColor: AppColor.kWhiteColor,
+            fontFamily: 'Plus Jakarta Sans'),
         onGenerateRoute: AppRoute.onGenaratedRoute,
-        initialRoute: '/',
-      
+        initialRoute: '/login',
       ),
     );
   }

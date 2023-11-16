@@ -5,10 +5,11 @@ import 'package:kalicart/common/widgets/text_bold.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton(
-      {super.key, required this.onPressed, required this.buttonText});
+      {super.key, required this.onPressed, required this.buttonText,this.isloading = false});
 
   final VoidCallback onPressed;
   final String buttonText;
+  final bool isloading;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class PrimaryButton extends StatelessWidget {
           backgroundColor: AppColor.kGreenColor,
         ),
         onPressed: onPressed,
-        child: BoldTextStyle(
+        child: isloading ? const CircularProgressIndicator(color: AppColor.kWhiteColor,) : BoldTextStyle(
           size: 18.sp,
           text: buttonText,
           color: Colors.white,

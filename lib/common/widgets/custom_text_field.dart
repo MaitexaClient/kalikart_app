@@ -9,13 +9,22 @@ class CustomTextField extends StatelessWidget {
       required this.label,
       required this.hintText,
       this.isPassword = false,
-      this.validator
+      this.validator,
+      this.onSaved,
+      this.borderColor,
+      this.labelColor,
+      this.onChanged
       });
 
   final String label;
   final String hintText;
   final bool isPassword;
-  final FormFieldValidator<String> ? validator;
+  final FormFieldValidator<String>? validator;
+  final FormFieldSetter<String> ?onSaved;
+  final void Function(String)? onChanged;
+  final Color ? borderColor;
+  final Color ? labelColor;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -27,21 +36,21 @@ class CustomTextField extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
             border: Border.all(
-              color: AppColor.kblack20,
+              color: borderColor ?? AppColor.kblack20,
               width: 1.0,
             ),
           ),
           child: TextFormField(
             obscureText: isPassword,
+            onChanged: onChanged,
             cursorColor: AppColor.kblack,
-            validator:validator, 
+            validator: validator,
+            onSaved: onSaved,
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: hintText,
-              hintStyle: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 16.sp
-              ),
+              hintStyle:
+                  TextStyle(fontWeight: FontWeight.w400, fontSize: 16.sp),
               filled: true,
               fillColor: Colors.transparent,
             ),
@@ -52,11 +61,11 @@ class CustomTextField extends StatelessWidget {
           left: 10,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 6.0),
-            color: AppColor.kWhiteColor,
+            color:  AppColor.kWhiteColor,
             child: RegularTextStyle(
               size: 14.sp,
               text: label,
-              color: AppColor.kblack40,
+              color:labelColor ?? AppColor.kblack40,
             ),
           ),
         ),
