@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kalicart/common/routes/route.dart';
+import 'package:kalicart/common/utils/app_color.dart';
+import 'package:kalicart/features/auth/controller/auth_controller.dart';
+import 'package:provider/provider.dart';
 
 void main(){
 
-  runApp(const Myapp());
+  runApp(MultiProvider(providers:  [
+    ChangeNotifierProvider(create: (_) => AuthController()),
+
+  ]));
 }
 
 
@@ -11,11 +19,18 @@ class Myapp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
-      theme: ThemeData(
-        fontFamily: 'Plus Jakarta Sans'
+    return  ScreenUtilInit(
+      designSize: const Size(414,896),
+      child: MaterialApp(
+      
+        theme: ThemeData(
+          scaffoldBackgroundColor: AppColor.kWhiteColor,
+          fontFamily: 'Plus Jakarta Sans'
+        ),
+        onGenerateRoute: AppRoute.onGenaratedRoute,
+        initialRoute: '/',
+      
       ),
-
     );
   }
 }

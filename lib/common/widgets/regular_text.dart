@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:kalicart/common/utils/app_color.dart';
 
 class RegularTextStyle extends StatelessWidget {
-  const RegularTextStyle({super.key, required this.size, required this.text});
+  const RegularTextStyle({super.key, required this.size, required this.text,this.color});
 
   final  double  size;
   final String text;
+  final Color ? color;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,8 @@ class RegularTextStyle extends StatelessWidget {
       text,
       style: TextStyle(
         fontSize: size,
-        fontWeight: FontWeight.w400
+        fontWeight: FontWeight.w400,
+        color: color ?? AppColor.kblack
       ),
 
     );

@@ -1,3 +1,4 @@
 class RouteName{
-  static const onBoarding  = '/on-boarding';
+  static const onBoardingScreen  = '/on-boarding';
+  static const  LoginScreen = '/login';
 }
