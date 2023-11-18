@@ -24,6 +24,7 @@ class Myapp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(414, 896),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
             scaffoldBackgroundColor: AppColor.kWhiteColor,
             fontFamily: 'Plus Jakarta Sans'),

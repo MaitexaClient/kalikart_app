@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/custom_text_field.dart';
 import 'package:kalicart/common/widgets/primary_button.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
-import 'package:kalicart/common/widgets/text_bold.dart';
 import 'package:kalicart/features/auth/controller/auth_controller.dart';
+import 'package:kalicart/features/auth/widgets/head_text.dart';
 import 'package:kalicart/features/auth/widgets/span_text.dart';
 import 'package:provider/provider.dart';
 
@@ -26,14 +27,10 @@ class SignUpScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Spacer(),
-                  BoldTextStyle(size: 28.sp, text: 'Sign up'),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  RegularTextStyle(
-                    size: 16.sp,
-                    text:
-                        'Sit amet consectetur adipiscing elit duis\ntristique sollicitudin',
+                  const HeadText(
+                    title: 'Login',
+                    subTitle:
+                        'Sit amet consectetur adipiscing elit duis tristique sollicitudin',
                   ),
                   SizedBox(
                     height: 60.h,
@@ -122,25 +119,24 @@ class SignUpScreen extends StatelessWidget {
                       controller.password = newValue;
                     },
                   ),
-                  const Spacer(
-                  
-                  ),
+                  const Spacer(),
 
                   PrimaryButton(
                     isloading: controller.loading,
                     onPressed: () {
-                      controller.login();
+                      Navigator.pushNamed(context, RouteName.otpverificationScreen);
                     },
                     buttonText: 'Sign up',
                   ),
                   const Spacer(
                     flex: 2,
-                  
                   ),
                   SpanText(
                     text: 'Already have account?',
                     buttonText: 'Login',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushReplacementNamed(context, RouteName.loginScreen);
+                    },
                   ),
                 ],
               ),
