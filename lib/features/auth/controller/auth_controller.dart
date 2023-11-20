@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kalicart/common/routes/route_name.dart';
 
 class AuthController extends ChangeNotifier {
   final GlobalKey<FormState> loginFormkey = GlobalKey<FormState>();
@@ -7,11 +8,8 @@ class AuthController extends ChangeNotifier {
   String? email;
   String? password;
 
-
-
   String emailErrorText = '';
-  String  passwordError = '';
-
+  String passwordError = '';
 
   //validate email
   void validateEmail(String value) {
@@ -32,40 +30,33 @@ class AuthController extends ChangeNotifier {
 
   //validate password
   void validatePassword(String value) {
-  if (value.isEmpty) {
-    passwordError =  'Please enter a password';
-  } else if (value.length < 6) {
-    passwordError = 'Password must be at least 6 characters long';
-  } else {
-     passwordError = '';
+    if (value.isEmpty) {
+      passwordError = 'Please enter a password';
+    } else if (value.length < 6) {
+      passwordError = 'Password must be at least 6 characters long';
+    } else {
+      passwordError = '';
+    }
+
+    notifyListeners();
   }
 
-  notifyListeners();
-}
-
   //login
-  void login()  async{
-
-    
-
+  void login(BuildContext context) async {
     loginFormkey.currentState!.save();
     validateEmail(email!);
     validatePassword(password!);
 
-    
-    
-    if(emailErrorText.isEmpty){
-
-     
-
+    if (emailErrorText.isEmpty) {
       loading = true;
       notifyListeners();
-      await Future.delayed(Duration(seconds: 5));
-      loading=false;
+      await Future.delayed(const Duration(seconds: 5));
+
+      if (context.mounted) {
+        Navigator.pushNamed(context, RouteName.homeScreen);
+      }
+      loading = false;
       notifyListeners();
-
     }
-    
-
   }
 }

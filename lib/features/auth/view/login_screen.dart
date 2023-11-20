@@ -7,6 +7,7 @@ import 'package:kalicart/common/widgets/primary_button.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
 import 'package:kalicart/common/widgets/text_bold.dart';
 import 'package:kalicart/features/auth/controller/auth_controller.dart';
+import 'package:kalicart/features/auth/view/forgot_password_screen.dart';
 import 'package:kalicart/features/auth/widgets/head_text.dart';
 import 'package:kalicart/features/auth/widgets/span_text.dart';
 import 'package:provider/provider.dart';
@@ -92,7 +93,9 @@ class LoginScreen extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ForgetScreen(),));
+                      },
                       child: RegularTextStyle(
                         size: 16.sp,
                         text: 'Forgot Password?',
@@ -103,7 +106,7 @@ class LoginScreen extends StatelessWidget {
                   PrimaryButton(
                     isloading: controller.loading,
                     onPressed: () {
-                      controller.login();
+                      controller.login(context);
                     },
                     buttonText: 'Login',
                   ),

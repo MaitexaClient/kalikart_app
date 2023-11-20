@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:kalicart/common/routes/route_name.dart';
+import 'package:kalicart/features/Root/view/root_screen.dart';
 import 'package:kalicart/features/auth/view/login_screen.dart';
 import 'package:kalicart/features/auth/view/otp_verification_screen.dart';
 import 'package:kalicart/features/auth/view/sigin_up_screen.dart';
-import 'package:kalicart/features/onboarding/view/on_boarding_screen.dart';
+import 'package:kalicart/features/home/view/home_screen.dart';
 
 class AppRoute {
   static Route onGenaratedRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (context) => const OnBoardingScreen(),
+          builder: (context) => RootScreen(),
         );
       case RouteName.loginScreen:
         return MaterialPageRoute(
@@ -24,6 +25,8 @@ class AppRoute {
         return MaterialPageRoute(
           builder: (context) => const OTPverificationScreen(),
         );
+      case RouteName.homeScreen:
+        return MaterialPageRoute(builder: (context) => const HomeScreen(),);
 
       default:
         return MaterialPageRoute(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kalicart/common/routes/route.dart';
 import 'package:kalicart/common/utils/app_color.dart';
+import 'package:kalicart/features/Root/controller/root_controller.dart';
 import 'package:kalicart/features/auth/controller/auth_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -10,6 +11,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthController()),
+        ChangeNotifierProvider(create: (_) => RootController()),
       ],
       child:const Myapp(),
     ),

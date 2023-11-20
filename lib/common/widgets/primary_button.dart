@@ -5,17 +5,20 @@ import 'package:kalicart/common/widgets/text_bold.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton(
-      {super.key, required this.onPressed, required this.buttonText,this.isloading = false});
+      {super.key, required this.onPressed, required this.buttonText,this.isloading = false,this.height, this.buttonTextSize});
 
   final VoidCallback onPressed;
   final String buttonText;
   final bool isloading;
+  final double ? height;
+  final double ? buttonTextSize;
+  
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: 60.h,
+      height: height??60.h,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
 
@@ -26,7 +29,7 @@ class PrimaryButton extends StatelessWidget {
         ),
         onPressed: onPressed,
         child: isloading ? const CircularProgressIndicator(color: AppColor.kWhiteColor,) : BoldTextStyle(
-          size: 18.sp,
+          size: buttonTextSize?? 18.sp,
           text: buttonText,
           color: Colors.white,
         ),

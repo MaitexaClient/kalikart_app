@@ -3,5 +3,6 @@ class RouteName{
   static const  loginScreen = '/login';
   static const  signupScreen = '/signUp';
   static const  otpverificationScreen = '/otpverificationScreen';
+  static const  homeScreen = '/home';
   
 }
