@@ -1,15 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:kalicart/common/routes/route_name.dart';
+import 'package:kalicart/common/services/api_services.dart';
+import 'package:kalicart/common/services/db_service.dart';
+import 'package:kalicart/common/utils/keys.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends ChangeNotifier {
-  final GlobalKey<FormState> loginFormkey = GlobalKey<FormState>();
+ 
+
+  //shared prefernce
+  SharedPreferences? sharedPreferences;
+
+  final ApiService _apiService = ApiService();
 
   bool loading = false;
   String? email;
   String? password;
+  String? name;
+  String? phone;
 
   String emailErrorText = '';
   String passwordError = '';
+  String confirmPasswordError = '';
+  String phoneError = '';
 
   //validate email
   void validateEmail(String value) {
@@ -36,6 +49,34 @@ class AuthController extends ChangeNotifier {
       passwordError = 'Password must be at least 6 characters long';
     } else {
       passwordError = '';
+
+      password = value;
+    }
+
+    notifyListeners();
+  }
+
+  //validate phone
+  void validatePhone(String value) {
+    if (value.isEmpty) {
+      phoneError = 'Please enter phone number';
+    } else if (value.length > 10) {
+      phoneError = 'Phone number must be  10 numbers';
+    } else {
+      phoneError = '';
+    }
+
+    notifyListeners();
+  }
+
+  //match password
+  void ismatchPassword(String value) {
+    if (value.isEmpty) {
+      confirmPasswordError = 'Please enter password again';
+    } else if (value != password) {
+      confirmPasswordError = 'Password not match';
+    } else {
+      confirmPasswordError = '';
     }
 
     notifyListeners();
@@ -43,20 +84,66 @@ class AuthController extends ChangeNotifier {
 
   //login
   void login(BuildContext context) async {
-    loginFormkey.currentState!.save();
+    FormKeys.registrationFormKey.currentState!.save();
     validateEmail(email!);
     validatePassword(password!);
 
-    if (emailErrorText.isEmpty) {
-      loading = true;
-      notifyListeners();
-      await Future.delayed(const Duration(seconds: 5));
+    if (emailErrorText.isEmpty && passwordError.isEmpty) {
+      try {
+        loading = true;
+        notifyListeners();
 
-      if (context.mounted) {
-        Navigator.pushNamed(context, RouteName.homeScreen);
+        Map<String, dynamic> data =
+            await _apiService.login(email: email, password: password);
+
+        await Db.init();
+        sharedPreferences = Db.instance;
+
+        Db.setAuth(loginId: data["loginId"], token: data["token"], auth: true);
+
+        loading = false;
+        notifyListeners();
+      } catch (e) {
+        loading = false;
+        notifyListeners();
       }
-      loading = false;
-      notifyListeners();
+    }
+  }
+
+  //sigin up
+  void signUp(BuildContext context) async {
+    FormKeys.registrationFormKey.currentState!.save();
+
+    validateEmail(email!);
+    validatePassword(password!);
+    ismatchPassword(password!);
+    validatePhone(phone!);
+
+    if (emailErrorText.isEmpty &&
+        passwordError.isEmpty &&
+        confirmPasswordError.isEmpty &&
+        phoneError.isEmpty) {
+      try {
+        loading = true;
+        notifyListeners();
+
+        await _apiService.signUp(
+            name: name, email: email, confirmPassword: password, phone: phone);
+
+        if (context.mounted) {
+          Navigator.pop(context);
+        }
+
+        loading = false;
+        notifyListeners();
+      } catch (e) {
+        loading = false;
+        notifyListeners();
+        if (context.mounted) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(e.toString())));
+        }
+      }
     }
   }
 }

@@ -10,16 +10,14 @@ class AppRoute {
   static Route onGenaratedRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(
-          builder: (context) => RootScreen(),
-        );
+        
       case RouteName.loginScreen:
         return MaterialPageRoute(
-          builder: (context) => const LoginScreen(),
+          builder: (context) =>  LoginScreen(),
         );
       case RouteName.signupScreen:
         return MaterialPageRoute(
-          builder: (context) => const SignUpScreen(),
+          builder: (context) =>  SignUpScreen(),
         );
       case RouteName.otpverificationScreen:
         return MaterialPageRoute(

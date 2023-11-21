@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/utils/app_color.dart';
+import 'package:kalicart/common/utils/keys.dart';
 import 'package:kalicart/common/widgets/custom_text_field.dart';
 import 'package:kalicart/common/widgets/primary_button.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
@@ -17,16 +18,16 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child:
-              Consumer<AuthController>(builder: (context, controller, child) {
-            return Form(
-              key: controller.loginFormkey,
-              child: Column(
+      body: Form(
+        key: FormKeys.registrationFormKey,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Consumer<AuthController>(
+                builder: (context, controller, child) => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Spacer(),
@@ -122,8 +123,8 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ],
               ),
-            );
-          }),
+              ),
+          ),
         ),
       ),
     );

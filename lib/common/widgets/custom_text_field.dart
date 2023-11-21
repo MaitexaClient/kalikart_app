@@ -13,7 +13,8 @@ class CustomTextField extends StatelessWidget {
       this.onSaved,
       this.borderColor,
       this.labelColor,
-      this.onChanged
+      this.onChanged,
+      this.keyboardType, this.maxLength
       });
 
   final String label;
@@ -24,6 +25,8 @@ class CustomTextField extends StatelessWidget {
   final void Function(String)? onChanged;
   final Color ? borderColor;
   final Color ? labelColor;
+  final TextInputType? keyboardType;
+  final int ? maxLength;
   
 
   @override
@@ -41,8 +44,11 @@ class CustomTextField extends StatelessWidget {
             ),
           ),
           child: TextFormField(
+            keyboardType: keyboardType,
             obscureText: isPassword,
             onChanged: onChanged,
+            maxLength: maxLength,
+          
             cursorColor: AppColor.kblack,
             validator: validator,
             onSaved: onSaved,

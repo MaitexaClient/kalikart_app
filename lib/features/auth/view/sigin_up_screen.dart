@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/utils/app_color.dart';
+import 'package:kalicart/common/utils/keys.dart';
 import 'package:kalicart/common/widgets/custom_text_field.dart';
 import 'package:kalicart/common/widgets/primary_button.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
@@ -16,24 +17,39 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child:
-              Consumer<AuthController>(builder: (context, controller, child) {
-            return Form(
-              child: Column(
+    
+      bottomSheet: Container(
+        color: AppColor.kWhiteColor,
+        height: 30,
+        child: Center(
+          child: SpanText(
+            text: 'Already have account?',
+            buttonText: 'Login',
+            onTap: () {
+              Navigator.pushReplacementNamed(context, RouteName.loginScreen);
+            },
+          ),
+        ),
+      ),
+      body: Form(
+        key: FormKeys.registrationFormKey,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Consumer<AuthController>(
+                builder: (context, controller, child) => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Spacer(),
+                  SizedBox(
+                    height: 70.h,
+                  ),
                   const HeadText(
-                    title: 'Login',
+                    title: 'Sign Up',
                     subTitle:
                         'Sit amet consectetur adipiscing elit duis tristique sollicitudin',
                   ),
                   SizedBox(
-                    height: 60.h,
+                    height: 40.h,
                   ),
                   //name text field
                   CustomTextField(
@@ -42,12 +58,16 @@ class SignUpScreen extends StatelessWidget {
                     hintText: 'Enter your name',
                     labelColor: AppColor.kblack40,
                     onChanged: (value) {},
-                    onSaved: (newValue) {},
+                    onSaved: (newValue) {
+                      controller.name = newValue;
+                    },
                   ),
+                  
                   const SizedBox(
-                    height: 25,
+                    height: 20,
                   ),
-
+                  
+      
                   //emil text field
                   CustomTextField(
                     label: 'Email',
@@ -65,7 +85,7 @@ class SignUpScreen extends StatelessWidget {
                       controller.email = newValue;
                     },
                   ),
-
+      
                   controller.emailErrorText.isEmpty
                       ? const SizedBox.shrink()
                       : RegularTextStyle(
@@ -73,8 +93,36 @@ class SignUpScreen extends StatelessWidget {
                           text: controller.emailErrorText,
                           color: AppColor.kSecondaryRed,
                         ),
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 20),
 
+                  CustomTextField(
+                    keyboardType: TextInputType.phone,
+                    borderColor: controller.phoneError.isEmpty
+                        ? AppColor.kblack20
+                        : AppColor.kSecondaryRed,
+                    labelColor: controller.phoneError.isEmpty
+                        ? AppColor.kblack40
+                        : AppColor.kSecondaryRed,
+                    label: 'phone',
+                    hintText: 'Enter your Phone number',
+                    onChanged: (value) {
+                      controller.validatePhone(value);
+                    },
+                    onSaved: (newValue) {
+                      controller.phone = newValue;
+                    },
+                  ),
+
+                  controller.phoneError.isEmpty
+                      ? const SizedBox.shrink()
+                      : RegularTextStyle(
+                          size: 14.sp,
+                          text: controller.phoneError,
+                          color: AppColor.kSecondaryRed,
+                        ),
+
+                    SizedBox(height: 20,),
+      
                   //password  text field
                   CustomTextField(
                     borderColor: controller.passwordError.isEmpty
@@ -88,9 +136,7 @@ class SignUpScreen extends StatelessWidget {
                     onChanged: (value) {
                       controller.validatePassword(value);
                     },
-                    onSaved: (newValue) {
-                      controller.password = newValue;
-                    },
+                    onSaved: (newValue) {},
                   ),
                   controller.passwordError.isEmpty
                       ? const SizedBox.shrink()
@@ -99,49 +145,53 @@ class SignUpScreen extends StatelessWidget {
                           text: controller.passwordError,
                           color: AppColor.kSecondaryRed,
                         ),
-
-                  const SizedBox(height: 25),
-
+      
+                
+      
+                  const SizedBox(height: 20),
+      
                   //confirm text field
                   CustomTextField(
-                    borderColor: controller.passwordError.isEmpty
+                    borderColor: controller.confirmPasswordError.isEmpty
                         ? AppColor.kblack20
                         : AppColor.kSecondaryRed,
-                    labelColor: controller.passwordError.isEmpty
+                    labelColor: controller.confirmPasswordError.isEmpty
                         ? AppColor.kblack40
                         : AppColor.kSecondaryRed,
                     label: 'Confirm password',
                     hintText: 'Confirm your Password',
                     onChanged: (value) {
-                      controller.validatePassword(value);
+                      controller.ismatchPassword(value);
                     },
                     onSaved: (newValue) {
                       controller.password = newValue;
                     },
                   ),
-                  const Spacer(),
-
+      
+                  controller.confirmPasswordError.isEmpty
+                      ? const SizedBox.shrink()
+                      : RegularTextStyle(
+                          size: 14.sp,
+                          text: controller.confirmPasswordError,
+                          color: AppColor.kSecondaryRed,
+                        ),
+                   SizedBox(
+                    height: 50.h,
+                  ),
+      
                   PrimaryButton(
                     isloading: controller.loading,
                     onPressed: () {
-                      Navigator.pushNamed(context, RouteName.otpverificationScreen);
+                      controller.signUp(context);
                     },
                     buttonText: 'Sign up',
                   ),
-                  const Spacer(
-                    flex: 2,
-                  ),
-                  SpanText(
-                    text: 'Already have account?',
-                    buttonText: 'Login',
-                    onTap: () {
-                      Navigator.pushReplacementNamed(context, RouteName.loginScreen);
-                    },
-                  ),
                 ],
+              )
+           
+           ,
               ),
-            );
-          }),
+          ),
         ),
       ),
     );

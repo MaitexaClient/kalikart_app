@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kalicart/common/routes/route.dart';
+import 'package:kalicart/common/services/db_service.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/features/Root/controller/root_controller.dart';
 import 'package:kalicart/features/auth/controller/auth_controller.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async{
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // await Db.init();
   runApp(
     MultiProvider(
       providers: [
@@ -31,7 +37,7 @@ class Myapp extends StatelessWidget {
             scaffoldBackgroundColor: AppColor.kWhiteColor,
             fontFamily: 'Plus Jakarta Sans'),
         onGenerateRoute: AppRoute.onGenaratedRoute,
-        initialRoute: '/',
+        initialRoute: '/login',
       ),
     );
   }

@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +7,6 @@ import 'package:kalicart/common/widgets/card_column_widget.dart';
 import 'package:kalicart/common/widgets/medium_text.dart';
 import 'package:kalicart/common/widgets/primary_button.dart';
 import 'package:kalicart/common/widgets/product_card_widget.dart';
-import 'package:kalicart/common/widgets/regular_text.dart';
 import 'package:kalicart/common/widgets/text_bold.dart';
 import 'package:kalicart/common/widgets/text_semi_bold.dart';
 import 'package:kalicart/features/home/widgets/row_text_widget.dart';
