@@ -31,7 +31,7 @@ class Myapp extends StatelessWidget {
             scaffoldBackgroundColor: AppColor.kWhiteColor,
             fontFamily: 'Plus Jakarta Sans'),
         onGenerateRoute: AppRoute.onGenaratedRoute,
-        initialRoute: '/login',
+        initialRoute: '/',
       ),
     );
   }
