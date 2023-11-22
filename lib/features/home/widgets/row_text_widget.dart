@@ -25,6 +25,7 @@ class RowTextWidget extends StatelessWidget {
         children: [
           BoldTextStyle(size: 22.sp, text: leadText),
           GestureDetector(
+            onTap: action,
             child: SemiBoldTextStyle(
               size: 14.sp,
               text: actionText,

@@ -2,6 +2,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Db{
 
+  static bool  isLoggedIn = false;
+
 static SharedPreferences? _instance;
   static SharedPreferences get instance => _instance!;
 
@@ -21,7 +23,7 @@ static SharedPreferences? _instance;
 
   }
 
-  static auth(){
+  static  auth(){
     return _instance?.getBool('auth');
   }
   static getLoginId(){

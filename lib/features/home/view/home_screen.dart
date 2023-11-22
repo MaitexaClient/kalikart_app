@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/card_column_widget.dart';
 import 'package:kalicart/common/widgets/medium_text.dart';
@@ -58,7 +59,8 @@ class HomeScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                       color: Colors.amber),
                   child: CarouselSlider(
-                    options: CarouselOptions(autoPlay: true, viewportFraction: 1),
+                    options:
+                        CarouselOptions(autoPlay: true, viewportFraction: 1),
                     items: [1, 2, 3, 4, 5].map((i) {
                       return Builder(
                         builder: (BuildContext context) {
@@ -75,7 +77,8 @@ class HomeScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    MediumTextStyle(size: 15.sp, text: 'Fastbey'),
+                                    MediumTextStyle(
+                                        size: 15.sp, text: 'Fastbey'),
                                     const SizedBox(
                                       height: 3,
                                     ),
@@ -84,8 +87,8 @@ class HomeScreen extends StatelessWidget {
                                       height: 10,
                                     ),
                                     SizedBox(
-                                      width:
-                                          MediaQuery.of(context).size.width / 3.5,
+                                      width: MediaQuery.of(context).size.width /
+                                          3.5,
                                       child: PrimaryButton(
                                         onPressed: () {},
                                         buttonText: 'Order now',
@@ -101,17 +104,18 @@ class HomeScreen extends StatelessWidget {
                     }).toList(),
                   ),
                 )
-                
-                
+
                 //category
                 ,
                 RowTextWidget(
                   leadText: 'Categories',
                   actionText: 'View all',
-                  action: () {},
+                  action: () {
+                    Navigator.pushNamed(context, RouteName.categoryScreen);
+                  },
                 ),
                 //category
-        
+
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: 150.h,
@@ -137,7 +141,8 @@ class HomeScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                       color: Colors.amber),
                   child: CarouselSlider(
-                    options: CarouselOptions(autoPlay: true, viewportFraction: 1),
+                    options:
+                        CarouselOptions(autoPlay: true, viewportFraction: 1),
                     items: [1, 2, 3, 4, 5].map((i) {
                       return Builder(
                         builder: (BuildContext context) {
@@ -154,7 +159,8 @@ class HomeScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    MediumTextStyle(size: 15.sp, text: 'Fastbey'),
+                                    MediumTextStyle(
+                                        size: 15.sp, text: 'Fastbey'),
                                     const SizedBox(
                                       height: 3,
                                     ),
@@ -163,8 +169,8 @@ class HomeScreen extends StatelessWidget {
                                       height: 10,
                                     ),
                                     SizedBox(
-                                      width:
-                                          MediaQuery.of(context).size.width / 3.5,
+                                      width: MediaQuery.of(context).size.width /
+                                          3.5,
                                       child: PrimaryButton(
                                         onPressed: () {},
                                         buttonText: 'Order now',
@@ -180,14 +186,15 @@ class HomeScreen extends StatelessWidget {
                     }).toList(),
                   ),
                 ),
-                
-                
+
                 RowTextWidget(
                   leadText: 'Trending',
                   actionText: 'View all',
-                  action: () {},
+                  action: () {
+                    Navigator.pushNamed(context, RouteName.trendingScreen);
+                  },
                 ),
-        
+
                 //trending product
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
@@ -196,7 +203,7 @@ class HomeScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) => const Padding(
                       padding: EdgeInsets.only(right: 15),
-                      child:ProductCard(),
+                      child: ProductCard(),
                     ),
                   ),
                 )

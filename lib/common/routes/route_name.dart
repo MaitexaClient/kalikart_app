@@ -4,5 +4,8 @@ class RouteName{
   static const  signupScreen = '/signUp';
   static const  otpverificationScreen = '/otpverificationScreen';
   static const  homeScreen = '/home';
+  static const  categoryScreen = '/category';
+  static const  trendingScreen = '/trending-screen';
+  
   
 }

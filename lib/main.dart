@@ -5,21 +5,24 @@ import 'package:kalicart/common/services/db_service.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/features/Root/controller/root_controller.dart';
 import 'package:kalicart/features/auth/controller/auth_controller.dart';
+import 'package:kalicart/features/home/controller/home_controller.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-void main() async{
-
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // await Db.init();
+  await Db.init();
+
+  Db.isLoggedIn = Db.auth();
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthController()),
         ChangeNotifierProvider(create: (_) => RootController()),
+        ChangeNotifierProvider(create: (_) => HomeController()),
+        
       ],
-      child:const Myapp(),
+      child: const Myapp(),
     ),
   );
 }
@@ -37,7 +40,7 @@ class Myapp extends StatelessWidget {
             scaffoldBackgroundColor: AppColor.kWhiteColor,
             fontFamily: 'Plus Jakarta Sans'),
         onGenerateRoute: AppRoute.onGenaratedRoute,
-        initialRoute: '/login',
+        initialRoute: '/',
       ),
     );
   }

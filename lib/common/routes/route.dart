@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:kalicart/common/routes/route_name.dart';
+import 'package:kalicart/common/services/db_service.dart';
 import 'package:kalicart/features/Root/view/root_screen.dart';
 import 'package:kalicart/features/auth/view/login_screen.dart';
 import 'package:kalicart/features/auth/view/otp_verification_screen.dart';
 import 'package:kalicart/features/auth/view/sigin_up_screen.dart';
+import 'package:kalicart/features/home/view/category_list.dart';
 import 'package:kalicart/features/home/view/home_screen.dart';
+import 'package:kalicart/features/home/view/trending_screen.dart';
 
 class AppRoute {
   static Route onGenaratedRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        
+          if(Db.isLoggedIn){
+            return MaterialPageRoute(builder: (context) =>  RootScreen());
+          }else{
+            return MaterialPageRoute(builder: (context) => const LoginScreen(),);
+          }
+                  
       case RouteName.loginScreen:
+        
         return MaterialPageRoute(
           builder: (context) =>  LoginScreen(),
         );
@@ -25,6 +34,10 @@ class AppRoute {
         );
       case RouteName.homeScreen:
         return MaterialPageRoute(builder: (context) => const HomeScreen(),);
+      case  RouteName.categoryScreen:
+        return MaterialPageRoute(builder: (context) => const CategoryListScreen(),);
+      case RouteName.trendingScreen:
+        return MaterialPageRoute(builder: (context) => const TrendingScreen(),);
 
       default:
         return MaterialPageRoute(
