@@ -8,6 +8,7 @@ import 'package:kalicart/features/auth/view/sigin_up_screen.dart';
 import 'package:kalicart/features/home/view/category_list.dart';
 import 'package:kalicart/features/home/view/home_screen.dart';
 import 'package:kalicart/features/home/view/trending_screen.dart';
+import 'package:kalicart/features/search/screen/search_screen.dart';
 
 class AppRoute {
   static Route onGenaratedRoute(RouteSettings settings) {
@@ -38,6 +39,8 @@ class AppRoute {
         return MaterialPageRoute(builder: (context) => const CategoryListScreen(),);
       case RouteName.trendingScreen:
         return MaterialPageRoute(builder: (context) => const TrendingScreen(),);
+      case RouteName.searchScreen:
+        return MaterialPageRoute(builder: (context) => const SearchScreen(),);
 
       default:
         return MaterialPageRoute(

@@ -6,6 +6,7 @@ class RouteName{
   static const  homeScreen = '/home';
   static const  categoryScreen = '/category';
   static const  trendingScreen = '/trending-screen';
+  static const  searchScreen  = '/search-screen';
   
   
 }

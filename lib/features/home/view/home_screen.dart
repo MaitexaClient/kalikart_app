@@ -40,10 +40,15 @@ class HomeScreen extends StatelessWidget {
                       color: AppColor.kblack,
                     ),
                     const Spacer(),
-                    const FaIcon(
-                      FontAwesomeIcons.magnifyingGlass,
-                      color: AppColor.kblack40,
-                      size: 20,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, RouteName.searchScreen);
+                      },
+                      child: const FaIcon(
+                        FontAwesomeIcons.magnifyingGlass,
+                        color: AppColor.kblack40,
+                        size: 20,
+                      ),
                     )
                   ],
                 ),

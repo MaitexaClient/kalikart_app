@@ -6,6 +6,7 @@ import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/features/Root/controller/root_controller.dart';
 import 'package:kalicart/features/auth/controller/auth_controller.dart';
 import 'package:kalicart/features/home/controller/home_controller.dart';
+import 'package:kalicart/features/search/controllers/search_controller.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -20,6 +21,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AuthController()),
         ChangeNotifierProvider(create: (_) => RootController()),
         ChangeNotifierProvider(create: (_) => HomeController()),
+        ChangeNotifierProvider(create: (_) => SearchScreenController()),
         
       ],
       child: const Myapp(),
