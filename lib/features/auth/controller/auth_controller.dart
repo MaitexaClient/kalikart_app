@@ -11,6 +11,10 @@ class AuthController extends ChangeNotifier {
   //shared prefernce
   SharedPreferences? sharedPreferences;
 
+  //login form key
+  GlobalKey<FormState> ? loginFormkey;
+  GlobalKey<FormState> ? registrationFormKey;
+ 
   final ApiService _apiService = ApiService();
 
   bool loading = false;
@@ -84,7 +88,7 @@ class AuthController extends ChangeNotifier {
 
   //login
   void login(BuildContext context) async {
-    FormKeys.registrationFormKey.currentState!.save();
+    loginFormkey?.currentState!.save();
     validateEmail(email!);
     validatePassword(password!);
 
@@ -112,7 +116,7 @@ class AuthController extends ChangeNotifier {
 
   //sigin up
   void signUp(BuildContext context) async {
-    FormKeys.registrationFormKey.currentState!.save();
+    registrationFormKey?.currentState!.save();
 
     validateEmail(email!);
     validatePassword(password!);

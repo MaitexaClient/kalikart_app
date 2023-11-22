@@ -18,11 +18,13 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    context.read<AuthController>().loginFormkey = GlobalKey<FormState>();
     
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Form(
-        key: FormKeys.registrationFormKey,
+        key: context.read<AuthController>().loginFormkey,
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),

@@ -16,6 +16,8 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    context.read<AuthController>().registrationFormKey = GlobalKey<FormState>();
     return Scaffold(
     
       bottomSheet: Container(
@@ -32,7 +34,7 @@ class SignUpScreen extends StatelessWidget {
         ),
       ),
       body: Form(
-        key: FormKeys.registrationFormKey,
+        key: context.read<AuthController>().registrationFormKey,
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
