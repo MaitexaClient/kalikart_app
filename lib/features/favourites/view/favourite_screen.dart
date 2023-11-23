@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kalicart/common/utils/app_color.dart';
+import 'package:kalicart/common/widgets/product_card_widget.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
 import 'package:kalicart/features/favourites/controller/favourite_controller.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,7 @@ class FavouriteScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
           child: Consumer<FavouriteController>(
             builder: (context, controller, child) {
-              return controller.favaerateList.length == 0 ?  Column(
+              return controller.favaerateList.isEmpty ?  Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
 
@@ -52,7 +53,49 @@ class FavouriteScreen extends StatelessWidget {
         
         
                 ],
-              ): Container();
+              ): Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.center,
+              child: GridView.builder(
+                primary: true,
+                
+                gridDelegate:
+                    const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 6.0,
+                  mainAxisSpacing: 8.0,
+                  childAspectRatio: .7,
+                ),
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return Stack(
+                    children: [
+                      const  ProductCard(),
+                      Positioned(
+                        right: 0,
+                        top: 0,
+                        child: IconButton(
+                        icon: Container(
+                          height: 25,
+                          width: 25,
+                          decoration: const  BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColor.kblack
+                          ),
+                          child: const Icon(Icons.favorite_outline,color: AppColor.kWhiteColor,size: 16,),
+                        ),
+                        onPressed: () {
+                          
+                        },
+                      ))
+                    ],
+                  );
+                },
+              ),
+            );
+            
+ 
+            
             },
           ),
         ),

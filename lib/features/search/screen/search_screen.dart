@@ -18,12 +18,8 @@ class SearchScreen extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: BoldTextStyle(size: 20.sp, text: 'Search'),
-        iconTheme: const IconThemeData(
-          color: Colors.black
-        ),
-        ),
-     
-     
+        iconTheme: const IconThemeData(color: Colors.black),
+      ),
       body: Column(
         children: [
           Container(
@@ -66,7 +62,28 @@ class SearchScreen extends StatelessWidget {
                     ),
                     itemCount: searchController.filteredProducts.length,
                     itemBuilder: (context, index) {
-                      return ProductCard();
+                      return Stack(
+                        children: [
+                          const  ProductCard(),
+                          Positioned(
+                            right: 0,
+                            top: 0,
+                            child: IconButton(
+                            icon: Container(
+                              height: 25,
+                              width: 25,
+                              decoration: const  BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColor.kblack
+                              ),
+                              child: const Icon(Icons.favorite_outline,color: AppColor.kWhiteColor,size: 16,),
+                            ),
+                            onPressed: () {
+                              
+                            },
+                          ))
+                        ],
+                      );
                     },
                   );
                 },

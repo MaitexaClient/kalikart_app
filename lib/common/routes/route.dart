@@ -16,18 +16,15 @@ class AppRoute {
     switch (settings.name) {
       case '/':
           if(Db.isLoggedIn){
-            print('ffffff');
             return MaterialPageRoute(builder: (context) =>  const RootScreen());
-
           }else{
-            print('ffffff');
             return MaterialPageRoute(builder: (context) => const LoginScreen(),);
           }
                   
       case RouteName.loginScreen:
         
         return MaterialPageRoute(
-          builder: (context) =>  LoginScreen(),
+          builder: (context) =>  const LoginScreen(),
         );
       case RouteName.signupScreen:
         return MaterialPageRoute(
