@@ -9,6 +9,7 @@ import 'package:kalicart/features/favourites/view/favourite_screen.dart';
 import 'package:kalicart/features/home/view/category_list.dart';
 import 'package:kalicart/features/home/view/home_screen.dart';
 import 'package:kalicart/features/home/view/trending_screen.dart';
+import 'package:kalicart/features/product/view/product_details_screen.dart';
 import 'package:kalicart/features/search/screen/search_screen.dart';
 
 class AppRoute {
@@ -44,6 +45,8 @@ class AppRoute {
         return MaterialPageRoute(builder: (context) => const SearchScreen(),);
       case RouteName.favouriteScreen:
         return MaterialPageRoute(builder: (context) => const FavouriteScreen(),);
+      case RouteName.productDeatailsScreen:
+        return MaterialPageRoute(builder: (context) => const ProductDetailsScreen(),);
 
     
 

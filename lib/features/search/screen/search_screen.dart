@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/product_card_widget.dart';
 import 'package:kalicart/common/widgets/text_bold.dart';
@@ -64,7 +65,11 @@ class SearchScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Stack(
                         children: [
-                          const  ProductCard(),
+                            ProductCard(onPressed: () {
+
+                              Navigator.pushNamed(context, RouteName.productDeatailsScreen);
+                            
+                          },),
                           Positioned(
                             right: 0,
                             top: 0,

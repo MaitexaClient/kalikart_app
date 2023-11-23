@@ -10,7 +10,7 @@ import 'package:kalicart/common/widgets/primary_button.dart';
 import 'package:kalicart/common/widgets/product_card_widget.dart';
 import 'package:kalicart/common/widgets/text_bold.dart';
 import 'package:kalicart/common/widgets/text_semi_bold.dart';
-import 'package:kalicart/features/home/widgets/row_text_widget.dart';
+import 'package:kalicart/common/widgets/row_text_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -206,9 +206,12 @@ class HomeScreen extends StatelessWidget {
                   height: 250.h,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => const Padding(
-                      padding: EdgeInsets.only(right: 15),
-                      child: ProductCard(),
+                    itemBuilder: (context, index) =>  Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: ProductCard(onPressed: () {
+                        Navigator.pushNamed(context, RouteName.productDeatailsScreen);
+                        
+                      },),
                     ),
                   ),
                 )
