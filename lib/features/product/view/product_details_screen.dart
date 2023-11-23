@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/primary_button.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
@@ -91,8 +92,10 @@ class ProductDetailsScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: PrimaryButton(onPressed: () {
+
+              Navigator.pushNamed(context, RouteName.cartListScreen);
               
-            }, buttonText: 'Add to cart'),
+            }, buttonText: 'Add  to  cart'),
           )
         ],
       ),

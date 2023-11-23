@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/features/Root/controller/root_controller.dart';
+import 'package:kalicart/features/cart/view/cart_list_screen.dart';
 import 'package:kalicart/features/favourites/view/favourite_screen.dart';
 import 'package:kalicart/features/home/view/home_screen.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +12,8 @@ class RootScreen extends StatelessWidget {
    
   final List<Widget> _pages = const  [
     HomeScreen(),
-    FavouriteScreen()
+    FavouriteScreen(),
+    CartListScreen()
   ];
 
    
@@ -44,7 +46,7 @@ class RootScreen extends StatelessWidget {
               
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
+              icon: Icon(Icons.shopping_cart_outlined),
               label: ''
             
             ),

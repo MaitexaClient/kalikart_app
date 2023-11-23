@@ -5,10 +5,14 @@ import 'package:kalicart/features/Root/view/root_screen.dart';
 import 'package:kalicart/features/auth/view/login_screen.dart';
 import 'package:kalicart/features/auth/view/otp_verification_screen.dart';
 import 'package:kalicart/features/auth/view/sigin_up_screen.dart';
+import 'package:kalicart/features/cart/view/cart_list_screen.dart';
+import 'package:kalicart/features/checkout/view/check_out_screen.dart';
+import 'package:kalicart/features/checkout/view/confirm_screen.dart';
 import 'package:kalicart/features/favourites/view/favourite_screen.dart';
 import 'package:kalicart/features/home/view/category_list.dart';
 import 'package:kalicart/features/home/view/home_screen.dart';
 import 'package:kalicart/features/home/view/trending_screen.dart';
+import 'package:kalicart/features/order/view/order_list_screen.dart';
 import 'package:kalicart/features/product/view/product_details_screen.dart';
 import 'package:kalicart/features/search/screen/search_screen.dart';
 
@@ -29,7 +33,7 @@ class AppRoute {
         );
       case RouteName.signupScreen:
         return MaterialPageRoute(
-          builder: (context) =>  SignUpScreen(),
+          builder: (context) =>  const  SignUpScreen(),
         );
       case RouteName.otpverificationScreen:
         return MaterialPageRoute(
@@ -47,6 +51,14 @@ class AppRoute {
         return MaterialPageRoute(builder: (context) => const FavouriteScreen(),);
       case RouteName.productDeatailsScreen:
         return MaterialPageRoute(builder: (context) => const ProductDetailsScreen(),);
+      case RouteName.cartListScreen:
+        return MaterialPageRoute(builder: (context) => const CartListScreen(),);
+      case RouteName.checkOutScreen:
+        return MaterialPageRoute(builder: (context) => const CheckOutScreen(),);
+      case RouteName.confirmScreen:
+        return MaterialPageRoute(builder: (context) => const ConfirmScreen(),);
+      case RouteName.orderListScreen:
+        return MaterialPageRoute(builder: (context) => const OrderListScreen(),);
 
     
 

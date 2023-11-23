@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/utils/app_color.dart';
+import 'package:kalicart/common/widgets/list_empty_widget.dart';
 import 'package:kalicart/common/widgets/product_card_widget.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
 import 'package:kalicart/common/widgets/text_semi_bold.dart';
@@ -31,36 +32,9 @@ class FavouriteScreen extends StatelessWidget {
         child: Consumer<FavouriteController>(
           builder: (context, controller, child) {
             return controller.favaerateList.isEmpty
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/fav.png',
-                        width: 100.h,
-                        height: 100.h,
-                      ),
-
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      BoldTextStyle(size: 20.sp, text: 'No  Favourites Yet!'),
-                      // RegularTextStyle(size: 16.sp, text: 'Commodo odio aenean\nsed adipiscing !'),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              side: BorderSide(color: AppColor.kGreenColor)),
-                          onPressed: () {},
-                          child: BoldTextStyle(
-                            size: 18.sp,
-                            color: AppColor.kGreenColor,
-                            text: 'Go to shop',
-                          ))
-                    ],
-                  )
+                ? ListEmptyWidget(buttonText:'Go to shop',title: 'No  Favourites Yet!',onTap: () {
+                  
+                },)
                 : Container(
                     width: MediaQuery.of(context).size.width,
                     alignment: Alignment.center,
@@ -88,3 +62,4 @@ class FavouriteScreen extends StatelessWidget {
     );
   }
 }
+
