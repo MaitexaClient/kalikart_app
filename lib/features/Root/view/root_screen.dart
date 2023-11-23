@@ -1,47 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/features/Root/controller/root_controller.dart';
+import 'package:kalicart/features/favourites/view/favourite_screen.dart';
 import 'package:kalicart/features/home/view/home_screen.dart';
 import 'package:provider/provider.dart';
 
 class RootScreen extends StatelessWidget {
 
-  RootScreen({super.key});
+  const RootScreen({super.key});
    
-  final List<Widget> _pages = [
-    HomeScreen()
+  final List<Widget> _pages = const  [
+    HomeScreen(),
+    FavouriteScreen()
   ];
 
    
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Consumer<RootController>(builder: (BuildContext context, RootController value, Widget? child) { 
-        return _pages[value.currentIndex];
-       },
+    return Consumer<RootController>(
+      builder: (context, value, child) => 
+       Scaffold(
+        body:_pages[value.currentIndex],
 
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: context.read<RootController>().currentIndex,
-        onTap: (index) {
-         
-            context.read<RootController>().setIndex(index);
-     
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Page 1',
+        bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: AppColor.kGreenColor,
+          currentIndex: context.read<RootController>().currentIndex,
+          onTap: (index) {
+           
+              context.read<RootController>().setIndex(index);
+       
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined),
+              activeIcon: Icon(Icons.home),
+              label: ''
+              
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite_border),
+              activeIcon: Icon(Icons.favorite),
+              label: ''
+              
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: ''
             
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Page 2',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Page 3',
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

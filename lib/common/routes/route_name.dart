@@ -7,6 +7,8 @@ class RouteName{
   static const  categoryScreen = '/category';
   static const  trendingScreen = '/trending-screen';
   static const  searchScreen  = '/search-screen';
+  static const  favouriteScreen = '/favourite-screen';
+
   
   
 }

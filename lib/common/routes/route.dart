@@ -5,6 +5,7 @@ import 'package:kalicart/features/Root/view/root_screen.dart';
 import 'package:kalicart/features/auth/view/login_screen.dart';
 import 'package:kalicart/features/auth/view/otp_verification_screen.dart';
 import 'package:kalicart/features/auth/view/sigin_up_screen.dart';
+import 'package:kalicart/features/favourites/view/favourite_screen.dart';
 import 'package:kalicart/features/home/view/category_list.dart';
 import 'package:kalicart/features/home/view/home_screen.dart';
 import 'package:kalicart/features/home/view/trending_screen.dart';
@@ -15,8 +16,11 @@ class AppRoute {
     switch (settings.name) {
       case '/':
           if(Db.isLoggedIn){
-            return MaterialPageRoute(builder: (context) =>  RootScreen());
+            print('ffffff');
+            return MaterialPageRoute(builder: (context) =>  const RootScreen());
+
           }else{
+            print('ffffff');
             return MaterialPageRoute(builder: (context) => const LoginScreen(),);
           }
                   
@@ -41,6 +45,10 @@ class AppRoute {
         return MaterialPageRoute(builder: (context) => const TrendingScreen(),);
       case RouteName.searchScreen:
         return MaterialPageRoute(builder: (context) => const SearchScreen(),);
+      case RouteName.favouriteScreen:
+        return MaterialPageRoute(builder: (context) => const FavouriteScreen(),);
+
+    
 
       default:
         return MaterialPageRoute(

@@ -5,16 +5,21 @@ import 'package:kalicart/common/services/db_service.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/features/Root/controller/root_controller.dart';
 import 'package:kalicart/features/auth/controller/auth_controller.dart';
+import 'package:kalicart/features/favourites/controller/favourite_controller.dart';
 import 'package:kalicart/features/home/controller/home_controller.dart';
 import 'package:kalicart/features/search/controllers/search_controller.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  
+  
+   WidgetsFlutterBinding.ensureInitialized();
 
   await Db.init();
 
-  Db.isLoggedIn = Db.auth();
+  Db.isLoggedIn = Db.auth() ?? false;
+
+
   runApp(
     MultiProvider(
       providers: [
@@ -22,6 +27,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => RootController()),
         ChangeNotifierProvider(create: (_) => HomeController()),
         ChangeNotifierProvider(create: (_) => SearchScreenController()),
+        ChangeNotifierProvider(create: (_) => FavouriteController()),
         
       ],
       child: const Myapp(),

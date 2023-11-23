@@ -92,6 +92,9 @@ class AuthController extends ChangeNotifier {
     validateEmail(email!);
     validatePassword(password!);
 
+    print(email!);
+    print(password!);
+
     if (emailErrorText.isEmpty && passwordError.isEmpty) {
       try {
         loading = true;
@@ -101,9 +104,13 @@ class AuthController extends ChangeNotifier {
             await _apiService.login(email: email, password: password);
 
         await Db.init();
-        sharedPreferences = Db.instance;
-
         Db.setAuth(loginId: data["loginId"], token: data["token"], auth: true);
+        if(context.mounted){
+
+          Navigator.pushReplacementNamed(context, RouteName.homeScreen);
+        }
+
+
 
         loading = false;
         notifyListeners();
