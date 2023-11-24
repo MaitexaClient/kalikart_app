@@ -1,5 +1,7 @@
 
+
 class RouteName {
+  static const rootScreen = '/root-screen';
   static const onBoardingScreen = '/on-boarding';
   static const loginScreen = '/login';
   static const signupScreen = '/signUp';

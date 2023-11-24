@@ -107,7 +107,7 @@ class AuthController extends ChangeNotifier {
         Db.setAuth(loginId: data["loginId"], token: data["token"], auth: true);
         if(context.mounted){
 
-          Navigator.pushReplacementNamed(context, RouteName.homeScreen);
+          Navigator.pushReplacementNamed(context, RouteName.rootScreen);
         }
 
 

@@ -25,6 +25,9 @@ class AppRoute {
           }else{
             return MaterialPageRoute(builder: (context) => const LoginScreen(),);
           }
+
+      case RouteName.rootScreen:
+       return  MaterialPageRoute(builder: (context) =>  const RootScreen());
                   
       case RouteName.loginScreen:
         

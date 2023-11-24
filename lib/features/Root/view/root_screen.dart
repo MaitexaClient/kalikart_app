@@ -4,6 +4,7 @@ import 'package:kalicart/features/Root/controller/root_controller.dart';
 import 'package:kalicart/features/cart/view/cart_list_screen.dart';
 import 'package:kalicart/features/favourites/view/favourite_screen.dart';
 import 'package:kalicart/features/home/view/home_screen.dart';
+import 'package:kalicart/features/order/view/order_list_screen.dart';
 import 'package:provider/provider.dart';
 
 class RootScreen extends StatelessWidget {
@@ -13,7 +14,8 @@ class RootScreen extends StatelessWidget {
   final List<Widget> _pages = const  [
     HomeScreen(),
     FavouriteScreen(),
-    CartListScreen()
+    CartListScreen(),
+    OrderListScreen()
   ];
 
    
@@ -26,6 +28,8 @@ class RootScreen extends StatelessWidget {
 
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: AppColor.kGreenColor,
+          unselectedItemColor: Colors.grey,
+          type: BottomNavigationBarType.fixed,
           currentIndex: context.read<RootController>().currentIndex,
           onTap: (index) {
            
@@ -47,9 +51,17 @@ class RootScreen extends StatelessWidget {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.shopping_cart_outlined),
+              activeIcon: Icon(Icons.shopping_cart),
               label: ''
             
             ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.article_outlined),
+              activeIcon: Icon(Icons.article),
+              label: ''
+            
+            ),
+            
           ],
         ),
       ),
