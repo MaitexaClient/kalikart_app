@@ -12,6 +12,7 @@ import 'package:kalicart/features/home/controller/home_controller.dart';
 import 'package:kalicart/features/order/controller/order_controller.dart';
 import 'package:kalicart/features/product/controller/product_controller.dart';
 import 'package:kalicart/features/product/view/product_details_screen.dart';
+import 'package:kalicart/features/profile/controller/profile_controller.dart';
 import 'package:kalicart/features/search/controllers/search_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +37,8 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ProductDetailsController(),),
         ChangeNotifierProvider(create: (_) => CartController(),),
         ChangeNotifierProvider(create: (_) => CheckOutController(),),
-        ChangeNotifierProvider(create: (_) => OrderController())
+        ChangeNotifierProvider(create: (_) => OrderController(),),
+        ChangeNotifierProvider(create: (_)=> ProfileController(),)
         
       ],
       child: const Myapp(),

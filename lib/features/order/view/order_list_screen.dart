@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/list_empty_widget.dart';
+import 'package:kalicart/common/widgets/text_bold.dart';
 import 'package:kalicart/features/order/controller/order_controller.dart';
 import 'package:kalicart/features/order/widgets/active_order_widget.dart';
 import 'package:kalicart/features/order/widgets/completed_order_widget.dart';
@@ -13,6 +14,13 @@ class OrderListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        title: BoldTextStyle(size: 20.sp, text: 'Order'),
+        iconTheme: const IconThemeData(color: Colors.black),
+      ),
       body: SafeArea(
         child: Consumer<OrderController>(
           builder: (context, controller, child) => controller.orderList.isEmpty

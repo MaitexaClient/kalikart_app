@@ -16,4 +16,5 @@ class RouteName {
   static const checkOutScreen = '/check-out-screen';
   static const confirmScreen = '/confirm-screen';
   static const orderListScreen = '/order-list-screen'; 
+  static const profileScreen = '/profile-screen';
 }
