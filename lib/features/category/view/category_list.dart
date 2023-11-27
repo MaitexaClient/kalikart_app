@@ -5,6 +5,7 @@ import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/card_column_widget.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
 import 'package:kalicart/common/widgets/text_bold.dart';
+import 'package:kalicart/features/category/controller/category_controller.dart';
 import 'package:kalicart/features/home/controller/home_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +27,7 @@ class CategoryListScreen extends StatelessWidget {
      
      
       body: SafeArea(
-        child: Consumer<HomeController>(
+        child: Consumer<CategoryController>(
           builder: (context, controller, child) {
             return Row(
               children: [

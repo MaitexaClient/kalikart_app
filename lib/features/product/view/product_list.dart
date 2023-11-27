@@ -4,15 +4,32 @@ import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/widgets/list_empty_widget.dart';
 import 'package:kalicart/common/widgets/product_card_widget.dart';
 import 'package:kalicart/common/widgets/text_bold.dart';
-import 'package:kalicart/features/favourites/controller/favourite_controller.dart';
 import 'package:kalicart/features/product/controller/product_controller.dart';
 import 'package:provider/provider.dart';
 
-class   ProductListScreen extends StatelessWidget {
-  const   ProductListScreen({super.key});
+class   ProductListScreen extends StatefulWidget {
+  const   ProductListScreen({this.categoryName ,super.key, this.catId});
+
+
+  final String  ? categoryName;
+  final String ? catId;
 
   @override
+  State<ProductListScreen> createState() => _ProductListScreenState();
+}
+
+class _ProductListScreenState extends State<ProductListScreen> {
+
+  @override
+  void initState() {
+     
+
+     
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
+    
     return  Scaffold(
       appBar:  AppBar(
         backgroundColor: Colors.transparent,

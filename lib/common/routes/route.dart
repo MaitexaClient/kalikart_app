@@ -9,7 +9,7 @@ import 'package:kalicart/features/cart/view/cart_list_screen.dart';
 import 'package:kalicart/features/checkout/view/check_out_screen.dart';
 import 'package:kalicart/features/checkout/view/confirm_screen.dart';
 import 'package:kalicart/features/favourites/view/favourite_screen.dart';
-import 'package:kalicart/features/home/view/category_list.dart';
+import 'package:kalicart/features/category/view/category_list.dart';
 import 'package:kalicart/features/home/view/home_screen.dart';
 import 'package:kalicart/features/home/view/trending_screen.dart';
 import 'package:kalicart/features/order/view/order_list_screen.dart';
@@ -19,6 +19,8 @@ import 'package:kalicart/features/search/screen/search_screen.dart';
 
 class AppRoute {
   static Route onGenaratedRoute(RouteSettings settings) {
+    final args = settings.arguments;
+
     switch (settings.name) {
       case '/':
           if(Db.isLoggedIn){
@@ -64,7 +66,7 @@ class AppRoute {
       case RouteName.orderListScreen:
         return MaterialPageRoute(builder: (context) => const OrderListScreen(),);
       case RouteName.productListScreen:
-        return MaterialPageRoute(builder: (context) => const ProductListScreen(),);
+        return MaterialPageRoute(builder: (context) =>  ProductListScreen(categoryName: args as String,),);
 
     
 

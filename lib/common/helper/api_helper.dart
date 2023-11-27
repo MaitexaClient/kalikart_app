@@ -13,9 +13,22 @@ class ApiHelper{
     },
     body: data
   );
+
+  
 }
+
+Future<http.Response> getData({required Uri  url}) {
+   
+  print(url);
+  return http.get(
+    url,
+    headers: <String, String>{
+       "Content-Type": "application/x-www-form-urlencoded",
+    },
+  );
 
 
 
    
+}
 }

@@ -6,6 +6,7 @@ import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/features/Root/controller/root_controller.dart';
 import 'package:kalicart/features/auth/controller/auth_controller.dart';
 import 'package:kalicart/features/cart/controller/cart_controller.dart';
+import 'package:kalicart/features/category/controller/category_controller.dart';
 import 'package:kalicart/features/checkout/controller/check_out_controller.dart';
 import 'package:kalicart/features/favourites/controller/favourite_controller.dart';
 import 'package:kalicart/features/home/controller/home_controller.dart';
@@ -38,7 +39,8 @@ void main() async {
         ChangeNotifierProvider(create: (_) => CartController(),),
         ChangeNotifierProvider(create: (_) => CheckOutController(),),
         ChangeNotifierProvider(create: (_) => OrderController(),),
-        ChangeNotifierProvider(create: (_)=> ProfileController(),)
+        ChangeNotifierProvider(create: (_)=> ProfileController(),),
+        ChangeNotifierProvider(create: (_) => CategoryController(),)
         
       ],
       child: const Myapp(),

@@ -6,4 +6,8 @@ class ProductDetailsController extends ChangeNotifier{
   List productList = [''];
 
 
+
+  
+
+
 }

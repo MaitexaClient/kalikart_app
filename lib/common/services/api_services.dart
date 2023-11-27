@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:kalicart/common/helper/api_helper.dart';
+import 'package:kalicart/common/models/category_model.dart';
 import 'package:kalicart/common/utils/api_constants.dart';
 
 class ApiService {
@@ -63,4 +65,32 @@ class ApiService {
       throw 'Somthing went wrong';
     }
   }
+
+  //category list
+  Future<List<Category>> getCategoryList() async{
+
+     final url = Uri.parse(ApiConstant.baseUrl + ApiConstant.categoryList);
+    var response = await _apiHelper.getData(url: url);
+
+     var data =  jsonDecode(response.body);
+
+ 
+
+     if (response.statusCode  == 200) {
+      List<Category> dataList =  data["data"].map<Category>((e)=> Category.fromJson(e)).toList();
+     
+      return dataList;
+    }else{
+
+      throw 'Somthing went wrong';
+    }
+
+
+
+  }
+
+  getAllProductByCategory(){
+    
+  }
+
 }

@@ -1,38 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:kalicart/common/models/category_model.dart';
+import 'package:kalicart/common/services/api_services.dart';
 
 class HomeController extends ChangeNotifier{
 
   bool loading = false;
 
-   int _selectedIndex = 0;
+  
 
-  get selectedIndex => _selectedIndex;
+  
 
-  List  categoryNameList = ['fasion','electronic','house hold'];
-  List  categoryProductList = [];
+  List<Category>  categoryList = [];
+
+  ApiService _apiService = ApiService();
 
 
 
-  void changePage(int index){
+  
 
-    _selectedIndex = index;
+  //home inital call
+  void initial(BuildContext context) async{
 
-    if(categoryNameList[index]=='fasion'){
+   await getCategoryList(context);
 
-      categoryProductList.addAll(['men','women','kids']);
-      
 
-    }else{
-
-        categoryProductList.clear();
-
-    }
-    
-
-    notifyListeners();
-    
 
   }
+
+
+  //category list
+  Future<void> getCategoryList(BuildContext context) async{
+
+    try{
+
+      loading = true;
+      notifyListeners();
+      categoryList = await _apiService.getCategoryList();
+      loading = false;
+      notifyListeners();
+      
+
+    }catch(e){
+
+      loading = false;
+      notifyListeners();
+
+       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+
+
+    }
+
+
+
+  }
+
+  
 
 
 
