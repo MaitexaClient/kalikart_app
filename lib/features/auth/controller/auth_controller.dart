@@ -109,11 +109,9 @@ class AuthController extends ChangeNotifier {
 
           Navigator.pushReplacementNamed(context, RouteName.rootScreen);
         }
-
-
-
         loading = false;
         notifyListeners();
+        
       } catch (e) {
         loading = false;
         notifyListeners();

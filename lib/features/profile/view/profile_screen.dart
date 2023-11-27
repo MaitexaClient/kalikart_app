@@ -50,13 +50,16 @@ class ProfileScreen extends StatelessWidget {
               onTap: () {},
             ),
 
-            //settings
+            
+            const Spacer(),
             CustomTileWidget(
-              tileText: 'Settings',
-              icon: Icons.settings_outlined,
+              tileText: 'Log out',
+              icon: Icons.logout_outlined,
+              isLogout: true,
               onTap: () {},
             ),
-            Spacer()
+
+
           ],
         ),
       ),

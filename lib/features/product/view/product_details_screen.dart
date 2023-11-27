@@ -7,7 +7,6 @@ import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/primary_button.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
-import 'package:kalicart/common/widgets/row_text_widget.dart';
 import 'package:kalicart/common/widgets/text_bold.dart';
 import 'package:kalicart/common/widgets/text_semi_bold.dart';
 

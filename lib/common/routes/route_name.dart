@@ -1,5 +1,7 @@
 
 
+import 'package:kalicart/features/product/view/product_list.dart';
+
 class RouteName {
   static const rootScreen = '/root-screen';
   static const onBoardingScreen = '/on-boarding';
@@ -17,4 +19,5 @@ class RouteName {
   static const confirmScreen = '/confirm-screen';
   static const orderListScreen = '/order-list-screen'; 
   static const profileScreen = '/profile-screen';
+  static const productListScreen = '/product-list-screen';
 }

@@ -5,12 +5,14 @@ import 'package:kalicart/common/widgets/text_bold.dart';
 
 class ListEmptyWidget extends StatelessWidget {
   const ListEmptyWidget({
-    super.key, required this.title, required this.buttonText, required this.onTap,
+    super.key, required this.title, required this.buttonText, required this.onTap,this.isButton= false
   });
 
   final String title;
   final String buttonText;
   final VoidCallback onTap;
+  final  bool isButton;
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class ListEmptyWidget extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          OutlinedButton(
+          isButton ? const SizedBox()  :OutlinedButton(
               style: OutlinedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20)),

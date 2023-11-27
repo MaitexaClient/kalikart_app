@@ -4,11 +4,12 @@ import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
 
 class CustomTileWidget extends StatelessWidget {
-  const CustomTileWidget({super.key, required this.tileText, required this.onTap, required this.icon});
+  const CustomTileWidget({super.key, required this.tileText, required this.onTap, required this.icon,  this.isLogout = false });
 
   final String tileText;
   final VoidCallback onTap;
   final IconData icon;
+  final bool   isLogout;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class CustomTileWidget extends StatelessWidget {
         ListTile(
               leading:  Icon(icon),
               title:  RegularTextStyle(size: 16.sp, text: tileText),
-              trailing: const Icon(Icons.keyboard_arrow_right),
+              trailing: isLogout ? null  : const Icon(Icons.keyboard_arrow_right),
               onTap: onTap,
               
             ),

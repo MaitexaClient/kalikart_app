@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/card_column_widget.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
@@ -67,6 +68,10 @@ class CategoryListScreen extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   // Use the index to create your item
                   return CardColumnWidget(
+                    onTap: () {
+                          Navigator.pushNamed(context, RouteName.productListScreen);
+                          
+                        },
                       image:
                           'https://img.freepik.com/free-photo/portrait-young-handsome-bearded-man_1303-19639.jpg',
                       text: controller.categoryProductList[index],

@@ -126,9 +126,13 @@ class HomeScreen extends StatelessWidget {
                   height: 150.h,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => const Padding(
-                      padding: EdgeInsets.only(right: 15),
+                    itemBuilder: (context, index) =>  Padding(
+                      padding: const EdgeInsets.only(right: 15),
                       child: CardColumnWidget(
+                        onTap: () {
+                          Navigator.pushNamed(context, RouteName.productListScreen);
+                          
+                        },
                         image:
                             'https://img.freepik.com/free-photo/portrait-young-handsome-bearded-man_1303-19639.jpg',
                         text: 'Mens Style',
