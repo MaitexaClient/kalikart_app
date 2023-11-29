@@ -1,4 +1,4 @@
-class Product {
+class ProductModel {
   String? sId;
   String? shopId;
   String? categoryId;
@@ -7,11 +7,11 @@ class Product {
   int? price;
   String? availableQuantity;
   int? offer;
-  List<String>? image;
+  List<dynamic> ? image;
   String? description;
   int? iV;
 
-  Product(
+  ProductModel(
       {this.sId,
       this.shopId,
       this.categoryId,
@@ -24,7 +24,7 @@ class Product {
       this.description,
       this.iV});
 
-  Product.fromJson(Map<String, dynamic> json) {
+  ProductModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     shopId = json['shop_id'];
     categoryId = json['category_id'];
@@ -33,7 +33,8 @@ class Product {
     price = json['price'];
     availableQuantity = json['available_quantity'];
     offer = json['offer'];
-    image = json['image'].cast<String>();
+    print(json['image']);
+    image = json['image'] ?? [];
     description = json['description'];
     iV = json['__v'];
   }

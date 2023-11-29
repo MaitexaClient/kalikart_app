@@ -7,12 +7,11 @@ import 'package:kalicart/common/widgets/text_bold.dart';
 import 'package:kalicart/features/product/controller/product_controller.dart';
 import 'package:provider/provider.dart';
 
-class   ProductListScreen extends StatefulWidget {
-  const   ProductListScreen({this.categoryName ,super.key, this.catId});
+class ProductListScreen extends StatefulWidget {
+  const ProductListScreen({this.categoryName, super.key, this.catId});
 
-
-  final String  ? categoryName;
-  final String ? catId;
+  final String? categoryName;
+  final String? catId;
 
   @override
   State<ProductListScreen> createState() => _ProductListScreenState();
@@ -20,18 +19,19 @@ class   ProductListScreen extends StatefulWidget {
 
 class _ProductListScreenState extends State<ProductListScreen> {
 
+  
   @override
   void initState() {
-     
-
-     
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<ProductDetailsController>(context,listen: false).getAllProductByCat();
+    });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    
-    return  Scaffold(
-      appBar:  AppBar(
+    return Scaffold(
+      appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
@@ -46,12 +46,11 @@ class _ProductListScreenState extends State<ProductListScreen> {
           builder: (context, controller, child) {
             return controller.productList.isEmpty
                 ? ListEmptyWidget(
-                  isButton: true,
-                  buttonText:'',
-                  title: 'No Products',
-                  onTap: () {
-                  
-                },)
+                    isButton: true,
+                    buttonText: '',
+                    title: 'No Products',
+                    onTap: () {},
+                  )
                 : Container(
                     width: MediaQuery.of(context).size.width,
                     alignment: Alignment.center,
@@ -66,18 +65,18 @@ class _ProductListScreenState extends State<ProductListScreen> {
                       ),
                       itemCount: 5,
                       itemBuilder: (context, index) {
-                        return ProductCard(onPressed: () {
-                          Navigator.pushNamed(context, RouteName.productDeatailsScreen);
-                          
-                        },);
+                        return ProductCard(
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, RouteName.productDeatailsScreen);
+                          },
+                        );
                       },
                     ),
                   );
           },
         ),
       ),
-  
-  
     );
   }
 }
