@@ -32,9 +32,11 @@ class FavouriteScreen extends StatelessWidget {
         child: Consumer<FavouriteController>(
           builder: (context, controller, child) {
             return controller.favaerateList.isEmpty
-                ? ListEmptyWidget(buttonText:'Go to shop',title: 'No  Favourites Yet!',onTap: () {
-                  
-                },)
+                ? ListEmptyWidget(
+                    buttonText: 'Go to shop',
+                    title: 'No  Favourites Yet!',
+                    onTap: () {},
+                  )
                 : Container(
                     width: MediaQuery.of(context).size.width,
                     alignment: Alignment.center,
@@ -49,19 +51,22 @@ class FavouriteScreen extends StatelessWidget {
                       ),
                       itemCount: 5,
                       itemBuilder: (context, index) {
-                        return ProductCard(onPressed: () {
-                          Navigator.pushNamed(context, RouteName.productDeatailsScreen);
-                          
-                        },);
+                        return ProductCard(
+                          images: '',
+                          catName: '',
+                          price: '',
+                          productName: '',
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, RouteName.productDeatailsScreen);
+                          },
+                        );
                       },
                     ),
                   );
           },
         ),
       ),
-  
-  
     );
   }
 }
-

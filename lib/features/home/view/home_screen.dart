@@ -158,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.only(right: 15),
                           child: CardColumnWidget(
                             onTap: () {
-                              Navigator.pushNamed(context, RouteName.productListScreen ,arguments: 'hi');
+                              Navigator.pushNamed(context, RouteName.productListScreen ,arguments: {'catName': controller.categoryList[index].category,'catId': controller.categoryList[index].sId});
                               
                             },
                             image:controller.categoryList[index].image ?? '',
@@ -239,7 +239,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) =>  Padding(
                           padding: const EdgeInsets.only(right: 15),
-                          child: ProductCard(onPressed: () {
+                          child: ProductCard(
+                            images: 'https://static.thenounproject.com/png/482114-200.png',
+                              catName: '',
+                              price: '',
+                              productName: '',
+                            onPressed: () {
                             Navigator.pushNamed(context, RouteName.productDeatailsScreen);
                             
                           },),

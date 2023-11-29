@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:ffi';
+
 
 import 'package:kalicart/common/helper/api_helper.dart';
 import 'package:kalicart/common/models/category_model.dart';
@@ -76,7 +76,7 @@ class ApiService {
   Future<List<ProductModel>> getAllProductByCategory(
       {required String catId}) async {
     final url = Uri.parse(
-        '${ApiConstant.baseUrl}${ApiConstant.productListByCat}/$catId');
+        '${ApiConstant.baseUrl+ApiConstant.productListByCat}/$catId');
     var response = await _apiHelper.getData(url: url);
     var data = jsonDecode(response.body);
 
@@ -87,4 +87,38 @@ class ApiService {
       throw 'Somthing went wrong';
     }
   }
+
+  //getsingle product details
+  Future<ProductModel> getSingleProductDetails(
+      {required String productId}) async {
+    final url = Uri.parse(
+        ApiConstant.baseUrl+ApiConstant.getSingleProductDetails+productId);
+    var response = await _apiHelper.getData(url: url);
+    var data = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+    
+      return ProductModel.fromJson(data["data"]);
+    } else {
+      throw 'Somthing went wrong';
+    }
+  }
+
+  Future<void> addTocart(
+      {required String productId,required String loginId}) async {
+    final url = Uri.parse(
+        ApiConstant.baseUrl+ApiConstant.getSingleProductDetails+productId);
+    var response = await _apiHelper.getData(url: url);
+    var data = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+    
+     
+    } else {
+      throw 'Somthing went wrong';
+    }
+  }
+
+
+
 }

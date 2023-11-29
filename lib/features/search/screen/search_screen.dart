@@ -65,7 +65,14 @@ class SearchScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Stack(
                         children: [
-                            ProductCard(onPressed: () {
+                            ProductCard(
+                              images: '',
+                              catName: '',
+                              price: '',
+                              productName: '',
+                              
+                              
+                              onPressed: () {
 
                               Navigator.pushNamed(context, RouteName.productDeatailsScreen);
                             

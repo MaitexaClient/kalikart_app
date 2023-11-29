@@ -56,7 +56,8 @@ class AppRoute {
       case RouteName.favouriteScreen:
         return MaterialPageRoute(builder: (context) => const FavouriteScreen(),);
       case RouteName.productDeatailsScreen:
-        return MaterialPageRoute(builder: (context) => const ProductDetailsScreen(),);
+         final productId  = args as String;
+        return MaterialPageRoute(builder: (context) =>  ProductDetailsScreen(productId:  productId,),);
       case RouteName.cartListScreen:
         return MaterialPageRoute(builder: (context) => const CartListScreen(),);
       case RouteName.checkOutScreen:
@@ -66,7 +67,9 @@ class AppRoute {
       case RouteName.orderListScreen:
         return MaterialPageRoute(builder: (context) => const OrderListScreen(),);
       case RouteName.productListScreen:
-        return MaterialPageRoute(builder: (context) =>  ProductListScreen(categoryName: args as String,),);
+       final  params = args as Map<String,dynamic>;
+      
+        return MaterialPageRoute(builder: (context) =>  ProductListScreen(categoryName: params['catName'],catId: params['catId'],),);
 
     
 

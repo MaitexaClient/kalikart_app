@@ -33,8 +33,7 @@ class ProductModel {
     price = json['price'];
     availableQuantity = json['available_quantity'];
     offer = json['offer'];
-    print(json['image']);
-    image = json['image'] ?? [];
+    image = json['image'];
     description = json['description'];
     iV = json['__v'];
   }

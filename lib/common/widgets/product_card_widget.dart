@@ -6,9 +6,15 @@ import 'package:kalicart/common/widgets/regular_text.dart';
 import 'package:kalicart/common/widgets/text_semi_bold.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key,required this.onPressed});
+  const ProductCard({super.key,required this.onPressed, required this.images, required this.productName, required this.price, required this.catName});
 
   final VoidCallback onPressed;
+  final String  images;
+  final String productName;
+  final String price;
+  final String catName;
+
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -23,11 +29,10 @@ class ProductCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                   child: CachedNetworkImage(
                     width: 177.w,
-                    imageUrl:
-                        'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D',
+                    imageUrl: images,
                     fit: BoxFit.fill,
-                    placeholder: (context, url) => Center(
-                      child: const CircularProgressIndicator(
+                    placeholder: (context, url) => const Center(
+                      child:  CircularProgressIndicator(
                         color: AppColor.kGreenColor,
                       ),
                     ),
@@ -46,18 +51,18 @@ class ProductCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30)),
                 child: SemiBoldTextStyle(
                   size: 12.sp,
-                  text: 'Categoryname',
+                  text: catName,
                   color: AppColor.kGreenColor.withOpacity(.6),
                 ),
               ),
               const SizedBox(
                 height: 10,
               ),
-              SemiBoldTextStyle(size: 16.sp, text: 'Head phone'),
+              SemiBoldTextStyle(size: 16.sp, text: productName),
               const SizedBox(
                 height: 10,
               ),
-              RegularTextStyle(size: 14.sp, text: '₹100'),
+              RegularTextStyle(size: 14.sp, text: '₹$price'),
               const SizedBox(
                 height: 20,
               ),

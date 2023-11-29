@@ -2,44 +2,69 @@ import 'package:flutter/material.dart';
 import 'package:kalicart/common/models/product_model.dart';
 import 'package:kalicart/common/services/api_services.dart';
 
-class ProductDetailsController extends ChangeNotifier{
-
-  bool  loading = false;
+class ProductDetailsController extends ChangeNotifier {
+  bool loading = false;
   List<ProductModel> productList = [];
+  ProductModel? singleProductDeatails;
+
 
   final _apiService = ApiService();
 
-
-  void getAllProductByCat(BuildContext context) async{
-
-    try{
-
-      loading =true;
+  //get all product by caegory
+  void getAllProductByCat(BuildContext context, String catId) async {
+    try {
+      loading = true;
       notifyListeners();
-      productList = await  _apiService.getAllProductByCategory(catId: '6557454d5dac0598a6523d4e');
-      loading = false;
-      notifyListeners();
-
-
-
-    }catch(e){
+      productList = await _apiService.getAllProductByCategory(catId: catId);
 
       loading = false;
       notifyListeners();
-      ScaffoldMessenger.of(context).
+    } catch (e) {
+      productList.clear();
+      loading = false;
+      notifyListeners();
 
-
+      if (context.mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.toString())));
+      }
     }
+  }
 
+  //get product details
+  void getSingleProduct(BuildContext context, String productid) async {
+    try {
+      loading = true;
+      notifyListeners();
 
+      singleProductDeatails = await _apiService.getSingleProductDetails(productId: productid);
+     
+
+      
+      
+      loading = false;
+      notifyListeners();
+    } catch (e) {
+      singleProductDeatails = null;
+      loading = false;
+      notifyListeners();
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              e.toString(),
+            ),
+          ),
+        );
+      }
+    }
   }
 
 
-  
+  //add to cart
+  void addCart(){
 
 
-
-  
-
+  }
 
 }
