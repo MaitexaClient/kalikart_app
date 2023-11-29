@@ -6,7 +6,6 @@ import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/list_empty_widget.dart';
 import 'package:kalicart/common/widgets/primary_button.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
-import 'package:kalicart/common/widgets/row_product_card.dart';
 import 'package:kalicart/common/widgets/text_bold.dart';
 import 'package:kalicart/common/widgets/text_semi_bold.dart';
 import 'package:kalicart/features/cart/controller/cart_controller.dart';
@@ -18,6 +17,10 @@ class CartListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<CartController>(context, listen: false)
+          .getAllcart(context);
+    });
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -29,7 +32,9 @@ class CartListScreen extends StatelessWidget {
       body: Consumer<CartController>(
         builder: (context, controller, child) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: controller.cartList.isEmpty
+          child:controller.loading ? 
+           const Center(child: CircularProgressIndicator(color: AppColor.kGreenColor),)  : 
+           controller.allCartData == null 
               ? Center(
                 child: ListEmptyWidget(
                     title: 'Your Cart Is Empty!',
@@ -42,7 +47,7 @@ class CartListScreen extends StatelessWidget {
                     Expanded(
                       flex: 2,
                       child: ListView.builder(
-                        itemCount: 5,
+                        itemCount: controller.allCartData?.cartProducts?.length,
                         itemBuilder: (context, index) => Container(
                           margin: const EdgeInsets.only(top: 20),
                           child: Row(
@@ -77,7 +82,7 @@ class CartListScreen extends StatelessWidget {
                                             BorderRadius.circular(30)),
                                     child: SemiBoldTextStyle(
                                       size: 12.sp,
-                                      text: 'Categoryname',
+                                      text: controller.allCartData!.cartProducts![index].subCategory!,
                                       color:
                                           AppColor.kGreenColor.withOpacity(.6),
                                     ),
@@ -86,11 +91,11 @@ class CartListScreen extends StatelessWidget {
                                     height: 10,
                                   ),
                                   SemiBoldTextStyle(
-                                      size: 16.sp, text: 'Head phone'),
+                                      size: 16.sp, text: controller.allCartData!.cartProducts![index].productName!,),
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  RegularTextStyle(size: 14.sp, text: '₹100'),
+                                  RegularTextStyle(size: 14.sp, text: '₹${controller.allCartData!.cartProducts![index].price}'),
                                   const SizedBox(
                                     height: 10,
                                   ),
@@ -98,12 +103,22 @@ class CartListScreen extends StatelessWidget {
                               ),
                               const Spacer(),
                               IconButton(
-                                  onPressed: () {},
+                                  onPressed: () async{
+
+                                   await controller.decreament(controller.allCartData!.cartProducts![index].sId.toString(), context);
+                                  
+                                  },
                                   icon:
                                       const Icon(Icons.remove_circle_outline)),
-                              RegularTextStyle(size: 14.sp, text: '1'),
+                              RegularTextStyle(size: 14.sp, text: controller.allCartData!.cartProducts![index].quantity!.toString()),
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () async{
+
+                                  await controller.increament(controller.allCartData!.cartProducts![index].sId.toString(), context);
+                                   
+
+
+                                },
                                 icon: const Icon(Icons.add_circle_outline),
                               ),
                             ],
@@ -116,18 +131,18 @@ class CartListScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           SubRowTextWidget(
-                            prfixText: 'Subtotal',
-                            suffixText: '100',
+                            prfixText: 'total',
+                            suffixText: controller.allCartData!.total.toString(),
                           ),
-                          Divider(
+                          const Divider(
                             thickness: 1,
                             color: AppColor.kGray,
                           ),
-                          SubRowTextWidget(
-                            prfixText: 'Tax',
-                            suffixText: '+100',
+                          const SubRowTextWidget(
+                            prfixText: 'offer',
+                            suffixText: '0',
                           ),
-                          Divider(
+                          const Divider(
                             thickness: 1,
                             color: AppColor.kGray,
                           ),
@@ -135,7 +150,7 @@ class CartListScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               SemiBoldTextStyle(size: 18.sp, text: 'Total'),
-                              SemiBoldTextStyle(size: 18.sp, text: '₹200'),
+                              SemiBoldTextStyle(size: 18.sp, text: '₹${controller.allCartData!.total}'),
                             ],
                           ),
                           PrimaryButton(

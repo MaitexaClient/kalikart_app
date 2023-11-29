@@ -73,7 +73,7 @@ class ProductDetailsController extends ChangeNotifier {
       final loginId = Db.getLoginId();
       await _apiService.addTocart(productId: productId, loginId: loginId, price: price);
       if(context.mounted){
-        Navigator.pushNamed(context, RouteName.cartListScreen);
+       await Navigator.pushNamed(context, RouteName.cartListScreen);
       }
       loading = false;
       notifyListeners();
