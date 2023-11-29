@@ -7,6 +7,7 @@ class ApiConstant{
   static const productListByCat = '/filter-product_cat';
   static const getSingleProductDetails = '/view-product/';
   static const addCart = '/add-cart/';
+  static const getAllCart = 'view-cart/';
   
 
 }

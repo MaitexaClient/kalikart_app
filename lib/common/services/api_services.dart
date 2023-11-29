@@ -81,7 +81,7 @@ class ApiService {
     var data = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
-      print(data);
+      
       return data["data"].map<ProductModel>((e) => ProductModel.fromJson(e)).toList();
     } else {
       throw 'Somthing went wrong';
@@ -104,20 +104,22 @@ class ApiService {
     }
   }
 
+  //add to cart
   Future<void> addTocart(
-      {required String productId,required String loginId}) async {
+      {required String productId,required String loginId,required String price}) async {
     final url = Uri.parse(
-        ApiConstant.baseUrl+ApiConstant.getSingleProductDetails+productId);
-    var response = await _apiHelper.getData(url: url);
-    var data = jsonDecode(response.body);
+        '${ApiConstant.baseUrl}${ApiConstant.addCart}$loginId/$productId');
 
-    if (response.statusCode == 200) {
-    
-     
-    } else {
+    final body = {
+      'price':price
+    };
+    var response = await _apiHelper.postData(url: url,data: body);
+    if (response.statusCode != 200) {
       throw 'Somthing went wrong';
     }
   }
+  //get all cart
+  
 
 
 

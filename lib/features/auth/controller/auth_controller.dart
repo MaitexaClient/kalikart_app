@@ -92,8 +92,7 @@ class AuthController extends ChangeNotifier {
     validateEmail(email!);
     validatePassword(password!);
 
-    print(email!);
-    print(password!);
+    
 
     if (emailErrorText.isEmpty && passwordError.isEmpty) {
       try {
