@@ -70,6 +70,22 @@ class ApiService {
     }
   }
 
+  //get subcategory by  category
+  Future<List<dynamic>> getSubCategory({required String catId}) async {
+    final url =
+        Uri.parse('${ApiConstant.baseUrl + ApiConstant.subCategory}$catId');
+    var response = await _apiHelper.getData(url: url);
+    var data = jsonDecode(response.body);
+
+    List<dynamic>? subCatList = data["data"];
+
+    if (response.statusCode == 200) {
+      return subCatList ?? [];
+    } else {
+      throw 'Somthing went wrong';
+    }
+  }
+
   //get all product by category
   Future<List<ProductModel>> getAllProductByCategory(
       {required String catId}) async {
@@ -134,7 +150,8 @@ class ApiService {
 
   //increament
   Future<void> cartIncreament(String cartProductId) async {
-    final url = Uri.parse(ApiConstant.baseUrl  + ApiConstant.cartIncreament + cartProductId);
+    final url = Uri.parse(
+        ApiConstant.baseUrl + ApiConstant.cartIncreament + cartProductId);
 
     var response = await _apiHelper.putData(url: url);
     if (response.statusCode != 200) {
@@ -144,7 +161,8 @@ class ApiService {
 
   //decreament
   Future<void> cartDecreament(String cartProductId) async {
-    final url = Uri.parse(ApiConstant.baseUrl + ApiConstant.cartDecrement + cartProductId);
+    final url = Uri.parse(
+        ApiConstant.baseUrl + ApiConstant.cartDecrement + cartProductId);
 
     var response = await _apiHelper.putData(url: url);
     if (response.statusCode != 200) {

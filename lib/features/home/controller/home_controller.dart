@@ -2,61 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:kalicart/common/models/category_model.dart';
 import 'package:kalicart/common/services/api_services.dart';
 
-class HomeController extends ChangeNotifier{
-
+class HomeController extends ChangeNotifier {
   bool loading = false;
 
-  
+  List<Category> categoryList = [];
 
-  
-
-  List<Category>  categoryList = [];
-
-  ApiService _apiService = ApiService();
-
-
-
-  
+  final  _apiService = ApiService();
 
   //home inital call
-  void initial(BuildContext context) async{
-
-   await getCategoryList(context);
-
-
-
+  void initial(BuildContext context) async {
+    await getCategoryList(context);
   }
 
-
   //category list
-  Future<void> getCategoryList(BuildContext context) async{
-
-    try{
-
+  Future<void> getCategoryList(BuildContext context) async {
+    try {
       loading = true;
       notifyListeners();
       categoryList = await _apiService.getCategoryList();
       loading = false;
       notifyListeners();
-      
-
-    }catch(e){
-
+    } catch (e) {
       loading = false;
       notifyListeners();
-
-       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-
-
+      if (context.mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.toString())));
+      }
     }
-
-
-
   }
-
-  
-
-
-
-  
 }
