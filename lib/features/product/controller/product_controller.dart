@@ -117,4 +117,25 @@ class ProductDetailsController extends ChangeNotifier {
       }
     }
   }
+
+  //add to faveriout
+  void addToFavourite({required String productId}) async{
+    try{
+
+      print(productId);
+
+       await _apiService.addFavorite(productId: productId);
+
+    }catch(e){
+
+      print(e);
+
+
+    }
+
+    
+
+
+
+  }
 }

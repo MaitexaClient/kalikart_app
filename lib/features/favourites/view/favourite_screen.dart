@@ -1,12 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kalicart/common/routes/route_name.dart';
-import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/list_empty_widget.dart';
 import 'package:kalicart/common/widgets/product_card_widget.dart';
-import 'package:kalicart/common/widgets/regular_text.dart';
-import 'package:kalicart/common/widgets/text_semi_bold.dart';
 import 'package:kalicart/features/favourites/controller/favourite_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -56,6 +52,7 @@ class FavouriteScreen extends StatelessWidget {
                           catName: '',
                           price: '',
                           productName: '',
+                         
                           onPressed: () {
                             Navigator.pushNamed(
                                 context, RouteName.productDeatailsScreen);

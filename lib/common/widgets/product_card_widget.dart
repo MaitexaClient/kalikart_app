@@ -4,16 +4,26 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
 import 'package:kalicart/common/widgets/text_semi_bold.dart';
+import 'package:kalicart/features/product/controller/product_controller.dart';
+import 'package:provider/provider.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key,required this.onPressed, required this.images, required this.productName, required this.price, required this.catName});
+  const ProductCard(
+      {super.key,
+      required this.onPressed,
+      required this.images,
+      required this.productName,
+      required this.price,
+      required this.catName,
+      this.productId});
 
   final VoidCallback onPressed;
-  final String  images;
+
+  final String images;
   final String productName;
   final String price;
   final String catName;
-
+  final String? productId;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +42,7 @@ class ProductCard extends StatelessWidget {
                     imageUrl: images,
                     fit: BoxFit.fill,
                     placeholder: (context, url) => const Center(
-                      child:  CircularProgressIndicator(
+                      child: CircularProgressIndicator(
                         color: AppColor.kGreenColor,
                       ),
                     ),
@@ -91,7 +101,11 @@ class ProductCard extends StatelessWidget {
                     size: 16,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  if (productId != null) {
+                    context.read<ProductDetailsController>().addToFavourite(productId: productId!);
+                  }
+                },
               ))
         ],
       ),

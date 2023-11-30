@@ -12,6 +12,16 @@ class ApiHelper {
         body: data);
   }
 
+  Future<http.Response> postDataWithOutBody({required Uri url}) {
+    print(url);
+    return http.post(
+      url,
+      headers: <String, String>{
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    );
+  }
+
   Future<http.Response> getData({required Uri url}) {
     print(url);
     return http.get(
@@ -22,7 +32,7 @@ class ApiHelper {
     );
   }
 
-   Future<http.Response> putData({required Uri url}) {
+  Future<http.Response> putData({required Uri url}) {
     print(url);
     return http.put(
       url,

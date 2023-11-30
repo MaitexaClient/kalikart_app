@@ -71,7 +71,10 @@ class SearchScreen extends StatelessWidget {
                               catName: searchController.filteredProducts[index].subCategory??'product name',
                               price: searchController.filteredProducts[index].price.toString(),
                               productName:  searchController.filteredProducts[index].productName??'product name',
+                              
                               onPressed: () {
+
+                              print('asdfghj');
 
                              // Navigator.pushNamed(context, RouteName.productDeatailsScreen);
                             

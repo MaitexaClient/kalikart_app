@@ -3,6 +3,7 @@ import 'package:kalicart/common/helper/api_helper.dart';
 import 'package:kalicart/common/models/cart_model.dart';
 import 'package:kalicart/common/models/category_model.dart';
 import 'package:kalicart/common/models/product_model.dart';
+import 'package:kalicart/common/services/db_service.dart';
 import 'package:kalicart/common/utils/api_constants.dart';
 
 class ApiService {
@@ -186,23 +187,38 @@ class ApiService {
       throw 'Somthing went wrong';
     }
   }
+
   //search product by name
-  Future<List<ProductModel>> getSearchItems(String searchQuery) async{
-
-    final url = Uri.parse(ApiConstant.baseUrl + ApiConstant.searchProductName + searchQuery);
+  Future<List<ProductModel>> getSearchItems(String searchQuery) async {
+    final url = Uri.parse(
+        ApiConstant.baseUrl + ApiConstant.searchProductName + searchQuery);
     var response = await _apiHelper.getData(url: url);
-    if(response.statusCode == 200){
-
+    if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
-      return data["data"].map<ProductModel>((e)=> ProductModel.fromJson(e)).toList();
-
-    }else{
+      return data["data"]
+          .map<ProductModel>((e) => ProductModel.fromJson(e))
+          .toList();
+    } else {
       throw 'Somthing went wrong';
     }
-    
+  }
+  //add to favorite
+  Future<void> addFavorite({required String productId}) async{
+    final loginId = Db.getLoginId();
+    final url =  Uri.parse('${ApiConstant.baseUrl+ApiConstant.addtoFavourite+loginId}/$productId');
 
-
-
+    var response = await _apiHelper.postDataWithOutBody(url: url);
+    print(response.statusCode);
+    if(response.statusCode != 200){
+        throw 'Somthing went wrong';
+    }
 
   }
+
+  //get all favorite list
+  // Future<List<ProductModel>> getAllFavoriteProductList(){
+
+
+  // }
+
 }

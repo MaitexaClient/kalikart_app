@@ -76,8 +76,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                               productName: controller.productList[index].productName??'product name',
                               price: controller.productList[index].price.toString(),
                               catName: controller.productList[index].subCategory??'sub',
-                              
-
+                             
                               onPressed: () {
                                 Navigator.pushNamed(
                                     context, RouteName.productDeatailsScreen,arguments: controller.productList[index].sId??'');

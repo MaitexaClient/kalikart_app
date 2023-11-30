@@ -244,6 +244,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   catName: '',
                                   price: '',
                                   productName: '',
+                                  productId: '',
+                                  
                                 onPressed: () {
                                 Navigator.pushNamed(context, RouteName.productDeatailsScreen);
                                 

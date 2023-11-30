@@ -7,5 +7,16 @@ class FavouriteController extends ChangeNotifier{
    List get favaerateList => _favaerateList;
 
 
+    void getAllFeverateList(){
+      
+
+
+   }
+
+
+
+
+
+
 
 }
