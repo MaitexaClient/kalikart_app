@@ -88,12 +88,8 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                             // Use the index to create your item
                             return CardColumnWidget(
                               onTap: () {
-                                Navigator.pushNamed(
-                                    context, RouteName.productListScreen, arguments: {
-                                      'catName': controller.subCatList[index],
-                                      'catId':controller.subCatList[index]
-
-                                    });
+                                Navigator.pushNamed(context,RouteName.productListSubCatScreen,arguments:controller.subCatList[index].toString() );
+                                    
                               },
                               image:
                                   'https://img.freepik.com/free-photo/portrait-young-handsome-bearded-man_1303-19639.jpg',

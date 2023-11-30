@@ -15,6 +15,7 @@ import 'package:kalicart/features/home/view/trending_screen.dart';
 import 'package:kalicart/features/order/view/order_list_screen.dart';
 import 'package:kalicart/features/product/view/product_details_screen.dart';
 import 'package:kalicart/features/product/view/product_list.dart';
+import 'package:kalicart/features/product/view/product_list_subcat_screen.dart';
 import 'package:kalicart/features/search/screen/search_screen.dart';
 
 class AppRoute {
@@ -66,6 +67,9 @@ class AppRoute {
         return MaterialPageRoute(builder: (context) => const ConfirmScreen(),);
       case RouteName.orderListScreen:
         return MaterialPageRoute(builder: (context) => const OrderListScreen(),);
+      case RouteName.productListSubCatScreen:
+        String subCatName = args as String;
+        return MaterialPageRoute(builder: (context) =>  ProductListSubCatScreen(subCatName: subCatName,),);
       case RouteName.productListScreen:
        final  params = args as Map<String,dynamic>;
       

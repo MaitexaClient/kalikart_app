@@ -12,6 +12,8 @@ class ApiConstant{
   static const cartIncreament = '/increment-cart/';
   static const cartDecrement = '/decrement-cart/';
   static const getProfile  = '/user-profile/';
+  static const getAllProductBySubCat = '/filter-product_sub_cat/';
+  static const searchProductName = '/search-product/';
   
 
 }

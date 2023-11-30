@@ -31,13 +31,12 @@ class SearchScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20.r)),
             child: TextField(
               onChanged: (value) {
-                Provider.of<SearchScreenController>(context, listen: false)
-                    .searchQuery = value;
+                Provider.of<SearchScreenController>(context, listen: false).getfilterProducts(context, searchQuery: value);
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Search',
                 border: InputBorder.none,
-                icon: const FaIcon(
+                icon:  FaIcon(
                   FontAwesomeIcons.magnifyingGlass,
                   color: AppColor.kblack40,
                   size: 20,
@@ -51,7 +50,9 @@ class SearchScreen extends StatelessWidget {
               alignment: Alignment.center,
               child: Consumer<SearchScreenController>(
                 builder: (context, searchController, _) {
-                  return GridView.builder(
+                  return searchController.loading ? const Center(child: CircularProgressIndicator(color: AppColor.kGreenColor,),)  :
+                  
+                   GridView.builder(
                     primary: true,
                     padding: const EdgeInsets.all(20),
                     gridDelegate:
@@ -66,15 +67,13 @@ class SearchScreen extends StatelessWidget {
                       return Stack(
                         children: [
                             ProductCard(
-                              images: '',
-                              catName: '',
-                              price: '',
-                              productName: '',
-                              
-                              
+                              images: 'https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg',
+                              catName: searchController.filteredProducts[index].subCategory??'product name',
+                              price: searchController.filteredProducts[index].price.toString(),
+                              productName:  searchController.filteredProducts[index].productName??'product name',
                               onPressed: () {
 
-                              Navigator.pushNamed(context, RouteName.productDeatailsScreen);
+                             // Navigator.pushNamed(context, RouteName.productDeatailsScreen);
                             
                           },),
                           Positioned(

@@ -103,6 +103,23 @@ class ApiService {
     }
   }
 
+  //get all product by  subcategory
+  Future<List<ProductModel>> getAllProductBySubCategory(
+      {required String subCat}) async {
+    final url = Uri.parse(
+        '${ApiConstant.baseUrl + ApiConstant.getAllProductBySubCat}$subCat');
+    var response = await _apiHelper.getData(url: url);
+    var data = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return data["data"]
+          .map<ProductModel>((e) => ProductModel.fromJson(e))
+          .toList();
+    } else {
+      throw 'Somthing went wrong';
+    }
+  }
+
   //getsingle product details
   Future<ProductModel> getSingleProductDetails(
       {required String productId}) async {
@@ -168,5 +185,24 @@ class ApiService {
     if (response.statusCode != 200) {
       throw 'Somthing went wrong';
     }
+  }
+  //search product by name
+  Future<List<ProductModel>> getSearchItems(String searchQuery) async{
+
+    final url = Uri.parse(ApiConstant.baseUrl + ApiConstant.searchProductName + searchQuery);
+    var response = await _apiHelper.getData(url: url);
+    if(response.statusCode == 200){
+
+      var data = jsonDecode(response.body);
+      return data["data"].map<ProductModel>((e)=> ProductModel.fromJson(e)).toList();
+
+    }else{
+      throw 'Somthing went wrong';
+    }
+    
+
+
+
+
   }
 }

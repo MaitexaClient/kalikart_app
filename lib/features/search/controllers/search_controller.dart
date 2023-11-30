@@ -1,29 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:kalicart/common/models/product_model.dart';
+import 'package:kalicart/common/services/api_services.dart';
 
 class SearchScreenController extends ChangeNotifier {
-  List<String> _allProducts = [
-    'Product 1',
-    'Product 2',
-    'Product 3',
-    // Add more products
-  ];
+  final _apiService = ApiService();
+  bool loading = false;
 
-  String _searchQuery = '';
-  List<String> _filteredProducts = [];
+  List<ProductModel> _filteredProducts = [];
 
-  String get searchQuery => _searchQuery;
+  List<ProductModel> get filteredProducts => _filteredProducts;
 
-  List<String> get filteredProducts => _filteredProducts;
+  void getfilterProducts(BuildContext context, {required searchQuery}) async {
+    try {
+      loading = true;
+      notifyListeners();
 
-  set searchQuery(String value) {
-    _searchQuery = value;
-    _filterProducts();
-    notifyListeners();
-  }
+      _filteredProducts = await _apiService.getSearchItems(searchQuery);
 
-  void _filterProducts() {
-    _filteredProducts = _allProducts
-        .where((product) => product.toLowerCase().contains(_searchQuery.toLowerCase()))
-        .toList();
+      loading = false;
+      notifyListeners();
+    } catch (e) {
+      _filteredProducts = [];
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+         const  SnackBar(
+            content: Text('No product found'),
+          ),
+        );
+      }
+
+      loading = false;
+      notifyListeners();
+    }
   }
 }

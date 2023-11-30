@@ -7,6 +7,7 @@ import 'package:kalicart/common/services/db_service.dart';
 class ProductDetailsController extends ChangeNotifier {
   bool loading = false;
   List<ProductModel> productList = [];
+  List<ProductModel> subCategoryProductList= [];
   ProductModel? singleProductDeatails;
 
   final _apiService = ApiService();
@@ -58,6 +59,31 @@ class ProductDetailsController extends ChangeNotifier {
       }
     }
   }
+
+  //get all product by sub category
+
+  void getAllProductBySubCat(BuildContext context, String subCat) async {
+    try {
+      loading = true;
+      notifyListeners();
+      
+      subCategoryProductList = await _apiService.getAllProductBySubCategory(subCat: subCat);
+
+      loading = false;
+      notifyListeners();
+    } catch (e) {
+      productList.clear();
+      loading = false;
+      notifyListeners();
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.toString())));
+      }
+    }
+  }
+  
+
 
   //add to cart
   void addCart(
