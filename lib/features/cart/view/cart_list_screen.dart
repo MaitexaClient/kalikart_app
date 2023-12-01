@@ -57,8 +57,7 @@ class CartListScreen extends StatelessWidget {
                                 child: CachedNetworkImage(
                                   width: 104.w,
                                   height: 130.h,
-                                  imageUrl:
-                                      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D',
+                                  imageUrl: controller.allCartData?.cartProducts![index].image ?? 'https://png.pngtree.com/element_our/20200610/ourmid/pngtree-character-default-avatar-image_2237203.jpg',
                                   fit: BoxFit.fill,
                                   placeholder: (context, url) =>
                                       const CircularProgressIndicator(

@@ -24,6 +24,7 @@ class CartProducts {
   String? loginId;
   String? productName;
   String? subCategory;
+  String ? image;
   int? offer;
   int? price;
   int? quantity;
@@ -37,7 +38,9 @@ class CartProducts {
       this.offer,
       this.price,
       this.quantity,
-      this.subtotal});
+      this.subtotal,
+      this.image
+      });
 
   CartProducts.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -48,6 +51,7 @@ class CartProducts {
     price = json['price'];
     quantity = json['quantity'];
     subtotal = json['subtotal'];
+    image = json['image'][0];
   }
 
   
