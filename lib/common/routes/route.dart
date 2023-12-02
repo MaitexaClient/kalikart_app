@@ -16,7 +16,7 @@ import 'package:kalicart/features/order/view/order_list_screen.dart';
 import 'package:kalicart/features/product/view/product_details_screen.dart';
 import 'package:kalicart/features/product/view/product_list.dart';
 import 'package:kalicart/features/product/view/product_list_subcat_screen.dart';
-import 'package:kalicart/features/search/screen/search_screen.dart';
+import 'package:kalicart/features/search/view/search_screen.dart';
 
 class AppRoute {
   static Route onGenaratedRoute(RouteSettings settings) {

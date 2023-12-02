@@ -15,7 +15,11 @@ class ProductCard extends StatelessWidget {
       required this.productName,
       required this.price,
       required this.catName,
-      this.productId});
+      this.productId,
+      this.showFaviorateButton = true,
+      this.isFavarated = false
+
+      });
 
   final VoidCallback onPressed;
 
@@ -24,9 +28,13 @@ class ProductCard extends StatelessWidget {
   final String price;
   final String catName;
   final String? productId;
+  final bool  showFaviorateButton;
+  final bool  isFavarated;
+
 
   @override
   Widget build(BuildContext context) {
+    
     return GestureDetector(
       onTap: onPressed,
       child: Stack(
@@ -89,24 +97,30 @@ class ProductCard extends StatelessWidget {
           Positioned(
               right: 0,
               top: 0,
-              child: IconButton(
+              child: showFaviorateButton  ?  IconButton(
                 icon: Container(
                   height: 25,
                   width: 25,
                   decoration: const BoxDecoration(
                       shape: BoxShape.circle, color: AppColor.kblack),
-                  child: const Icon(
-                    Icons.favorite_outline,
-                    color: AppColor.kWhiteColor,
+                  child:  Icon(
+                    isFavarated ?Icons.favorite : Icons.favorite_outline   ,
+                    color:isFavarated ?   AppColor.kSecondaryRed : AppColor.kWhiteColor,
                     size: 16,
                   ),
                 ),
                 onPressed: () {
                   if (productId != null) {
-                    context.read<ProductDetailsController>().addToFavourite(productId: productId!,context: context);
+                    isFavarated ?  
+                      context.read<ProductDetailsController>().deleteFavorite(productId: productId!, context: context)
+                     :
+                      context.read<ProductDetailsController>().addToFavourite(productId: productId!,context: context);
+                    
+                  
                   }
                 },
-              ))
+              ) : const SizedBox.shrink()
+              )
         ],
       ),
     );

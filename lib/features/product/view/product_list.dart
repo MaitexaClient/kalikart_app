@@ -23,7 +23,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<ProductDetailsController>(context, listen: false)
-          .getAllProductByCat(context,widget.catId!);
+          .getAllProductByCat(context, widget.catId!);
+      Provider.of<ProductDetailsController>(context, listen: false)
+          .getAllFavourite(context: context);
     });
     super.initState();
   }
@@ -70,16 +72,29 @@ class _ProductListScreenState extends State<ProductListScreen> {
                           ),
                           itemCount: controller.productList.length,
                           itemBuilder: (context, index) {
-                            
                             return ProductCard(
-                              images: controller.productList[index].image != null ?  controller.productList[index].image![0]  :'https://static.thenounproject.com/png/482114-200.png',
-                              productName: controller.productList[index].productName??'product name',
-                              price: controller.productList[index].price.toString(),
-                              catName: controller.productList[index].subCategory??'sub',
-                             
+                              images: controller.productList[index].image !=
+                                      null
+                                  ? controller.productList[index].image![0]
+                                  : 'https://static.thenounproject.com/png/482114-200.png',
+                              productName:
+                                  controller.productList[index].productName ??
+                                      'product name',
+                              price: controller.productList[index].price
+                                  .toString(),
+                              catName:
+                                  controller.productList[index].subCategory ??
+                                      'sub',
+                              isFavarated: controller.checkFaviorite(
+                                  productId: controller.productList[index].sId
+                                      .toString()),
+                              productId: controller.productList[index].sId,
                               onPressed: () {
                                 Navigator.pushNamed(
-                                    context, RouteName.productDeatailsScreen,arguments: controller.productList[index].sId??'');
+                                    context, RouteName.productDeatailsScreen,
+                                    arguments:
+                                        controller.productList[index].sId ??
+                                            '');
                               },
                             );
                           },

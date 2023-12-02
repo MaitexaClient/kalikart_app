@@ -11,14 +11,18 @@ class ApiConstant{
   static const getAllCart = '/view-cart/';
   static const cartIncreament = '/increment-cart/';
   static const cartDecrement = '/decrement-cart/';
+  static const deleteCart = '/delete-cart/';
   static const getProfile  = '/user-profile/';
   static const getAllProductBySubCat = '/filter-product_sub_cat/';
   static const searchProductName = '/search-product/';
   static const addtoFavourite = '/add-wishlist/';
   static const allFavourite = '/view-wishlist/';
+  static const deleteFavorite = '/delete-wishlist/';
 
   static const user = '/user-profile/';
   static const updateUser = '/user-profile-update/';
+
+  
    
 
 }

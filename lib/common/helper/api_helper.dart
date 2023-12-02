@@ -41,4 +41,14 @@ class ApiHelper {
       },
     );
   }
+
+  Future<http.Response> deleteData({required Uri url}) {
+    print(url);
+    return http.delete(
+      url,
+      headers: <String, String>{
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    );
+  }
 }

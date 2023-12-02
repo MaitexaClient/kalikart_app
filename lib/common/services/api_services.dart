@@ -56,15 +56,17 @@ class ApiService {
       throw 'Somthing went wrong';
     }
   }
+
   //get profile user
-  Future<User>  getProfile() async{
-    String  loginId =  Db.getLoginId();
-    final url = Uri.parse(ApiConstant.baseUrl+ApiConstant.getProfile+loginId);
+  Future<User> getProfile() async {
+    String loginId = Db.getLoginId();
+    final url =
+        Uri.parse(ApiConstant.baseUrl + ApiConstant.getProfile + loginId);
     var response = await _apiHelper.getData(url: url);
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
-      return  User.fromJson(data["data"]);
-    }else{
+      return User.fromJson(data["data"]);
+    } else {
       throw 'Somthing went wrong';
     }
   }
@@ -72,8 +74,6 @@ class ApiService {
   // //update profile
   // Future<User>  updateProfile() async{
   //   final url = Uri.parse(ApiConstant.baseUrl+ApiConstant.updateUser);
-
-
 
   // }
 
@@ -211,6 +211,16 @@ class ApiService {
     }
   }
 
+  // delete cart
+  Future<void> deleteCart({required String cartId}) async{
+
+    final url = Uri.parse(ApiConstant.baseUrl+ApiConstant.deleteCart+cartId);
+    var response = await _apiHelper.deleteData(url: url);
+    if(response.statusCode != 200){
+      throw 'Somthing went wrong';
+    }
+  }
+
   //search product by name
   Future<List<ProductModel>> getSearchItems(String searchQuery) async {
     final url = Uri.parse(
@@ -225,44 +235,48 @@ class ApiService {
       throw 'Somthing went wrong';
     }
   }
-  //add to favorite
-  Future<void> addFavorite({required String productId}) async{
-    final loginId = Db.getLoginId();
-    final url =  Uri.parse('${ApiConstant.baseUrl+ApiConstant.addtoFavourite+loginId}/$productId');
-
-    var response = await _apiHelper.postDataWithOutBody(url: url);
-    print(response.statusCode);
-    if(response.statusCode != 200){
-        throw 'Somthing went wrong';
-    }
-
-  }
 
   //get all favorite list
-  Future<List<FavouriteModel>> getAllFavoriteProductList() async{
+  Future<List<FavouriteModel>> getAllFavoriteProductList() async {
     final loginId = Db.getLoginId();
-    final url =  Uri.parse(ApiConstant.baseUrl+ApiConstant.allFavourite+loginId);
+    final url =
+        Uri.parse(ApiConstant.baseUrl + ApiConstant.allFavourite + loginId);
     var response = await _apiHelper.getData(url: url);
 
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
 
+      List<FavouriteModel> fvList = data["data"]
+          .map<FavouriteModel>((e) => FavouriteModel.fromJson(e))
+          .toList();
 
-
-    List<FavouriteModel> fvList = data["data"].map<FavouriteModel>((e)=> FavouriteModel.fromJson(e)).toList();
-    
-    print(fvList);
-
-    return fvList;
-
-    }else{
-
+      return fvList;
+    } else {
       throw 'Somthing went wrong';
-
-
     }
-
-
   }
 
+  //add to favorite
+  Future<void> addFavorite({required String productId}) async {
+    final loginId = Db.getLoginId();
+    final url = Uri.parse(
+        '${ApiConstant.baseUrl + ApiConstant.addtoFavourite + loginId}/$productId');
+
+    var response = await _apiHelper.postDataWithOutBody(url: url);
+    if (response.statusCode != 200) {
+      throw 'Somthing went wrong';
+    }
+  }
+
+  //delete favorite
+  Future<void> deleteFavorite({required String favoriteId}) async {
+    final url = Uri.parse(
+        ApiConstant.baseUrl + ApiConstant.deleteFavorite + favoriteId);
+
+    var response = await _apiHelper.deleteData(url: url);
+    
+    if (response.statusCode != 200) {
+      throw 'Somthing went wrong';
+    }
+  }
 }

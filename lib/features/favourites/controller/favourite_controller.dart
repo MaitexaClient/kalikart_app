@@ -30,4 +30,39 @@ class FavouriteController extends ChangeNotifier {
       }
     }
   }
+
+   //delete facorites
+  void  deleteFavorite({required String favoriteId,required BuildContext context}) async{
+    try{
+      loading = true;
+      notifyListeners();
+
+      
+      await _apiService.deleteFavorite(favoriteId:favoriteId);
+      
+      _favaerateList = await _apiService.getAllFavoriteProductList();
+
+      loading = false;
+      notifyListeners();
+
+    }catch(e){
+
+       
+
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+          ),
+        );
+      }
+
+      loading = false;
+      notifyListeners();
+
+
+    }
+
+}
 }

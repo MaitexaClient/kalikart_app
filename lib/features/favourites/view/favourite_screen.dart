@@ -14,10 +14,10 @@ class FavouriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-       Provider.of<FavouriteController>(context,listen: false).getAllFeverateList(context);
-  
-});
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<FavouriteController>(context, listen: false)
+          .getAllFeverateList(context);
+    });
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -32,43 +32,83 @@ class FavouriteScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Consumer<FavouriteController>(
           builder: (context, controller, child) {
-            return controller.loading ? 
-            const Center(child: CircularProgressIndicator(color: AppColor.kGreenColor,),) 
-            : 
-            controller.favaerateList.isEmpty
-                ? ListEmptyWidget(
-                    buttonText: 'Go to shop',
-                    title: 'No  Favourites Yet!',
-                    onTap: () {},
-                  )
-                : Container(
-                    width: MediaQuery.of(context).size.width,
-                    alignment: Alignment.center,
-                    child: GridView.builder(
-                      primary: true,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 6.0,
-                        mainAxisSpacing: 8.0,
-                        childAspectRatio: .7,
-                      ),
-                      itemCount: controller.favaerateList.length,
-                      itemBuilder: (context, index) {
-                        return ProductCard(
-                          images: controller.favaerateList[index].image??'',
-                          catName: controller.favaerateList[index].subCategory??' sub',
-                          price: controller.favaerateList[index].price.toString(),
-                          productName: controller.favaerateList[index].productName??'product name',
-                         
-                          onPressed: () {
-                            Navigator.pushNamed(
-                                context, RouteName.productDeatailsScreen);
-                          },
-                        );
-                      },
+            return controller.loading
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: AppColor.kGreenColor,
                     ),
-                  );
+                  )
+                : controller.favaerateList.isEmpty
+                    ? ListEmptyWidget(
+                        buttonText: 'Go to shop',
+                        title: 'No  Favourites Yet!',
+                        onTap: () {},
+                      )
+                    : Container(
+                        width: MediaQuery.of(context).size.width,
+                        alignment: Alignment.center,
+                        child: GridView.builder(
+                          primary: true,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 6.0,
+                            mainAxisSpacing: 8.0,
+                            childAspectRatio: .7,
+                          ),
+                          itemCount: controller.favaerateList.length,
+                          itemBuilder: (context, index) {
+                            return Stack(
+                              children: [
+                                ProductCard(
+                                  images:
+                                      controller.favaerateList[index].image ??
+                                          '',
+                                  catName: controller
+                                          .favaerateList[index].subCategory ??
+                                      ' sub',
+                                  price: controller.favaerateList[index].price
+                                      .toString(),
+                                  productName: controller
+                                          .favaerateList[index].productName ??
+                                      'product name',
+                                  showFaviorateButton: false,
+                                  onPressed: () {
+                                    Navigator.pushNamed(context,
+                                        RouteName.productDeatailsScreen);
+                                  },
+                                ),
+                                Positioned(
+                                    top: 0,
+                                    right: 0,
+                                    child: IconButton(
+                                      icon: Container(
+                                        height: 25,
+                                        width: 25,
+                                        decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: AppColor.kblack),
+                                        child: const Icon(
+                                          Icons.close,
+                                          color: AppColor.kWhiteColor,
+                                          size: 16,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        controller.deleteFavorite(
+                                            favoriteId: controller
+                                                .favaerateList[index].sId
+                                                .toString(),
+                                            context: context);
+                                      },
+                                    ))
+                            
+                            
+                              ],
+                            );
+                          },
+                        ),
+                      );
           },
         ),
       ),

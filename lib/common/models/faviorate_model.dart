@@ -6,6 +6,7 @@ class FavouriteModel {
   int? offer;
   int? price;
   String ? image;
+  String ? productId;
 
   FavouriteModel(
       {this.sId,
@@ -14,7 +15,9 @@ class FavouriteModel {
       this.subCategory,
       this.offer,
       this.price,
-      this.image});
+      this.image,
+      this.productId
+      });
 
   FavouriteModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -24,6 +27,7 @@ class FavouriteModel {
     offer = json['offer'];
     price = json['price'];
     image = json['image'][0];
+    productId = json['product_id'];
   }
 
   Map<String, dynamic> toJson() {

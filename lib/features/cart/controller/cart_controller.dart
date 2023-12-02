@@ -82,4 +82,38 @@ class CartController extends ChangeNotifier {
       }
     }
   }
+
+  // delete cart items
+  Future<void> deleteCartItems(
+      {required String cartId, required BuildContext context}) async {
+    try {
+      loading = true;
+      notifyListeners();
+
+      allCartData = await _apiService.getAllCart(loginId: Db.getLoginId());
+
+      await _apiService.deleteCart(cartId: cartId);
+
+      loading = false;
+      notifyListeners();
+    } catch (e) {
+
+    
+      loading = false;
+
+      allCartData = null;
+      notifyListeners();
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              e.toString(),
+            ),
+          ),
+        );
+      }
+      notifyListeners();
+    }
+  }
 }
