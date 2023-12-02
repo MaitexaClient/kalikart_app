@@ -77,8 +77,6 @@ class _ProductListSubCatScreenState extends State<ProductListSubCatScreen> {
                               price: controller.subCategoryProductList[index].price.toString(),
                               catName: controller.subCategoryProductList[index].subCategory??'sub',
                               productId: controller.subCategoryProductList[index].sId,
-                            
-
                               onPressed: () {
                                 Navigator.pushNamed(
                                     context, RouteName.productDeatailsScreen,arguments: controller.subCategoryProductList[index].sId??'');

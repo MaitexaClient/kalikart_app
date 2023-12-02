@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:kalicart/common/models/product_model.dart';
 import 'package:kalicart/common/routes/route_name.dart';
@@ -119,23 +121,28 @@ class ProductDetailsController extends ChangeNotifier {
   }
 
   //add to faveriout
-  void addToFavourite({required String productId}) async{
+  void addToFavourite({required String productId,required BuildContext context}) async{
     try{
 
-      print(productId);
+      loading = true;
+      notifyListeners();
 
-       await _apiService.addFavorite(productId: productId);
+      await _apiService.addFavorite(productId: productId);
+
+      loading = false;
+      notifyListeners();
 
     }catch(e){
 
-      print(e);
+      loading = false;
+      notifyListeners();
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.toString())));
+      }
 
 
     }
-
-    
-
-
-
   }
 }

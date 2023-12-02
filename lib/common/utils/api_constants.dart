@@ -15,6 +15,10 @@ class ApiConstant{
   static const getAllProductBySubCat = '/filter-product_sub_cat/';
   static const searchProductName = '/search-product/';
   static const addtoFavourite = '/add-wishlist/';
+  static const allFavourite = '/view-wishlist/';
+
+  static const user = '/user-profile/';
+  static const updateUser = '/user-profile-update/';
    
 
 }

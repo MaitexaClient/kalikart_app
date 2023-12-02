@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kalicart/common/routes/route_name.dart';
+import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/list_empty_widget.dart';
 import 'package:kalicart/common/widgets/product_card_widget.dart';
 import 'package:kalicart/features/favourites/controller/favourite_controller.dart';
@@ -13,6 +14,10 @@ class FavouriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+       Provider.of<FavouriteController>(context,listen: false).getAllFeverateList(context);
+  
+});
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -27,7 +32,10 @@ class FavouriteScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Consumer<FavouriteController>(
           builder: (context, controller, child) {
-            return controller.favaerateList.isEmpty
+            return controller.loading ? 
+            const Center(child: CircularProgressIndicator(color: AppColor.kGreenColor,),) 
+            : 
+            controller.favaerateList.isEmpty
                 ? ListEmptyWidget(
                     buttonText: 'Go to shop',
                     title: 'No  Favourites Yet!',
@@ -45,13 +53,13 @@ class FavouriteScreen extends StatelessWidget {
                         mainAxisSpacing: 8.0,
                         childAspectRatio: .7,
                       ),
-                      itemCount: 5,
+                      itemCount: controller.favaerateList.length,
                       itemBuilder: (context, index) {
                         return ProductCard(
-                          images: '',
-                          catName: '',
-                          price: '',
-                          productName: '',
+                          images: controller.favaerateList[index].image??'',
+                          catName: controller.favaerateList[index].subCategory??' sub',
+                          price: controller.favaerateList[index].price.toString(),
+                          productName: controller.favaerateList[index].productName??'product name',
                          
                           onPressed: () {
                             Navigator.pushNamed(

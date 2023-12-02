@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kalicart/common/helper/api_helper.dart';
 import 'package:kalicart/common/models/cart_model.dart';
 import 'package:kalicart/common/models/category_model.dart';
+import 'package:kalicart/common/models/faviorate_model.dart';
 import 'package:kalicart/common/models/product_model.dart';
+import 'package:kalicart/common/models/user_model.dart';
 import 'package:kalicart/common/services/db_service.dart';
 import 'package:kalicart/common/utils/api_constants.dart';
 
@@ -53,6 +56,26 @@ class ApiService {
       throw 'Somthing went wrong';
     }
   }
+  //get profile user
+  Future<User>  getProfile() async{
+    String  loginId =  Db.getLoginId();
+    final url = Uri.parse(ApiConstant.baseUrl+ApiConstant.getProfile+loginId);
+    var response = await _apiHelper.getData(url: url);
+    if(response.statusCode == 200){
+      var data = jsonDecode(response.body);
+      return  User.fromJson(data["data"]);
+    }else{
+      throw 'Somthing went wrong';
+    }
+  }
+
+  // //update profile
+  // Future<User>  updateProfile() async{
+  //   final url = Uri.parse(ApiConstant.baseUrl+ApiConstant.updateUser);
+
+
+
+  // }
 
   //category list
   Future<List<Category>> getCategoryList() async {
@@ -216,9 +239,30 @@ class ApiService {
   }
 
   //get all favorite list
-  // Future<List<ProductModel>> getAllFavoriteProductList(){
+  Future<List<FavouriteModel>> getAllFavoriteProductList() async{
+    final loginId = Db.getLoginId();
+    final url =  Uri.parse(ApiConstant.baseUrl+ApiConstant.allFavourite+loginId);
+    var response = await _apiHelper.getData(url: url);
+
+    if(response.statusCode == 200){
+      var data = jsonDecode(response.body);
 
 
-  // }
+
+    List<FavouriteModel> fvList = data["data"].map<FavouriteModel>((e)=> FavouriteModel.fromJson(e)).toList();
+    
+    print(fvList);
+
+    return fvList;
+
+    }else{
+
+      throw 'Somthing went wrong';
+
+
+    }
+
+
+  }
 
 }

@@ -103,7 +103,7 @@ class ProductCard extends StatelessWidget {
                 ),
                 onPressed: () {
                   if (productId != null) {
-                    context.read<ProductDetailsController>().addToFavourite(productId: productId!);
+                    context.read<ProductDetailsController>().addToFavourite(productId: productId!,context: context);
                   }
                 },
               ))
