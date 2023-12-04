@@ -40,7 +40,7 @@ class _AddUserAddressState extends State<AddUserAddress> {
               child: Column(
                 children: [
                   SizedBox(height: 20),
-                  CustomEditTextField(labelText: 'Name'),
+                 // CustomEditTextField(labelText: 'Name'),
                   SizedBox(height: 20),
                   CustomMaxEditTextField(labelText: 'Address'),
                   SizedBox(height: 20),
@@ -98,7 +98,7 @@ class _AddUserAddressState extends State<AddUserAddress> {
                     }).toList(),
                   ),
                   SizedBox(height: 20),
-                  CustomEditTextField(labelText: 'Phone Number'),
+                 // CustomEditTextField(labelText: 'Phone Number'),
 
                 ],
               ),

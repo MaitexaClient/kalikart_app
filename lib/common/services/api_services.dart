@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:kalicart/common/helper/api_helper.dart';
 import 'package:kalicart/common/models/cart_model.dart';
 import 'package:kalicart/common/models/category_model.dart';
@@ -65,17 +66,53 @@ class ApiService {
     var response = await _apiHelper.getData(url: url);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
-      return User.fromJson(data["data"]);
+      return User.fromJson(data["data"][0]);
     } else {
       throw 'Somthing went wrong';
     }
   }
 
   // //update profile
-  // Future<User>  updateProfile() async{
-  //   final url = Uri.parse(ApiConstant.baseUrl+ApiConstant.updateUser);
+ Future<User> updateProfile({String ? name,String ? email, String ? phoneNumber,File ? image}) async {
+    final url = Uri.parse(ApiConstant.baseUrl + ApiConstant.updateUser);
 
-  // }
+    // Create a multipart request
+    final request = http.MultipartRequest('POST', url);
+
+    // Add fields to the request
+    if(email !=  null){
+       request.fields['email'];
+    }
+    if(name != null){
+      request.fields['name'] = name;
+
+    }
+    if(phoneNumber !=null){
+      request.fields['phone'] = phoneNumber;
+    }
+    
+    
+
+    // Add image to the request if available
+    if (image != null) {
+      request.files.add(await http.MultipartFile.fromPath('image', image.path));
+    }
+
+    final response = await request.send();
+
+    // Check if the request was successful (status code 200)
+    if (response.statusCode == 200) {
+      final responseData = await response.stream.bytesToString();
+      final parsedData = json.decode(responseData);
+      return User(
+        email: parsedData['email'],
+        name: parsedData['name'],
+        phone: parsedData['phoneNumber'],
+      );
+    } else {
+      throw Exception('Failed to update profile. Status code: ${response.statusCode}');
+    }
+  }
 
   //category list
   Future<List<Category>> getCategoryList() async {
