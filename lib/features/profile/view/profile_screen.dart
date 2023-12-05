@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kalicart/common/utils/app_color.dart';
@@ -42,10 +43,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
           builder: (context,controller,child) {
             return controller.loading ? const Center(child: CircularProgressIndicator(color: AppColor.kGreenColor),)   : Column(
               children: [
-                const CircleAvatar(
-                  backgroundColor: AppColor.kGreenColor,
-                  radius: 50,
-                ),
+                CircleAvatar(
+                            backgroundColor: AppColor.kGreenColor,
+                            radius: 50,
+                            backgroundImage: controller.profile?.image != null
+                                ? NetworkImage(controller.profile!.image!)
+                                : null,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: controller.profile?.image != null ?  CachedNetworkImage(
+                                imageUrl: controller.profile!.image!,
+                                progressIndicatorBuilder:
+                                    (context, url, progress) =>
+                                        const CircularProgressIndicator(
+                                  color: AppColor.kWhiteColor,
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    const Image(
+                                        image: AssetImage(
+                                            'assets/images/profile.jpg')),
+                              )  : const Image(
+                                        image: AssetImage(
+                                            'assets/images/profile.jpg')),
+                            ),
+                          ),
+                       
+                       
                 SemiBoldTextStyle(size: 18.sp, text: controller.profile?.name??'name'),
                 RegularTextStyle(size: 16.sp, text:  controller.profile?.email ?? 'email'),
 

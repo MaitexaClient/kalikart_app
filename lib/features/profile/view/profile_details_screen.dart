@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/primary_button.dart';
@@ -56,12 +57,31 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 child: Column(
                   children: [
                     const SizedBox(height: 20),
-                    const Center(
+                    Center(
                       child: CircleAvatar(
-                        backgroundColor: AppColor.kGreenColor,
-                        radius: 50,
-                      ),
+                            backgroundColor: AppColor.kGreenColor,
+                            radius: 50,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: controller.profile?.image != null ?  CachedNetworkImage(
+                                imageUrl: controller.profile!.image!,
+                                progressIndicatorBuilder:
+                                    (context, url, progress) =>
+                                        const CircularProgressIndicator(
+                                  color: AppColor.kWhiteColor,
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    const Image(
+                                        image: AssetImage(
+                                            'assets/images/profile.jpg')),
+                              )  : const Image(
+                                        image: AssetImage(
+                                            'assets/images/profile.jpg')),
+                            ),
+                          ),
+                       
                     ),
+                    
                     SemiBoldTextStyle(
                         size: 18.sp,
                         text: controller.profile?.name ?? 'name'),

@@ -74,10 +74,15 @@ class ApiService {
 
   // //update profile
  Future<User> updateProfile({String ? name,String ? email, String ? phoneNumber,File ? image}) async {
-    final url = Uri.parse(ApiConstant.baseUrl + ApiConstant.updateUser);
+    final url = Uri.parse(ApiConstant.baseUrl + ApiConstant.updateUser+Db.getLoginId());
+
+    print('urr:$url');
+
+    print(email);
+    print(name);
 
     // Create a multipart request
-    final request = http.MultipartRequest('POST', url);
+    final request = http.MultipartRequest('PUT', url);
 
     // Add fields to the request
     if(email !=  null){
@@ -110,7 +115,7 @@ class ApiService {
         phone: parsedData['phoneNumber'],
       );
     } else {
-      throw Exception('Failed to update profile. Status code: ${response.statusCode}');
+      throw 'Failed to update profile';
     }
   }
 

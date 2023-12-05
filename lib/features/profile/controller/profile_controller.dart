@@ -17,7 +17,14 @@ class ProfileController extends ChangeNotifier {
 
     final XFile? selctedImage = await picker.pickImage(source: imageSource);
 
-    image = File(selctedImage!.path);
+    if(selctedImage != null){
+      image = File(selctedImage.path);
+
+      notifyListeners();
+
+    }
+    notifyListeners();
+
   }
 
   //get all profile details
@@ -41,7 +48,7 @@ class ProfileController extends ChangeNotifier {
 
   //update profile
 
-  void updateProfile(
+  void updateProfile(BuildContext context,
       {String? name, String? email, String? phone, File? image}) async {
     try {
       loading = true;
@@ -51,6 +58,23 @@ class ProfileController extends ChangeNotifier {
           name: name, email: email, phoneNumber: phone, image: image);
       loading = false;
       notifyListeners();
-    } catch (e) {}
+
+      print('essss');
+
+      if (context.mounted) {
+        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+      }
+    } catch (e) {
+
+      loading = false;
+      notifyListeners();
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.toString())));
+      }
+
+
+    }
   }
 }
