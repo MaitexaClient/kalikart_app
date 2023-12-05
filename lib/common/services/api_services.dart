@@ -76,10 +76,7 @@ class ApiService {
  Future<User> updateProfile({String ? name,String ? email, String ? phoneNumber,File ? image}) async {
     final url = Uri.parse(ApiConstant.baseUrl + ApiConstant.updateUser+Db.getLoginId());
 
-    print('urr:$url');
-
-    print(email);
-    print(name);
+    
 
     // Create a multipart request
     final request = http.MultipartRequest('PUT', url);
