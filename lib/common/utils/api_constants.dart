@@ -1,6 +1,7 @@
 class ApiConstant{
 
   static const baseUrl = 'https://kalikart-server.onrender.com/api';
+
   static const signUp = '/register';
   static const login = '/login';
   static const categoryList = '/view-category';
@@ -21,6 +22,8 @@ class ApiConstant{
 
   static const user = '/user-profile/';
   static const updateUser = '/user-profile-update/';
+  static const bannerImages = '/view-banners/images';
+  static const bannerVideo = '/view-banners/videos';
 
   
    

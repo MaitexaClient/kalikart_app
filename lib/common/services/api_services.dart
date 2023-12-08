@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -5,8 +6,10 @@ import 'package:kalicart/common/helper/api_helper.dart';
 import 'package:kalicart/common/models/cart_model.dart';
 import 'package:kalicart/common/models/category_model.dart';
 import 'package:kalicart/common/models/faviorate_model.dart';
+import 'package:kalicart/common/models/image_banner_model.dart';
 import 'package:kalicart/common/models/product_model.dart';
 import 'package:kalicart/common/models/user_model.dart';
+import 'package:kalicart/common/models/video_banner.dart';
 import 'package:kalicart/common/services/db_service.dart';
 import 'package:kalicart/common/utils/api_constants.dart';
 
@@ -73,27 +76,24 @@ class ApiService {
   }
 
   // //update profile
- Future<User> updateProfile({String ? name,String ? email, String ? phoneNumber,File ? image}) async {
-    final url = Uri.parse(ApiConstant.baseUrl + ApiConstant.updateUser+Db.getLoginId());
-
-    
+  Future<User> updateProfile(
+      {String? name, String? email, String? phoneNumber, File? image}) async {
+    final url = Uri.parse(
+        ApiConstant.baseUrl + ApiConstant.updateUser + Db.getLoginId());
 
     // Create a multipart request
     final request = http.MultipartRequest('PUT', url);
 
     // Add fields to the request
-    if(email !=  null){
-       request.fields['email'];
+    if (email != null) {
+      request.fields['email'];
     }
-    if(name != null){
+    if (name != null) {
       request.fields['name'] = name;
-
     }
-    if(phoneNumber !=null){
+    if (phoneNumber != null) {
       request.fields['phone'] = phoneNumber;
     }
-    
-    
 
     // Add image to the request if available
     if (image != null) {
@@ -102,7 +102,6 @@ class ApiService {
 
     final response = await request.send();
 
-    // Check if the request was successful (status code 200)
     if (response.statusCode == 200) {
       final responseData = await response.stream.bytesToString();
       final parsedData = json.decode(responseData);
@@ -114,6 +113,25 @@ class ApiService {
     } else {
       throw 'Failed to update profile';
     }
+  }
+
+  //video banner
+
+  Future<List<VideoBanner>> getAllVideoBannerList() async{
+
+    final url = Uri.parse(ApiConstant.baseUrl + ApiConstant.bannerVideo);
+    var response = await _apiHelper.getData(url: url);
+    if(response.statusCode == 200){
+      var videoList = jsonDecode(response.body)["data"];
+      return videoList.map<VideoBanner>((e)=> VideoBanner.fromJson(e)).toList();
+      
+    }else{
+
+      throw 'Somthing went wrong';
+
+    }
+
+
   }
 
   //category list
@@ -213,6 +231,19 @@ class ApiService {
     }
   }
 
+  //get banner images
+  Future<List<ImageBanner>> getBannerImages() async {
+    final url = Uri.parse(ApiConstant.baseUrl+ApiConstant.bannerImages);
+    var response = await _apiHelper.getData(url: url);
+    if(response.statusCode == 200){
+      final data = jsonDecode(response.body);
+      return data["data"].map<ImageBanner>((e)=> ImageBanner.fromJson(e)).toList();
+    }else{
+      throw 'Somthing went wrong';
+    }
+
+  }
+
   //get all cart
   Future<CartModel> getAllCart({required String loginId}) async {
     final url =
@@ -251,11 +282,11 @@ class ApiService {
   }
 
   // delete cart
-  Future<void> deleteCart({required String cartId}) async{
-
-    final url = Uri.parse(ApiConstant.baseUrl+ApiConstant.deleteCart+cartId);
+  Future<void> deleteCart({required String cartId}) async {
+    final url =
+        Uri.parse(ApiConstant.baseUrl + ApiConstant.deleteCart + cartId);
     var response = await _apiHelper.deleteData(url: url);
-    if(response.statusCode != 200){
+    if (response.statusCode != 200) {
       throw 'Somthing went wrong';
     }
   }
@@ -313,7 +344,7 @@ class ApiService {
         ApiConstant.baseUrl + ApiConstant.deleteFavorite + favoriteId);
 
     var response = await _apiHelper.deleteData(url: url);
-    
+
     if (response.statusCode != 200) {
       throw 'Somthing went wrong';
     }

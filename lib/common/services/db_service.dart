@@ -24,13 +24,18 @@ static SharedPreferences? _instance;
   }
 
   static  auth(){
-    return _instance?.getBool('auth');
+    return _instance?.getBool('auth') ?? false;
   }
   static getLoginId(){
     return _instance?.getString('loginId');
   }
   static getToken(){
     return _instance?.getString('token');
+  }
+
+  static removeAuth(){
+
+    return instance.remove('auth');
   }
 
   

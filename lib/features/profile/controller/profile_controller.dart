@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kalicart/common/models/user_model.dart';
 import 'package:kalicart/common/services/api_services.dart';
+import 'package:kalicart/common/services/db_service.dart';
 
 class ProfileController extends ChangeNotifier {
   User? profile;
@@ -54,15 +55,18 @@ class ProfileController extends ChangeNotifier {
       loading = true;
       notifyListeners();
 
-      _apiService.updateProfile(
+      await _apiService.updateProfile(
           name: name, email: email, phoneNumber: phone, image: image);
-      loading = false;
-      notifyListeners();
 
-      print('essss');
+      //profile = await _apiService.getProfile();
+     
+
+    
 
       if (context.mounted) {
         Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+         loading = false;
+      notifyListeners();
       }
     } catch (e) {
 
@@ -76,5 +80,13 @@ class ProfileController extends ChangeNotifier {
 
 
     }
+  }
+
+  void logout(BuildContext context){
+
+    Db.removeAuth();
+    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+
+
   }
 }

@@ -24,7 +24,7 @@ class AppRoute {
 
     switch (settings.name) {
       case '/':
-          if(Db.isLoggedIn){
+          if(Db.auth()){
             return MaterialPageRoute(builder: (context) =>  const RootScreen());
           }else{
             return MaterialPageRoute(builder: (context) => const LoginScreen(),);
@@ -74,8 +74,7 @@ class AppRoute {
        final  params = args as Map<String,dynamic>;
       
         return MaterialPageRoute(builder: (context) =>  ProductListScreen(categoryName: params['catName'],catId: params['catId'],),);
-
-    
+     
 
       default:
         return MaterialPageRoute(

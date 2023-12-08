@@ -46,7 +46,7 @@ class _SaveProfileScreenState extends State<SaveProfileScreen> {
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Consumer<ProfileController>(builder: (context, controller, child) {
-        return Column(
+        return controller.loading ? Center(child: CircularProgressIndicator(color: AppColor.kGreenColor,),)  : Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
@@ -154,7 +154,9 @@ class _SaveProfileScreenState extends State<SaveProfileScreen> {
                           : emailController.text,
                       phone: phoneController.text == ''
                           ? null
-                          : phoneController.text);
+                          : phoneController.text,
+                      image: controller.image
+                          );
                 },
                 buttonText: 'Save Profile',
               ),

@@ -100,7 +100,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   tileText: 'Log out',
                   icon: Icons.logout_outlined,
                   isLogout: true,
-                  onTap: () {},
+                  onTap: () {
+                    controller.logout(context);
+                  },
                 ),
 
 

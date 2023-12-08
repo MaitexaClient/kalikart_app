@@ -12,14 +12,16 @@ dependencies:
   cached_network_image: ^3.3.0
   carousel_slider: ^4.2.1
   cupertino_icons: ^1.0.2
+  flick_video_player: ^0.5.0
   flutter:
     sdk: flutter
   flutter_screenutil: ^5.9.0
   font_awesome_flutter: ^10.6.0
   http: ^1.1.0
+  image_picker: ^1.0.4
   provider: ^6.1.1
   shared_preferences: ^2.2.2
-  image_picker: ^1.0.4
+  video_player: ^2.8.1
 
 dev_dependencies:
   flutter_lints: ^2.0.0
