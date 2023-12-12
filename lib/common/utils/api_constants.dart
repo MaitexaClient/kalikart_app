@@ -24,6 +24,9 @@ class ApiConstant{
   static const updateUser = '/user-profile-update/';
   static const bannerImages = '/view-banners/images';
   static const bannerVideo = '/view-banners/videos';
+  static const trendingProduct = '/view-products/trending';
+  static const addCreditPoint = '/banner-credit/';
+  
 
   
    

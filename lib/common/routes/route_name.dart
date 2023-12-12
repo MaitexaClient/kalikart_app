@@ -20,6 +20,8 @@ class RouteName {
   static const productListScreen = '/product-list-screen';
   static const productListSubCatScreen = '/product-list-by-sub-cat';
   static const addressScreen = '/address-screen';
+  static const videoScreener = '/video-screen';
+  static const walletScreen = '/wallet-screen';
   
   
 }

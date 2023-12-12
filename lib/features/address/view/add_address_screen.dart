@@ -5,7 +5,6 @@ import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/primary_button.dart';
 import 'package:kalicart/common/widgets/text_bold.dart';
 import 'package:kalicart/features/address/widget/max_textfield_widget.dart';
-import 'package:kalicart/features/profile/widget/custom_edittext_widget.dart';
 
 class AddUserAddress extends StatefulWidget {
   const AddUserAddress({super.key});
@@ -97,7 +96,7 @@ class _AddUserAddressState extends State<AddUserAddress> {
                       );
                     }).toList(),
                   ),
-                  SizedBox(height: 20),
+                const   SizedBox(height: 20),
                  // CustomEditTextField(labelText: 'Phone Number'),
 
                 ],

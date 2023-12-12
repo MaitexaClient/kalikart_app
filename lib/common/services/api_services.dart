@@ -16,6 +16,7 @@ import 'package:kalicart/common/utils/api_constants.dart';
 class ApiService {
   final _apiHelper = ApiHelper();
 
+
   //sign up
   Future<void> signUp(
       {String? name,
@@ -117,14 +118,52 @@ class ApiService {
 
   //video banner
 
-  Future<List<VideoBanner>> getAllVideoBannerList() async{
-
+  Future<List<VideoBanner>> getAllVideoBannerList() async {
     final url = Uri.parse(ApiConstant.baseUrl + ApiConstant.bannerVideo);
     var response = await _apiHelper.getData(url: url);
+    if (response.statusCode == 200) {
+      var videoList = jsonDecode(response.body)["data"];
+
+      return videoList
+          .map<VideoBanner>((e) => VideoBanner.fromJson(e))
+          .toList();
+    } else {
+      throw 'Somthing went wrong';
+    }
+  }
+
+  //add credit point
+  Future<String> addCreditPoint({required String bannerId}) async{
+
+    final loginId = Db.getLoginId();
+
+    final url = Uri.parse('${ApiConstant.baseUrl}${ApiConstant.addCreditPoint}$bannerId/$loginId');
+
+    var response = await _apiHelper.putData(url: url);
+
+    if (response.statusCode == 200) {
+
+      var data = jsonDecode(response.body);
+    
+      return data["creditPrice"].toString();
+
+      
+    }else{
+      throw 'Somthing went wrong';
+    }
+
+  }
+
+  //get all trending product
+  Future<List<ProductModel>> getAllTrendingProduct() async{
+
+    final url = Uri.parse(ApiConstant.baseUrl + ApiConstant.trendingProduct);
+    var response = await _apiHelper.getData(url: url);
+
     if(response.statusCode == 200){
       var videoList = jsonDecode(response.body)["data"];
-      return videoList.map<VideoBanner>((e)=> VideoBanner.fromJson(e)).toList();
-      
+
+      return videoList.map<ProductModel>((e)=> ProductModel.fromJson(e)).toList();
     }else{
 
       throw 'Somthing went wrong';
@@ -233,15 +272,16 @@ class ApiService {
 
   //get banner images
   Future<List<ImageBanner>> getBannerImages() async {
-    final url = Uri.parse(ApiConstant.baseUrl+ApiConstant.bannerImages);
+    final url = Uri.parse(ApiConstant.baseUrl + ApiConstant.bannerImages);
     var response = await _apiHelper.getData(url: url);
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      return data["data"].map<ImageBanner>((e)=> ImageBanner.fromJson(e)).toList();
-    }else{
+      return data["data"]
+          .map<ImageBanner>((e) => ImageBanner.fromJson(e))
+          .toList();
+    } else {
       throw 'Somthing went wrong';
     }
-
   }
 
   //get all cart

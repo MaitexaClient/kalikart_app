@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:kalicart/common/models/video_banner.dart';
 import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/card_column_widget.dart';
@@ -14,6 +13,7 @@ import 'package:kalicart/common/widgets/text_semi_bold.dart';
 import 'package:kalicart/common/widgets/row_text_widget.dart';
 import 'package:kalicart/features/home/controller/home_controller.dart';
 import 'package:kalicart/features/home/view/video_screen.dart';
+import 'package:kalicart/features/product/controller/product_controller.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -28,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<HomeController>(context, listen: false).initial(context);
+       Provider.of<ProductDetailsController>(context,listen: false).getAllFavourite(context: context);
     });
 
     super.initState();
@@ -207,56 +208,54 @@ class _HomeScreenState extends State<HomeScreen> {
                                       onTap: () {
                                         
 
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                 VideoScreen(url: i.video!,),
-                                          ),
-                                        );
+                                        Navigator.pushNamed(context, RouteName.videoScreener,arguments: {
+                                          'url' : i.video!,
+                                          'bannerId' : i.sId,
+                                        });
                                       },
                                       child: Container(
                                           width:
                                               MediaQuery.of(context).size.width,
-                                          decoration: const BoxDecoration(
+                                          decoration:  BoxDecoration(
                                               image: DecorationImage(
-                                                  image: AssetImage(
-                                                      'assets/images/black-friday-elements-assortment.jpg'),
+                                                  image: NetworkImage(
+                                                      i.thumbNail!),
                                                   fit: BoxFit.cover)),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsets.only(left: 30.w),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                MediumTextStyle(
-                                                    size: 15.sp,
-                                                    text:  i.title!),
-                                                const SizedBox(
-                                                  height: 3,
-                                                ),
-                                                BoldTextStyle(
-                                                    size: 22.sp, text: 'Combo'),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                SizedBox(
+                                          child: Stack(
+                                            // crossAxisAlignment:
+                                            //     CrossAxisAlignment.center,
+                                            // mainAxisAlignment:
+                                            //     MainAxisAlignment.center,
+                                            children: [
+
+                                              Center(
+                                                child: const Icon(
+                                                  Icons.play_circle_outline,color: Colors.white,
+                                                  size: 50,
+                                                  ),
+                                              ),
+
+                                               
+                                             
+                                              
+                                              Positioned(
+                                                bottom: -1,
+                                                right: 0,
+                                                child: SizedBox(
                                                   width: MediaQuery.of(context)
                                                           .size
                                                           .width /
                                                       3.5,
                                                   child: PrimaryButton(
                                                     onPressed: () {},
-                                                    buttonText: 'Order now',
-                                                    height: 45.h,
+                                                    buttonText: 'Earn now',
+                                                    height: 40.h,
                                                     buttonTextSize: 14.sp,
+                                                    radius: 3,
                                                   ),
-                                                )
-                                              ],
-                                            ),
+                                                ),
+                                              )
+                                            ],
                                           )),
                                     );
                                   },
@@ -282,23 +281,106 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 250.h,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
+                              itemCount: controller.trendingList.length,
                               itemBuilder: (context, index) => Padding(
                                 padding: const EdgeInsets.only(right: 15),
-                                child: ProductCard(
-                                  images:
-                                      'https://static.thenounproject.com/png/482114-200.png',
-                                  catName: '',
-                                  price: '',
-                                  productName: '',
-                                  productId: '',
-                                  onPressed: () {
-                                    Navigator.pushNamed(context,
-                                        RouteName.productDeatailsScreen);
-                                  },
+                                child: Consumer<ProductDetailsController>(
+                                  builder: (context,productController,child) {
+                                    return ProductCard(
+                                      images:
+                                         controller.trendingList[index].image![0].toString(),
+                                      catName: controller.trendingList[index].subCategory?? '',
+                                      price: controller.trendingList[index].price.toString(),
+                                      productName: controller.trendingList[index].productName.toString(),
+                                      productId: controller.trendingList[index].sId,
+                                      isFavarated:  productController.checkFaviorite(productId:controller.trendingList[index].sId!),
+                                      onPressed: () {
+                                        Navigator.pushNamed(context,
+                                            RouteName.productDeatailsScreen, arguments: controller.trendingList[index].sId.toString());
+                                      },
+                                    );
+                                  }
                                 ),
                               ),
                             ),
-                          )
+                          ),
+
+                          //banner3
+                          Container(
+                            height: 165.h,
+                            clipBehavior: Clip.hardEdge,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.amber),
+                            child: CarouselSlider(
+                              options: CarouselOptions(
+                                  autoPlay: true, viewportFraction: 1),
+                              items: controller.bannerVideos.map((i) {
+                                return Builder(
+                                  builder: (BuildContext context) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        
+
+                                        Navigator.pushNamed(context, RouteName.videoScreener,arguments: {
+                                          'url' : i.video!,
+                                          'bannerId' : i.sId,
+                                        });
+                                      },
+                                      child: Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          decoration:  BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                      i.thumbNail!),
+                                                  fit: BoxFit.cover)),
+                                          child: Stack(
+                                            // crossAxisAlignment:
+                                            //     CrossAxisAlignment.center,
+                                            // mainAxisAlignment:
+                                            //     MainAxisAlignment.center,
+                                            children: [
+
+                                              Center(
+                                                child: const Icon(
+                                                  Icons.play_circle_outline,color: Colors.white,
+                                                  size: 50,
+                                                  ),
+                                              ),
+
+                                               
+                                             
+                                              
+                                              Positioned(
+                                                bottom: -1,
+                                                right: 0,
+                                                child: SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      3.5,
+                                                  child: PrimaryButton(
+                                                    onPressed: () {},
+                                                    buttonText: 'Earn now',
+                                                    height: 40.h,
+                                                    buttonTextSize: 14.sp,
+                                                    radius: 3,
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          )),
+                                    );
+                                  },
+                                );
+                              }).toList(),
+                            ),
+                          
+                          
+                          ),
+
                         ],
                       )),
                 ),

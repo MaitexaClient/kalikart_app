@@ -5,7 +5,7 @@ import 'package:kalicart/common/widgets/text_bold.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton(
-      {super.key, required this.onPressed, required this.buttonText,this.isloading = false,this.height, this.buttonTextSize, this.color, this.buttonTextColor});
+      {super.key, required this.onPressed, required this.buttonText,this.isloading = false,this.height, this.buttonTextSize, this.color, this.buttonTextColor,this.radius});
 
   final VoidCallback onPressed;
   final String buttonText;
@@ -14,6 +14,8 @@ class PrimaryButton extends StatelessWidget {
   final double ? buttonTextSize;
   final Color ? color;
   final Color ? buttonTextColor;
+  final double ? radius;
+
   
 
   @override
@@ -25,7 +27,7 @@ class PrimaryButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
 
           elevation: 0,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius??20)),
     
           backgroundColor: color ?? AppColor.kGreenColor,
         ),

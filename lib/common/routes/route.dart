@@ -12,11 +12,13 @@ import 'package:kalicart/features/favourites/view/favourite_screen.dart';
 import 'package:kalicart/features/category/view/category_list.dart';
 import 'package:kalicart/features/home/view/home_screen.dart';
 import 'package:kalicart/features/home/view/trending_screen.dart';
+import 'package:kalicart/features/home/view/video_screen.dart';
 import 'package:kalicart/features/order/view/order_list_screen.dart';
 import 'package:kalicart/features/product/view/product_details_screen.dart';
 import 'package:kalicart/features/product/view/product_list.dart';
 import 'package:kalicart/features/product/view/product_list_subcat_screen.dart';
 import 'package:kalicart/features/search/view/search_screen.dart';
+import 'package:kalicart/features/wallet/view/my_wallet_screen.dart';
 
 class AppRoute {
   static Route onGenaratedRoute(RouteSettings settings) {
@@ -51,7 +53,8 @@ class AppRoute {
       case  RouteName.categoryScreen:
         return MaterialPageRoute(builder: (context) => const CategoryListScreen(),);
       case RouteName.trendingScreen:
-        return MaterialPageRoute(builder: (context) => const TrendingScreen(),);
+        
+        return MaterialPageRoute(builder: (context) =>  TrendingScreen(),);
       case RouteName.searchScreen:
         return MaterialPageRoute(builder: (context) => const SearchScreen(),);
       case RouteName.favouriteScreen:
@@ -74,8 +77,12 @@ class AppRoute {
        final  params = args as Map<String,dynamic>;
       
         return MaterialPageRoute(builder: (context) =>  ProductListScreen(categoryName: params['catName'],catId: params['catId'],),);
+      case RouteName.videoScreener:
+        final videoparams  =  args as Map<String,dynamic>;
+        return MaterialPageRoute(builder: (context) => VideoScreen(url: videoparams['url'],bannerId: videoparams['bannerId'],),);
+      case RouteName.walletScreen:
+        return MaterialPageRoute(builder: (context) => const  MyWallet(),);
      
-
       default:
         return MaterialPageRoute(
           builder: (context) => const Scaffold(

@@ -144,6 +144,7 @@ class ProductDetailsController extends ChangeNotifier {
 
   //get all Favorite
   void getAllFavourite({required BuildContext context}) async {
+    print('fffffffffff');
     try {
       loading = true;
       notifyListeners();
@@ -170,6 +171,7 @@ class ProductDetailsController extends ChangeNotifier {
 
   //check
   bool checkFaviorite({required String productId}) {
+    
     return favaerateList.any((element) {
       return element.productId == productId;
     });
