@@ -95,6 +95,7 @@ class FavouriteScreen extends StatelessWidget {
                                         ),
                                       ),
                                       onPressed: () {
+                                        print('ffffffff');
                                         controller.deleteFavorite(
                                             favoriteId: controller
                                                 .favaerateList[index].sId

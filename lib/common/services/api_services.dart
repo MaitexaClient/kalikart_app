@@ -15,7 +15,7 @@ import 'package:kalicart/common/utils/api_constants.dart';
 
 class ApiService {
   final _apiHelper = ApiHelper();
-
+  final myLoginId = Db.getLoginId();
 
   //sign up
   Future<void> signUp(
@@ -133,44 +133,35 @@ class ApiService {
   }
 
   //add credit point
-  Future<String> addCreditPoint({required String bannerId}) async{
-
-    final loginId = Db.getLoginId();
-
-    final url = Uri.parse('${ApiConstant.baseUrl}${ApiConstant.addCreditPoint}$bannerId/$loginId');
+  Future<String> addCreditPoint({required String bannerId}) async {
+    final url = Uri.parse(
+        '${ApiConstant.baseUrl}${ApiConstant.addCreditPoint}$bannerId/$myLoginId');
 
     var response = await _apiHelper.putData(url: url);
 
     if (response.statusCode == 200) {
-
       var data = jsonDecode(response.body);
-    
-      return data["creditPrice"].toString();
 
-      
-    }else{
+      return data["creditPrice"].toString();
+    } else {
       throw 'Somthing went wrong';
     }
-
   }
 
   //get all trending product
-  Future<List<ProductModel>> getAllTrendingProduct() async{
-
+  Future<List<ProductModel>> getAllTrendingProduct() async {
     final url = Uri.parse(ApiConstant.baseUrl + ApiConstant.trendingProduct);
     var response = await _apiHelper.getData(url: url);
 
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       var videoList = jsonDecode(response.body)["data"];
 
-      return videoList.map<ProductModel>((e)=> ProductModel.fromJson(e)).toList();
-    }else{
-
+      return videoList
+          .map<ProductModel>((e) => ProductModel.fromJson(e))
+          .toList();
+    } else {
       throw 'Somthing went wrong';
-
     }
-
-
   }
 
   //category list
@@ -299,10 +290,10 @@ class ApiService {
     }
   }
 
-  //increament
+  //increament -19
   Future<void> cartIncreament(String cartProductId) async {
     final url = Uri.parse(
-        ApiConstant.baseUrl + ApiConstant.cartIncreament + cartProductId);
+        '${ApiConstant.baseUrl}${ApiConstant.cartIncreament}$myLoginId/$cartProductId');
 
     var response = await _apiHelper.putData(url: url);
     if (response.statusCode != 200) {
@@ -310,10 +301,10 @@ class ApiService {
     }
   }
 
-  //decreament
+  //decreament -20
   Future<void> cartDecreament(String cartProductId) async {
     final url = Uri.parse(
-        ApiConstant.baseUrl + ApiConstant.cartDecrement + cartProductId);
+        '${ApiConstant.baseUrl + ApiConstant.cartDecrement + myLoginId}/$cartProductId');
 
     var response = await _apiHelper.putData(url: url);
     if (response.statusCode != 200) {
@@ -323,8 +314,8 @@ class ApiService {
 
   // delete cart
   Future<void> deleteCart({required String cartId}) async {
-    final url =
-        Uri.parse(ApiConstant.baseUrl + ApiConstant.deleteCart + cartId);
+    final url = Uri.parse(
+        '${ApiConstant.baseUrl + ApiConstant.deleteCart + myLoginId}/$cartId');
     var response = await _apiHelper.deleteData(url: url);
     if (response.statusCode != 200) {
       throw 'Somthing went wrong';
@@ -348,9 +339,8 @@ class ApiService {
 
   //get all favorite list
   Future<List<FavouriteModel>> getAllFavoriteProductList() async {
-    final loginId = Db.getLoginId();
     final url =
-        Uri.parse(ApiConstant.baseUrl + ApiConstant.allFavourite + loginId);
+        Uri.parse(ApiConstant.baseUrl + ApiConstant.allFavourite + myLoginId);
     var response = await _apiHelper.getData(url: url);
 
     if (response.statusCode == 200) {
@@ -368,9 +358,8 @@ class ApiService {
 
   //add to favorite
   Future<void> addFavorite({required String productId}) async {
-    final loginId = Db.getLoginId();
     final url = Uri.parse(
-        '${ApiConstant.baseUrl + ApiConstant.addtoFavourite + loginId}/$productId');
+        '${ApiConstant.baseUrl + ApiConstant.addtoFavourite + myLoginId}/$productId');
 
     var response = await _apiHelper.postDataWithOutBody(url: url);
     if (response.statusCode != 200) {
@@ -381,7 +370,7 @@ class ApiService {
   //delete favorite
   Future<void> deleteFavorite({required String favoriteId}) async {
     final url = Uri.parse(
-        ApiConstant.baseUrl + ApiConstant.deleteFavorite + favoriteId);
+        '${ApiConstant.baseUrl}${ApiConstant.deleteFavorite}$myLoginId/$favoriteId');
 
     var response = await _apiHelper.deleteData(url: url);
 

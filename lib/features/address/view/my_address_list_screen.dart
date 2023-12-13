@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:http/http.dart';
+import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/widgets/primary_button.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
 import 'package:kalicart/common/widgets/text_bold.dart';
@@ -37,13 +39,13 @@ class _MyAddressListScreenState extends State<MyAddressListScreen> {
               size: 16.sp,
               text: 'Your Adress'),
 
-          SizedBox(height: 20,),
+          const  SizedBox(height: 20,),
           Expanded(
             child: ListView.separated(
               shrinkWrap: true,
                 itemCount: name.length,
                 itemBuilder: (context,index){
-              return Container(
+              return   Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -52,10 +54,10 @@ class _MyAddressListScreenState extends State<MyAddressListScreen> {
                       children: [
                         BoldTextStyle(size: 17.sp, text: name[index]),
                         PopupMenuButton<int>(
-                          icon: Icon(Icons.more_vert,color: Colors.grey),
+                          icon: const Icon(Icons.more_vert,color: Colors.grey),
                           itemBuilder: (context) => [
                             // PopupMenuItem 1
-                            PopupMenuItem(
+                           const  PopupMenuItem(
 
                               value: 1,
                               // row with 2 children
@@ -66,7 +68,7 @@ class _MyAddressListScreenState extends State<MyAddressListScreen> {
                               ),
                             ),
                             // PopupMenuItem 2
-                            PopupMenuItem(
+                            const PopupMenuItem(
                               value: 2,
                               // row with two children
                               child: Row(
@@ -76,24 +78,30 @@ class _MyAddressListScreenState extends State<MyAddressListScreen> {
                               ),
                             ),
                           ],
-                          offset: Offset(0, 100),
+                          offset: const Offset(0, 100),
                           color: Colors.white,
                           elevation: 2,
                           // on selected we show the dialog box
                           onSelected: (value){
+                            if(value == 1){
+                              Navigator.pushNamed(context, RouteName.editAddressScreen);
+                            }
+                            if(value == 2){
+                              print('deleteAddress');
+                            }
                           },
                         ),
                       ],
                     ),
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
                     RegularTextStyle(
                         size: 16.sp,
                         text: address[index]),
-                    SizedBox(height: 5,),
+                    const SizedBox(height: 5,),
                     RegularTextStyle(
                         size: 16.sp,
                         text: pin[index]),
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
                     RegularTextStyle(
                         size: 16.sp,
                         text: phone[index]),
@@ -101,14 +109,14 @@ class _MyAddressListScreenState extends State<MyAddressListScreen> {
                 ),
               );
             }, separatorBuilder: (BuildContext context, int index) {
-                return Divider();
+                return const Divider();
             },),
           ),
           Padding(
             padding: const EdgeInsets.all(15),
             child: PrimaryButton(
               onPressed: () {
-                // Add functionality for the button here
+                Navigator.pushNamed(context, RouteName.addAddressScreen);
               },
               buttonText: 'Add New Address',
             ),

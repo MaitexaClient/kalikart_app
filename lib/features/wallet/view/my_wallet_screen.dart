@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
 import 'package:kalicart/common/widgets/text_bold.dart';
+import 'package:kalicart/features/profile/controller/profile_controller.dart';
+import 'package:provider/provider.dart';
 
 class MyWallet extends StatefulWidget {
   const MyWallet({super.key});
@@ -14,6 +16,8 @@ class MyWallet extends StatefulWidget {
 class _MyWalletState extends State<MyWallet> {
   @override
   Widget build(BuildContext context) {
+    final  profileData =  context.watch<ProfileController>().profile;
+   
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -77,7 +81,7 @@ class _MyWalletState extends State<MyWallet> {
           ),
           child: Stack(
             children: [
-              Positioned(
+              const Positioned(
                 top: 25,
                 left: 20,
                 child: Text(
@@ -89,13 +93,13 @@ class _MyWalletState extends State<MyWallet> {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 top: 1,
                 right: 1,
                 child: Image(image: AssetImage('assets/images/Group 34110.png'),)
               ),
 
-              Positioned(
+              const Positioned(
                 top: 70,
                 left: 20,
                 child: Text(
@@ -106,7 +110,7 @@ class _MyWalletState extends State<MyWallet> {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 top: 100,
                 left: 20,
                 child: Text(
@@ -124,7 +128,7 @@ class _MyWalletState extends State<MyWallet> {
                   child:Container(
                     width:MediaQuery.of(context).size.width,
                     height: 50,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: AppColor.kGreenColor,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(16),
@@ -133,7 +137,7 @@ class _MyWalletState extends State<MyWallet> {
                     ),
                   )
               ),
-              Positioned(
+              const Positioned(
                 bottom: 20,
                 left: 20,
                 child: Text(
@@ -144,18 +148,18 @@ class _MyWalletState extends State<MyWallet> {
                   ),
                 ),
               ),
-              Positioned(
-                bottom: 20,
-                left: 55,
-                child: Text(
-                  '09/24',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 13,
-                  ),
-                ),
-              ),
-              Positioned(
+              // const Positioned(
+              //   bottom: 20,
+              //   left: 55,
+              //   child: Text(
+              //     '09/24',
+              //     style: TextStyle(
+              //       color: Colors.white,
+              //       fontSize: 13,
+              //     ),
+              //   ),
+              // ),
+              const Positioned(
                   bottom: 20,
                   right: 20,
                   child: Image(image: AssetImage('assets/images/Group 26818.png'),)
@@ -163,16 +167,16 @@ class _MyWalletState extends State<MyWallet> {
             ],
           ),
         ),
-            SizedBox(height: 10,),
-            TextButton.icon(     // <-- TextButton
-              onPressed: () {},
-              icon: Icon(
-                Icons.add,
-                size: 24.0,
-                color: AppColor.kblack,
-              ),
-              label:  RegularTextStyle(size: 16.sp, text: 'Add Money')
-            ),
+            // const SizedBox(height: 10,),
+            // TextButton.icon(     // <-- TextButton
+            //   onPressed: () {},
+            //   icon: const Icon(
+            //     Icons.add,
+            //     size: 24.0,
+            //     color: AppColor.kblack,
+            //   ),
+            //   label:  RegularTextStyle(size: 16.sp, text: 'Add Money')
+            // ),
           ],
         ),
       ),

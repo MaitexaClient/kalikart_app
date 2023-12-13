@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/services/db_service.dart';
 import 'package:kalicart/features/Root/view/root_screen.dart';
+import 'package:kalicart/features/address/view/add_address_screen.dart';
+import 'package:kalicart/features/address/view/edit_address_screen.dart';
+import 'package:kalicart/features/address/view/my_address_list_screen.dart';
 import 'package:kalicart/features/auth/view/login_screen.dart';
 import 'package:kalicart/features/auth/view/otp_verification_screen.dart';
 import 'package:kalicart/features/auth/view/sigin_up_screen.dart';
@@ -82,6 +85,13 @@ class AppRoute {
         return MaterialPageRoute(builder: (context) => VideoScreen(url: videoparams['url'],bannerId: videoparams['bannerId'],),);
       case RouteName.walletScreen:
         return MaterialPageRoute(builder: (context) => const  MyWallet(),);
+      //address screen
+      case RouteName.addressScreen:
+        return MaterialPageRoute(builder: (context) => const MyAddressListScreen(),);
+      case RouteName.addAddressScreen:
+        return MaterialPageRoute(builder: (context) => const AddUserAddress(),);
+      case RouteName.editAddressScreen:
+        return MaterialPageRoute(builder: (context) => const EditUserScreen(),);
      
       default:
         return MaterialPageRoute(

@@ -18,16 +18,16 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-
 class _ProfileScreenState extends State<ProfileScreen> {
-
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ProfileController>(context, listen: false).getProfile(context);
+      Provider.of<ProfileController>(context, listen: false)
+          .getProfile(context);
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,19 +40,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Consumer<ProfileController>(
-          builder: (context,controller,child) {
-            return controller.loading ? const Center(child: CircularProgressIndicator(color: AppColor.kGreenColor),)   : Column(
-              children: [
-                CircleAvatar(
-                            backgroundColor: AppColor.kGreenColor,
-                            radius: 50,
-                            backgroundImage: controller.profile?.image != null
-                                ? NetworkImage(controller.profile!.image!)
-                                : null,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(50),
-                              child: controller.profile?.image != null ?  CachedNetworkImage(
+        child:
+            Consumer<ProfileController>(builder: (context, controller, child) {
+          return controller.loading
+              ? const Center(
+                  child: CircularProgressIndicator(color: AppColor.kGreenColor),
+                )
+              : Column(
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: AppColor.kGreenColor,
+                      radius: 50,
+                      backgroundImage: controller.profile?.image != null
+                          ? NetworkImage(controller.profile!.image!)
+                          : null,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: controller.profile?.image != null
+                            ? CachedNetworkImage(
                                 imageUrl: controller.profile!.image!,
                                 progressIndicatorBuilder:
                                     (context, url, progress) =>
@@ -63,56 +68,61 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     const Image(
                                         image: AssetImage(
                                             'assets/images/profile.jpg')),
-                              )  : const Image(
-                                        image: AssetImage(
-                                            'assets/images/profile.jpg')),
-                            ),
+                              )
+                            : const Image(
+                                image: AssetImage('assets/images/profile.jpg')),
+                      ),
+                    ),
+
+                    SemiBoldTextStyle(
+                        size: 18.sp, text: controller.profile?.name ?? 'name'),
+                    RegularTextStyle(
+                        size: 16.sp,
+                        text: controller.profile?.email ?? 'email'),
+
+                    const Spacer(),
+                    //profile
+                    CustomTileWidget(
+                      tileText: 'profile',
+                      icon: Icons.person_outline,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const EditProfileScreen(),
                           ),
-                       
-                       
-                SemiBoldTextStyle(size: 18.sp, text: controller.profile?.name??'name'),
-                RegularTextStyle(size: 16.sp, text:  controller.profile?.email ?? 'email'),
+                        );
+                      },
+                    ),
+                    //address
+                    CustomTileWidget(
+                      tileText: 'My Addresses',
+                      icon: Icons.place_outlined,
+                      onTap: () {
+                        Navigator.pushNamed(context, RouteName.addressScreen);
+                      },
+                    ),
+                    //wallet
+                    CustomTileWidget(
+                      tileText: 'My Wallet',
+                      icon: Icons.account_balance_outlined,
+                      onTap: () {
+                        Navigator.pushNamed(context, RouteName.walletScreen);
+                      },
+                    ),
 
-                const Spacer(),
-                //profile
-                CustomTileWidget(
-                  tileText: 'profile',
-                  icon: Icons.person_outline,
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const  EditProfileScreen(),));
-                  },
-                ),
-                //address
-                CustomTileWidget(
-                  tileText: 'My Addresses',
-                  icon: Icons.place_outlined,
-                  onTap: () {},
-                ),
-                //wallet
-                CustomTileWidget(
-                  tileText: 'My Wallet',
-                  icon: Icons.account_balance_outlined,
-                  onTap: () {
-                    Navigator.pushNamed(context, RouteName.walletScreen);
-                  },
-                ),
-
-                
-                const Spacer(),
-                CustomTileWidget(
-                  tileText: 'Log out',
-                  icon: Icons.logout_outlined,
-                  isLogout: true,
-                  onTap: () {
-                    controller.logout(context);
-                  },
-                ),
-
-
-              ],
-            );
-          }
-        ),
+                    const Spacer(),
+                    CustomTileWidget(
+                      tileText: 'Log out',
+                      icon: Icons.logout_outlined,
+                      isLogout: true,
+                      onTap: () {
+                        controller.logout(context);
+                      },
+                    ),
+                  ],
+                );
+        }),
       ),
     );
   }
