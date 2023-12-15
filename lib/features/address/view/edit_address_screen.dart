@@ -22,6 +22,10 @@ class _EditUserScreenState extends State<EditUserScreen> {
   final List<String> City = ['Calicut', 'Karnataka', 'TamilNadu'];
   String selectedCity = 'Calicut'; // Default selected value
 
+
+
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +46,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                   SizedBox(height: 20),
                  // CustomEditTextField(labelText: 'Name'),
                   SizedBox(height: 20),
-                  CustomMaxEditTextField(labelText: 'Address'),
+                  //CustomMaxEditTextField(labelText: 'Address'),
                   SizedBox(height: 20),
                   DropdownButtonFormField<String>(
                     value: selectedState,

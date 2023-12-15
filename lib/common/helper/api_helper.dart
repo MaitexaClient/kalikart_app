@@ -42,6 +42,18 @@ class ApiHelper {
     );
   }
 
+  //update data with body
+  Future<http.Response> putDataWithBody({required Uri url,required Map<String,dynamic> data}) {
+    print(url);
+    return http.put(
+      url,
+      headers: <String, String>{
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: data
+    );
+  }
+
   Future<http.Response> deleteData({required Uri url}) {
   
     return http.delete(

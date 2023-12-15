@@ -26,6 +26,14 @@ class ApiConstant{
   static const bannerVideo = '/view-banners/videos';
   static const trendingProduct = '/view-products/trending';
   static const addCreditPoint = '/banner-credit/';
+  //add address
+  static const viewAddress = '/user-all-address/';
+  static const addAddress = '/user-address/';
+  static const deleteAddress = '/user-del-address/';
+  static const editAddres = '/user-address-update/';
+
+
+  
   
 
   

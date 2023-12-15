@@ -4,6 +4,7 @@ import 'package:kalicart/common/routes/route.dart';
 import 'package:kalicart/common/services/db_service.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/features/Root/controller/root_controller.dart';
+import 'package:kalicart/features/address/controller/address_controller.dart';
 import 'package:kalicart/features/auth/controller/auth_controller.dart';
 import 'package:kalicart/features/cart/controller/cart_controller.dart';
 import 'package:kalicart/features/category/controller/category_controller.dart';
@@ -18,30 +19,51 @@ import 'package:kalicart/features/search/controllers/search_controller.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  
-  
-   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
   await Db.init();
 
   Db.isLoggedIn = Db.auth() ?? false;
 
-
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AuthController()),
-        ChangeNotifierProvider(create: (_) => RootController()),
-        ChangeNotifierProvider(create: (_) => HomeController()),
-        ChangeNotifierProvider(create: (_) => SearchScreenController()),
-        ChangeNotifierProvider(create: (_) => FavouriteController()),
-        ChangeNotifierProvider(create: (_) => ProductDetailsController(),),
-        ChangeNotifierProvider(create: (_) => CartController(),),
-        ChangeNotifierProvider(create: (_) => CheckOutController(),),
-        ChangeNotifierProvider(create: (_) => OrderController(),),
-        ChangeNotifierProvider(create: (_)=> ProfileController(),),
-        ChangeNotifierProvider(create: (_) => CategoryController(),)
-        
+        ChangeNotifierProvider(
+          create: (_) => AuthController(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => RootController(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => HomeController(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => SearchScreenController(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => FavouriteController(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ProductDetailsController(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CartController(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CheckOutController(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => OrderController(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ProfileController(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CategoryController(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => AddressController(),
+        ),
       ],
       child: const Myapp(),
     ),

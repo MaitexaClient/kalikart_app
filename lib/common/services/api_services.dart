@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:kalicart/common/helper/api_helper.dart';
+import 'package:kalicart/common/models/address_model.dart';
 import 'package:kalicart/common/models/cart_model.dart';
 import 'package:kalicart/common/models/category_model.dart';
 import 'package:kalicart/common/models/faviorate_model.dart';
@@ -115,6 +117,89 @@ class ApiService {
       throw 'Failed to update profile';
     }
   }
+
+  //view address
+  Future<List<AddressModel>> getAllAddress() async {
+    final url =
+        Uri.parse(ApiConstant.baseUrl + ApiConstant.viewAddress + myLoginId);
+    var response = await _apiHelper.getData(url: url);
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body)["data"];
+      return data.map<AddressModel>((e) => AddressModel.fromJson(e)).toList();
+    } else {
+      throw 'Somthing went wrong';
+    }
+  }
+
+  //add address
+
+  Future<void> addAddressByUser({
+    required String name,
+    required String phone,
+    required String address,
+    required String city,
+    required String pinCode,
+    required String landmark,
+  }) async {
+    final url =
+        Uri.parse(ApiConstant.baseUrl + ApiConstant.addAddress + myLoginId);
+    var response = await _apiHelper.postData(
+      data: {
+        'name': name,
+        'phone': phone,
+        'address': address,
+        'pincode': pinCode,
+        'city': city,
+        'landmark': landmark
+      },
+      url: url,
+    );
+
+    if(response.statusCode != 200){
+      throw 'Somthing went wrong';
+    }
+  }
+
+  //delete address
+  Future<void> deleteAddress({required String addressId}) async {
+    final url =  Uri.parse(ApiConstant.baseUrl + ApiConstant.deleteAddress + addressId);
+
+    var response = await _apiHelper.deleteData(url: url);
+    if (response.statusCode != 200) {
+      throw 'Somthing went wrong';
+    }
+  }
+
+  //edit address
+  Future<void> editAddress({
+    required String name,
+    required String phone,
+    required String address,
+    required String city,
+    required String pinCode,
+    required String landmark,
+    required String addressId,
+  }) async {
+    final url =
+        Uri.parse(ApiConstant.baseUrl + ApiConstant.editAddres + addressId);
+    var response = await _apiHelper.putDataWithBody(
+      data: {
+        'name': name,
+        'phone': phone,
+        'address': address,
+        'pincode': pinCode,
+        'city': city,
+        'landmark': landmark
+      },
+      url: url,
+    );
+
+    if(response.statusCode != 200){
+      throw 'Somthing went wrong';
+    }
+  }
+
+
 
   //video banner
 
@@ -371,6 +456,8 @@ class ApiService {
   Future<void> deleteFavorite({required String favoriteId}) async {
     final url = Uri.parse(
         '${ApiConstant.baseUrl}${ApiConstant.deleteFavorite}$myLoginId/$favoriteId');
+
+    print(url);
 
     var response = await _apiHelper.deleteData(url: url);
 
