@@ -16,6 +16,7 @@ import 'package:kalicart/features/product/controller/product_controller.dart';
 import 'package:kalicart/features/product/view/product_details_screen.dart';
 import 'package:kalicart/features/profile/controller/profile_controller.dart';
 import 'package:kalicart/features/search/controllers/search_controller.dart';
+import 'package:kalicart/features/wallet/controller/wallet_controller.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -63,6 +64,17 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (_) => AddressController(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => WalletController(),
+        ),
+       
+        ChangeNotifierProxyProvider<CartController,CheckOutController>(
+          create: (context) => CheckOutController(cartController: Provider.of<CartController>(context,listen: false)), 
+          update: (BuildContext context, CartController  value, CheckOutController ? previous) => CheckOutController(cartController: value),
+          
+          
+        
         ),
       ],
       child: const Myapp(),

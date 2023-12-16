@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kalicart/common/models/address_model.dart';
 import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/services/db_service.dart';
 import 'package:kalicart/features/Root/view/root_screen.dart';
@@ -91,7 +92,8 @@ class AppRoute {
       case RouteName.addAddressScreen:
         return MaterialPageRoute(builder: (context) => const AddUserAddress(),);
       case RouteName.editAddressScreen:
-        return MaterialPageRoute(builder: (context) => const EditUserScreen(),);
+      final  params = args as AddressModel;
+        return MaterialPageRoute(builder: (context) =>  EditUserScreen(data: params,),);
      
       default:
         return MaterialPageRoute(

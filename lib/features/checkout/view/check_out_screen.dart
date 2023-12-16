@@ -58,9 +58,9 @@ class CheckOutScreen extends StatelessWidget {
               SemiBoldTextStyle(size: 18.sp, text: 'Order list'),
               Expanded(
                 child: ListView.builder(
-                  itemCount: 5,
+                  itemCount: value.cartController?.allCartData?.cartProducts?.length,
                   itemBuilder: (context, index) => Container(
-                    margin: EdgeInsets.only(top: 20),
+                    margin: const EdgeInsets.only(top: 20),
                     child: const RowProductCard()),
                 ),
               ),

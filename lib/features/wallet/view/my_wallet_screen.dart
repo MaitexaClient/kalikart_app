@@ -4,6 +4,7 @@ import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
 import 'package:kalicart/common/widgets/text_bold.dart';
 import 'package:kalicart/features/profile/controller/profile_controller.dart';
+import 'package:kalicart/features/wallet/controller/wallet_controller.dart';
 import 'package:provider/provider.dart';
 
 class MyWallet extends StatefulWidget {
@@ -14,9 +15,19 @@ class MyWallet extends StatefulWidget {
 }
 
 class _MyWalletState extends State<MyWallet> {
+
+
+  @override
+  void initState() {
+    
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    final  profileData =  context.watch<ProfileController>().profile;
+
+    
+
+    
    
     return Scaffold(
       appBar: AppBar(

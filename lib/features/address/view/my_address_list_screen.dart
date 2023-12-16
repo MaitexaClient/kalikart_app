@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:http/http.dart';
 import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/primary_button.dart';
@@ -25,14 +24,6 @@ class _MyAddressListScreenState extends State<MyAddressListScreen> {
     });
     super.initState();
   }
-
-  List name = ["Leslie Alexander", "Wade Warren"];
-  List address = [
-    '2972 Westheimer Rd. Santa Ana, Illinois ',
-    '3891 Ranchview Dr. Richardson, California'
-  ];
-  List pin = ['85486', '62639'];
-  List phone = ['(684) 555-0102', '(308) 555-0121'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,7 +95,7 @@ class _MyAddressListScreenState extends State<MyAddressListScreen> {
                                       onSelected: (value) {
                                         if (value == 1) {
                                           Navigator.pushNamed(context,
-                                              RouteName.editAddressScree);
+                                              RouteName.editAddressScreen, arguments: controller.listAddress[index]);
                                         }
                                         if (value == 2) {
                                           controller.deleteAddress(context: context, addressId: controller.listAddress[index].sId!);
