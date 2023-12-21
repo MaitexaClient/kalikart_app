@@ -200,6 +200,23 @@ class ApiService {
   }
 
 
+  //get primary address
+
+  Future<AddressModel> getPrimaryAddress() async {
+    final url =
+        Uri.parse(ApiConstant.baseUrl + ApiConstant.getPrimaryAddress + myLoginId);
+    var response = await _apiHelper.getData(url: url);
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body)["data"];
+            
+      return AddressModel.fromJson(data);
+    } else {
+      throw 'Somthing went wrong';
+    }
+  }
+
+
+
 
   //video banner
 
@@ -346,6 +363,63 @@ class ApiService {
     }
   }
 
+  //orders 
+  // Future<List> getOrders() async{
+  //   final url = Uri.parse(ApiConstant.baseUrl+ApiConstant.orderList+myLoginId);
+
+  //   var response =  await _apiHelper.getData(url: url);
+  //   var data = jsonDecode(response.body);
+
+  //   if(response.statusCode == 200){
+      
+
+  //   }else{
+  //     throw 'Somthing went wrong';
+  //   }
+  // }
+
+  //add check out
+
+  Future<void> addCheckOut() async{
+
+     final url = Uri.parse(ApiConstant.baseUrl+ApiConstant.addtoCheckOut+myLoginId);
+
+      
+
+     var response =  await _apiHelper.postDataWithOutBody(url: url);
+     
+
+     if(response.statusCode == 200){
+      
+     }else{
+
+       throw 'somthing went wrong';
+
+
+     }
+
+
+
+
+
+
+  }
+
+  // //completed orders list
+  // Future<List> getCompletedOrders() async{
+  //   final url = Uri.parse(ApiConstant.baseUrl+ApiConstant.completeOrederList+myLoginId);
+
+  //   var response =  await _apiHelper.getData(url: url);
+  //   var data = jsonDecode(response.body);
+
+  //   if(response.statusCode == 200){
+  //     re
+
+  //   }else{
+  //     throw 'Somthing went wrong';
+  //   }
+  // }
+
   //get banner images
   Future<List<ImageBanner>> getBannerImages() async {
     final url = Uri.parse(ApiConstant.baseUrl + ApiConstant.bannerImages);
@@ -457,7 +531,7 @@ class ApiService {
     final url = Uri.parse(
         '${ApiConstant.baseUrl}${ApiConstant.deleteFavorite}$myLoginId/$favoriteId');
 
-    print(url);
+    
 
     var response = await _apiHelper.deleteData(url: url);
 
@@ -465,4 +539,9 @@ class ApiService {
       throw 'Somthing went wrong';
     }
   }
+
+
+  //payment integration
+
+  // Future<void> 
 }

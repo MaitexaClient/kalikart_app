@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kalicart/common/routes/route_name.dart';
+import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/primary_button.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
 import 'package:kalicart/common/widgets/row_product_card.dart';
@@ -9,9 +9,27 @@ import 'package:kalicart/common/widgets/text_semi_bold.dart';
 import 'package:kalicart/features/checkout/controller/check_out_controller.dart';
 import 'package:provider/provider.dart';
 
-class CheckOutScreen extends StatelessWidget {
+class CheckOutScreen extends StatefulWidget {
   const CheckOutScreen({super.key});
 
+  @override
+  State<CheckOutScreen> createState() => _CheckOutScreenState();
+}
+
+class _CheckOutScreenState extends State<CheckOutScreen> {
+  
+
+  @override
+  void initState() {
+
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<CheckOutController>(context, listen: false).getAddress(context: context);
+      
+    });
+    
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,13 +37,13 @@ class CheckOutScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: BoldTextStyle(size: 20.sp, text: 'Cart'),
+        title: BoldTextStyle(size: 20.sp, text: 'Confirim'),
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Consumer<CheckOutController>(
         builder:(context, value, child) =>  Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
+          child: value.loading ?   const Center(child: CircularProgressIndicator(color: AppColor.kGreenColor,),) : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 30,),
@@ -39,12 +57,12 @@ class CheckOutScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        BoldTextStyle(size: 15.sp, text: 'Home'),
+                        BoldTextStyle(size: 15.sp, text: value.primaryAddress?.name?? 'home'),
                          const SizedBox(height: 5,),
                         RegularTextStyle(
                             size: 14.sp,
                             text:
-                                '4517 Washington Ave. Manchester, Kentucky 39495')
+                                  value.primaryAddress?.address??'address')
                       ],
                     ),
                   ),
@@ -61,12 +79,17 @@ class CheckOutScreen extends StatelessWidget {
                   itemCount: value.cartController?.allCartData?.cartProducts?.length,
                   itemBuilder: (context, index) => Container(
                     margin: const EdgeInsets.only(top: 20),
-                    child: const RowProductCard()),
+                    child:  RowProductCard(
+                      image: value.cartController?.allCartData?.cartProducts?[index].image,
+                      categoryName: value.cartController?.allCartData?.cartProducts?[index].subCategory,
+                      price: value.cartController?.allCartData?.cartProducts?[index].price.toString(),
+
+                    )),
                 ),
               ),
               PrimaryButton(onPressed: () {
       
-                Navigator.pushNamed(context, RouteName.confirmScreen);
+                
                 
               }, buttonText: 'Confirm')
           ],

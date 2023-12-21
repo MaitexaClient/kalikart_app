@@ -5,14 +5,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/card_column_widget.dart';
-import 'package:kalicart/common/widgets/medium_text.dart';
 import 'package:kalicart/common/widgets/primary_button.dart';
 import 'package:kalicart/common/widgets/product_card_widget.dart';
-import 'package:kalicart/common/widgets/text_bold.dart';
 import 'package:kalicart/common/widgets/text_semi_bold.dart';
 import 'package:kalicart/common/widgets/row_text_widget.dart';
 import 'package:kalicart/features/home/controller/home_controller.dart';
-import 'package:kalicart/features/home/view/video_screen.dart';
 import 'package:kalicart/features/product/controller/product_controller.dart';
 import 'package:provider/provider.dart';
 

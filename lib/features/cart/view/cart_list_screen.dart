@@ -202,8 +202,9 @@ class CartListScreen extends StatelessWidget {
                               ),
                               PrimaryButton(
                                   onPressed: () {
-                                    Navigator.pushNamed(
-                                        context, RouteName.checkOutScreen);
+
+                                    controller.addCheckOut(context: context);
+                                   
                                   },
                                   buttonText: 'Check out')
                             ],

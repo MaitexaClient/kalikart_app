@@ -1,3 +1,5 @@
+import 'package:kalicart/features/order/widgets/completed_order_widget.dart';
+
 class ApiConstant{
 
   static const baseUrl = 'https://kalikart-server.onrender.com/api';
@@ -26,11 +28,16 @@ class ApiConstant{
   static const bannerVideo = '/view-banners/videos';
   static const trendingProduct = '/view-products/trending';
   static const addCreditPoint = '/banner-credit/';
+  static const orderList = '/view-orders/';
+  static const completeOrederList = '/completed-orders/';
+  static const addtoCheckOut  = '/add-orders/';
+  
   //add address
   static const viewAddress = '/user-all-address/';
   static const addAddress = '/user-address/';
   static const deleteAddress = '/user-del-address/';
   static const editAddres = '/user-address-update/';
+  static const getPrimaryAddress = '/user-primary-address/';
 
 
   

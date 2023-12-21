@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kalicart/common/models/cart_model.dart';
+import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/services/api_services.dart';
 import 'package:kalicart/common/services/db_service.dart';
 
@@ -97,8 +98,6 @@ class CartController extends ChangeNotifier {
       loading = false;
       notifyListeners();
     } catch (e) {
-
-    
       loading = false;
 
       allCartData = null;
@@ -114,6 +113,31 @@ class CartController extends ChangeNotifier {
         );
       }
       notifyListeners();
+    }
+  }
+
+  //add into checkout
+  void addCheckOut({required BuildContext context}) async {
+    try {
+      loading = true;
+      notifyListeners();
+
+      await _apiService.addCheckOut();
+      if(context.mounted){
+
+        Navigator.pushNamed(context, RouteName.checkOutScreen);
+      }
+
+      loading = false;
+      notifyListeners();
+    } catch (e) {
+      loading = false;
+      notifyListeners();
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.toString())));
+      }
     }
   }
 }

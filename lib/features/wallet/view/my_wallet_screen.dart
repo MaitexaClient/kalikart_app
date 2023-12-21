@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
 import 'package:kalicart/common/widgets/text_bold.dart';
-import 'package:kalicart/features/profile/controller/profile_controller.dart';
 import 'package:kalicart/features/wallet/controller/wallet_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -25,9 +24,8 @@ class _MyWalletState extends State<MyWallet> {
   @override
   Widget build(BuildContext context) {
 
-    
-
-    
+    final data = context.read<WalletController>();
+  
    
     return Scaffold(
       appBar: AppBar(
@@ -121,12 +119,12 @@ class _MyWalletState extends State<MyWallet> {
                   ),
                 ),
               ),
-              const Positioned(
+               Positioned(
                 top: 100,
                 left: 20,
                 child: Text(
-                  '\$500.00',
-                  style: TextStyle(
+                  'Rs.${data.profile.profile?.creditPrice}',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                   ),

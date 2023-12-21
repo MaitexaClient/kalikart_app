@@ -12,8 +12,8 @@ import 'package:kalicart/features/checkout/controller/check_out_controller.dart'
 import 'package:kalicart/features/favourites/controller/favourite_controller.dart';
 import 'package:kalicart/features/home/controller/home_controller.dart';
 import 'package:kalicart/features/order/controller/order_controller.dart';
+import 'package:kalicart/features/payment/controller/payment_controller.dart';
 import 'package:kalicart/features/product/controller/product_controller.dart';
-import 'package:kalicart/features/product/view/product_details_screen.dart';
 import 'package:kalicart/features/profile/controller/profile_controller.dart';
 import 'package:kalicart/features/search/controllers/search_controller.dart';
 import 'package:kalicart/features/wallet/controller/wallet_controller.dart';
@@ -66,15 +66,19 @@ void main() async {
           create: (_) => AddressController(),
         ),
         ChangeNotifierProvider(
-          create: (_) => WalletController(),
+          create: (context) =>
+              WalletController(profile: context.read<ProfileController>()),
         ),
-       
-        ChangeNotifierProxyProvider<CartController,CheckOutController>(
-          create: (context) => CheckOutController(cartController: Provider.of<CartController>(context,listen: false)), 
-          update: (BuildContext context, CartController  value, CheckOutController ? previous) => CheckOutController(cartController: value),
-          
-          
-        
+        ChangeNotifierProvider(
+          create: (context) => PaymentController(),
+        ),
+        ChangeNotifierProxyProvider<CartController, CheckOutController>(
+          create: (context) => CheckOutController(
+              cartController:
+                  Provider.of<CartController>(context, listen: false)),
+          update: (BuildContext context, CartController value,
+                  CheckOutController? previous) =>
+              CheckOutController(cartController: value),
         ),
       ],
       child: const Myapp(),
