@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:kalicart/common/helper/api_helper.dart';
 import 'package:kalicart/common/models/address_model.dart';
@@ -155,14 +156,15 @@ class ApiService {
       url: url,
     );
 
-    if(response.statusCode != 200){
+    if (response.statusCode != 200) {
       throw 'Somthing went wrong';
     }
   }
 
   //delete address
   Future<void> deleteAddress({required String addressId}) async {
-    final url =  Uri.parse(ApiConstant.baseUrl + ApiConstant.deleteAddress + addressId);
+    final url =
+        Uri.parse(ApiConstant.baseUrl + ApiConstant.deleteAddress + addressId);
 
     var response = await _apiHelper.deleteData(url: url);
     if (response.statusCode != 200) {
@@ -194,29 +196,51 @@ class ApiService {
       url: url,
     );
 
-    if(response.statusCode != 200){
+    if (response.statusCode != 200) {
       throw 'Somthing went wrong';
     }
   }
 
+  //set primary address
+
+  Future<void> setPrimaryAddress(
+      {required int addressCount}) async {
+    final url = Uri.parse('${ApiConstant.baseUrl +
+        ApiConstant.addAddress +
+        myLoginId}/$addressCount');
+
+    var response = await _apiHelper.putData(
+      url: url,
+    );
+
+    if(response.statusCode == 201){
+
+      print(response.body);
+
+      
+
+
+    }else{
+
+      throw 'Somthing went wrong';
+
+    }
+  }
 
   //get primary address
 
   Future<AddressModel> getPrimaryAddress() async {
-    final url =
-        Uri.parse(ApiConstant.baseUrl + ApiConstant.getPrimaryAddress + myLoginId);
+    final url = Uri.parse(
+        ApiConstant.baseUrl + ApiConstant.getPrimaryAddress + myLoginId);
     var response = await _apiHelper.getData(url: url);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)["data"];
-            
+
       return AddressModel.fromJson(data);
     } else {
       throw 'Somthing went wrong';
     }
   }
-
-
-
 
   //video banner
 
@@ -363,7 +387,7 @@ class ApiService {
     }
   }
 
-  //orders 
+  //orders
   // Future<List> getOrders() async{
   //   final url = Uri.parse(ApiConstant.baseUrl+ApiConstant.orderList+myLoginId);
 
@@ -371,7 +395,6 @@ class ApiService {
   //   var data = jsonDecode(response.body);
 
   //   if(response.statusCode == 200){
-      
 
   //   }else{
   //     throw 'Somthing went wrong';
@@ -380,29 +403,16 @@ class ApiService {
 
   //add check out
 
-  Future<void> addCheckOut() async{
+  Future<void> addCheckOut() async {
+    final url =
+        Uri.parse(ApiConstant.baseUrl + ApiConstant.addtoCheckOut + myLoginId);
 
-     final url = Uri.parse(ApiConstant.baseUrl+ApiConstant.addtoCheckOut+myLoginId);
+    var response = await _apiHelper.postDataWithOutBody(url: url);
 
-      
-
-     var response =  await _apiHelper.postDataWithOutBody(url: url);
-     
-
-     if(response.statusCode == 200){
-      
-     }else{
-
-       throw 'somthing went wrong';
-
-
-     }
-
-
-
-
-
-
+    if (response.statusCode == 200) {
+    } else {
+      throw 'somthing went wrong';
+    }
   }
 
   // //completed orders list
@@ -531,8 +541,6 @@ class ApiService {
     final url = Uri.parse(
         '${ApiConstant.baseUrl}${ApiConstant.deleteFavorite}$myLoginId/$favoriteId');
 
-    
-
     var response = await _apiHelper.deleteData(url: url);
 
     if (response.statusCode != 200) {
@@ -540,8 +548,26 @@ class ApiService {
     }
   }
 
-
   //payment integration
 
-  // Future<void> 
+   Future<void> addPayment({required String  userName,required String password,required Map<String,dynamic> data}) async{
+
+
+    print(userName);
+    print(password);
+
+    var response = await _apiHelper.paymentPost(
+      userName:  userName,
+      password: password,
+      data:  data
+      );
+
+    if (response.statusCode != 200) {
+
+      print(response.body);
+      throw 'Somthing went wrong';
+    }
+
+
+   }
 }

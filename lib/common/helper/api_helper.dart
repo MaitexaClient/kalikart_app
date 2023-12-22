@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 class ApiHelper {
@@ -43,24 +45,40 @@ class ApiHelper {
   }
 
   //update data with body
-  Future<http.Response> putDataWithBody({required Uri url,required Map<String,dynamic> data}) {
+  Future<http.Response> putDataWithBody(
+      {required Uri url, required Map<String, dynamic> data}) {
     print(url);
-    return http.put(
-      url,
-      headers: <String, String>{
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: data
-    );
+    return http.put(url,
+        headers: <String, String>{
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: data);
   }
 
   Future<http.Response> deleteData({required Uri url}) {
-  
     return http.delete(
       url,
       headers: <String, String>{
         "Content-Type": "application/x-www-form-urlencoded",
       },
+    );
+  }
+
+  //add payment
+
+  Future<http.Response> paymentPost({required String userName,required String password,required Map<String,dynamic>  data}) {
+  
+
+    String basicAuth =
+        'Basic ${base64Encode(utf8.encode('$userName:$password'))}';
+    return  http.post(
+      Uri.https(
+          "api.razorpay.com", "v1/orders"), //https://api.razorpay.com/v1/orders
+      headers: <String, String>{
+        "Content-Type": "application/json",
+        'authorization': basicAuth,
+      },
+      body: jsonEncode(data),
     );
   }
 }

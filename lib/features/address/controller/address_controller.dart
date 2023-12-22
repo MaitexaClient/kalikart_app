@@ -7,8 +7,7 @@ class AddressController extends ChangeNotifier {
 
   bool loading = false;
 
-  List<AddressModel>  listAddress = [];
-
+  List<AddressModel> listAddress = [];
 
   void addAddress({
     required String name,
@@ -32,7 +31,7 @@ class AddressController extends ChangeNotifier {
         landmark: landmark,
       );
 
-      listAddress = await  _apiService.getAllAddress();
+      listAddress = await _apiService.getAllAddress();
 
       if (context.mounted) {
         Navigator.pop(context);
@@ -51,20 +50,16 @@ class AddressController extends ChangeNotifier {
     }
   }
 
-  void getAllAddress(BuildContext context) async{
-
-    try{
+  void getAllAddress(BuildContext context) async {
+    try {
       loading = true;
       notifyListeners();
-      
-      listAddress = await  _apiService.getAllAddress();
+
+      listAddress = await _apiService.getAllAddress();
 
       loading = false;
       notifyListeners();
-
-    }catch(e){
-
-
+    } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -72,32 +67,24 @@ class AddressController extends ChangeNotifier {
           ),
         );
       }
-
     }
-
-
-
   }
 
   //delete address handler
 
-  void deleteAddress({required BuildContext context,required String addressId}) async{
-
-
-    try{
-      loading =true;
+  void deleteAddress(
+      {required BuildContext context, required String addressId}) async {
+    try {
+      loading = true;
       notifyListeners();
 
-     await _apiService.deleteAddress(addressId: addressId);
+      await _apiService.deleteAddress(addressId: addressId);
 
-     listAddress = await _apiService.getAllAddress();
+      listAddress = await _apiService.getAllAddress();
 
-     loading = false;
-     notifyListeners();
-
-    }catch(e){
-
-
+      loading = false;
+      notifyListeners();
+    } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -105,13 +92,11 @@ class AddressController extends ChangeNotifier {
           ),
         );
       }
-
-      
     }
   }
 
   //update address
-   void updateAddress({
+  void updateAddress({
     required String name,
     required String phone,
     required String address,
@@ -126,16 +111,15 @@ class AddressController extends ChangeNotifier {
       loading = true;
       notifyListeners();
       await _apiService.editAddress(
-        name: name,
-        phone: phone,
-        address: address,
-        city: city,
-        pinCode: pinCode,
-        landmark: landmark,
-        addressId: addressId
-      );
+          name: name,
+          phone: phone,
+          address: address,
+          city: city,
+          pinCode: pinCode,
+          landmark: landmark,
+          addressId: addressId);
 
-      listAddress = await  _apiService.getAllAddress();
+      listAddress = await _apiService.getAllAddress();
 
       if (context.mounted) {
         Navigator.pop(context);
@@ -153,8 +137,29 @@ class AddressController extends ChangeNotifier {
       }
     }
   }
-  
 
+  //select address
+  void selectAddress(
+      {required int addressCount, required BuildContext context}) async {
+    try {
+      loading = true;
+      notifyListeners();
+      await _apiService.setPrimaryAddress(addressCount: addressCount);
 
+      listAddress = await _apiService.getAllAddress();
 
+      loading = false;
+      notifyListeners();
+    } catch (e) {
+      loading = false;
+      notifyListeners();
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Somthing went wrong'),
+          ),
+        );
+      }
+    }
+  }
 }

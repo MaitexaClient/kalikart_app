@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/primary_button.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
@@ -7,6 +8,7 @@ import 'package:kalicart/common/widgets/row_product_card.dart';
 import 'package:kalicart/common/widgets/text_bold.dart';
 import 'package:kalicart/common/widgets/text_semi_bold.dart';
 import 'package:kalicart/features/checkout/controller/check_out_controller.dart';
+import 'package:kalicart/features/payment/controller/payment_controller.dart';
 import 'package:provider/provider.dart';
 
 class CheckOutScreen extends StatefulWidget {
@@ -66,9 +68,15 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       ],
                     ),
                   ),
-                  const Icon(
-                    Icons.edit,
-                    size: 18,
+                  GestureDetector(
+                    onTap: (){
+
+                      Navigator.pushNamed(context, RouteName.addressScreen);
+                    },
+                    child: const Icon(
+                      Icons.edit,
+                      size: 18,
+                    ),
                   )
                 ],
               ),
@@ -88,6 +96,10 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 ),
               ),
               PrimaryButton(onPressed: () {
+
+                //payment confirmation
+
+                context.read<PaymentController>().createOrder(amount: 1000);
       
                 
                 

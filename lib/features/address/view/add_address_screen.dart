@@ -66,9 +66,7 @@ class _AddUserAddressState extends State<AddUserAddress> {
                       labelText: 'phone',
                       textEditingController: phoneController,
                     ),
-              
                     const SizedBox(height: 20),
-              
                     CustomEditTextField(
                       labelText: 'pin code',
                       textEditingController: pinCodeController,
@@ -78,7 +76,7 @@ class _AddUserAddressState extends State<AddUserAddress> {
                       labelText: 'landmark',
                       textEditingController: landmarkController,
                     ),
-                      const SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     CustomMaxEditTextField(
                       labelText: 'Address',
                       controller: addressController,
@@ -95,8 +93,8 @@ class _AddUserAddressState extends State<AddUserAddress> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
                           borderSide: const BorderSide(
-                              color:
-                                  AppColor.kblack30), // Border color when focused
+                            color: AppColor.kblack30,
+                          ), // Border color when focused
                         ),
                       ),
                       onChanged: (String? value) {
@@ -125,8 +123,8 @@ class _AddUserAddressState extends State<AddUserAddress> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
                           borderSide: const BorderSide(
-                              color:
-                                  AppColor.kblack30), // Border color when focused
+                              color: AppColor
+                                  .kblack30), // Border color when focused
                         ),
                       ),
                       onChanged: (String? value) {
@@ -151,38 +149,41 @@ class _AddUserAddressState extends State<AddUserAddress> {
             Padding(
               padding: const EdgeInsets.all(15),
               child: Consumer<AddressController>(
-                builder: (context,adressController,child) {
-                  return  adressController.loading ? const CircularProgressIndicator(color: AppColor.kGreenColor,) :  PrimaryButton(
-                    onPressed: () {
-                      if (nameController.text.isNotEmpty &&
-                          phoneController.text.isNotEmpty &&
-                          addressController.text.isNotEmpty &&
-                          pinCodeController.text.isNotEmpty &&
-                          stateController.text.isNotEmpty &&
-                          cityController.text.isNotEmpty &&
-                          landmarkController.text.isNotEmpty) {
-                        context.read<AddressController>().addAddress(
-                              name: nameController.text,
-                              phone: phoneController.text,
-                              address: addressController.text,
-                              pinCode: pinCodeController.text,
-                              state: stateController.text,
-                              city: cityController.text,
-                              landmark: landmarkController.text,
-                              context: context,
+                  builder: (context, adressController, child) {
+                return adressController.loading
+                    ? const CircularProgressIndicator(
+                        color: AppColor.kGreenColor,
+                      )
+                    : PrimaryButton(
+                        onPressed: () {
+                          if (nameController.text.isNotEmpty &&
+                              phoneController.text.isNotEmpty &&
+                              addressController.text.isNotEmpty &&
+                              pinCodeController.text.isNotEmpty &&
+                              stateController.text.isNotEmpty &&
+                              cityController.text.isNotEmpty &&
+                              landmarkController.text.isNotEmpty) {
+                            context.read<AddressController>().addAddress(
+                                  name: nameController.text,
+                                  phone: phoneController.text,
+                                  address: addressController.text,
+                                  pinCode: pinCodeController.text,
+                                  state: stateController.text,
+                                  city: cityController.text,
+                                  landmark: landmarkController.text,
+                                  context: context,
+                                );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('All Fields are required'),
+                              ),
                             );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('All Fields are required'),
-                          ),
-                        );
-                      }
-                    },
-                    buttonText: 'Save Address',
-                  );
-                }
-              ),
+                          }
+                        },
+                        buttonText: 'Save Address',
+                      );
+              }),
             ),
           ],
         ),

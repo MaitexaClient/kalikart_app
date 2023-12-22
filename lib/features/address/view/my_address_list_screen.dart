@@ -57,68 +57,79 @@ class _MyAddressListScreenState extends State<MyAddressListScreen> {
                         shrinkWrap: true,
                         itemCount: controller.listAddress.length,
                         itemBuilder: (context, index) {
-                          return  Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    BoldTextStyle(
-                                        size: 17.sp, text: controller.listAddress[index].name??'address label'),
-                                    PopupMenuButton<int>(
-                                      icon: const Icon(Icons.more_vert,
-                                          color: Colors.grey),
-                                      itemBuilder: (context) => [
-                                        // PopupMenuItem 1
-                                        const PopupMenuItem(
-                                          value: 1,
-                                          // row with 2 children
-                                          child: Row(
-                                            children: [Text("Edit")],
+                          return  GestureDetector(
+                            onTap: () {
+                              controller.selectAddress(addressCount: controller.listAddress[index].addressCount!, context: context);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: controller.listAddress[index].addressType == 'primary' ? AppColor.kGreenColor  : Colors.black26
+                                )
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      BoldTextStyle(
+                                          size: 17.sp, text: controller.listAddress[index].name??'address label'),
+                                      PopupMenuButton<int>(
+                                        icon: const Icon(Icons.more_vert,
+                                            color: Colors.grey),
+                                        itemBuilder: (context) => [
+                                          // PopupMenuItem 1
+                                          const PopupMenuItem(
+                                            value: 1,
+                                            // row with 2 children
+                                            child: Row(
+                                              children: [Text("Edit")],
+                                            ),
                                           ),
-                                        ),
-                                        // PopupMenuItem 2
-                                        const PopupMenuItem(
-                                          value: 2,
-                                          // row with two children
-                                          child: Row(
-                                            children: [Text("Delete")],
+                                          // PopupMenuItem 2
+                                          const PopupMenuItem(
+                                            value: 2,
+                                            // row with two children
+                                            child: Row(
+                                              children: [Text("Delete")],
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                      offset: const Offset(0, 100),
-                                      color: Colors.white,
-                                      elevation: 2,
-                                      // on selected we show the dialog box
-                                      onSelected: (value) {
-                                        if (value == 1) {
-                                          Navigator.pushNamed(context,
-                                              RouteName.editAddressScreen, arguments: controller.listAddress[index]);
-                                        }
-                                        if (value == 2) {
-                                          controller.deleteAddress(context: context, addressId: controller.listAddress[index].sId!);
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                RegularTextStyle(
-                                    size: 16.sp, text: controller.listAddress[index].address??'address'),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                RegularTextStyle(size: 16.sp, text: controller.listAddress[index].pincode??'pin code'),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                RegularTextStyle(
-                                    size: 16.sp, text: controller.listAddress[index].phone??'phone no'),
-                              ],
+                                        ],
+                                        offset: const Offset(0, 100),
+                                        color: Colors.white,
+                                        elevation: 2,
+                                        // on selected we show the dialog box
+                                        onSelected: (value) {
+                                          if (value == 1) {
+                                            Navigator.pushNamed(context,
+                                                RouteName.editAddressScreen, arguments: controller.listAddress[index]);
+                                          }
+                                          if (value == 2) {
+                                            controller.deleteAddress(context: context, addressId: controller.listAddress[index].sId!);
+                                          }
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  RegularTextStyle(
+                                      size: 16.sp, text: controller.listAddress[index].address??'address'),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  RegularTextStyle(size: 16.sp, text: controller.listAddress[index].pincode??'pin code'),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  RegularTextStyle(
+                                      size: 16.sp, text: controller.listAddress[index].phone??'phone no'),
+                                ],
+                              ),
                             ),
                           );
                         },
