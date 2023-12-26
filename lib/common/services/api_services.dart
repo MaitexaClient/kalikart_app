@@ -10,6 +10,7 @@ import 'package:kalicart/common/models/cart_model.dart';
 import 'package:kalicart/common/models/category_model.dart';
 import 'package:kalicart/common/models/faviorate_model.dart';
 import 'package:kalicart/common/models/image_banner_model.dart';
+import 'package:kalicart/common/models/order_model.dart';
 import 'package:kalicart/common/models/product_model.dart';
 import 'package:kalicart/common/models/user_model.dart';
 import 'package:kalicart/common/models/video_banner.dart';
@@ -203,27 +204,18 @@ class ApiService {
 
   //set primary address
 
-  Future<void> setPrimaryAddress(
-      {required int addressCount}) async {
-    final url = Uri.parse('${ApiConstant.baseUrl +
-        ApiConstant.addAddress +
-        myLoginId}/$addressCount');
+  Future<void> setPrimaryAddress({required int addressCount}) async {
+    final url = Uri.parse(
+        '${ApiConstant.baseUrl + ApiConstant.addAddress + myLoginId}/$addressCount');
 
     var response = await _apiHelper.putData(
       url: url,
     );
 
-    if(response.statusCode == 201){
-
+    if (response.statusCode == 201) {
       print(response.body);
-
-      
-
-
-    }else{
-
+    } else {
       throw 'Somthing went wrong';
-
     }
   }
 
@@ -549,25 +541,45 @@ class ApiService {
   }
 
   //payment integration
-
-   Future<void> addPayment({required String  userName,required String password,required Map<String,dynamic> data}) async{
-
-
-    print(userName);
-    print(password);
-
+  Future<void> addPayment(
+      {required String userName,
+      required String password,
+      required Map<String, dynamic> data}) async {
     var response = await _apiHelper.paymentPost(
-      userName:  userName,
-      password: password,
-      data:  data
-      );
+        userName: userName, password: password, data: data);
 
     if (response.statusCode != 200) {
-
-      print(response.body);
       throw 'Somthing went wrong';
+    }
+  }
+
+  //add order
+  Future<void> updateOrder({required addressId}) async {
+    final url = Uri.parse('${ApiConstant.baseUrl +
+        ApiConstant.updateOrder +
+        myLoginId}/$addressId/1');
+
+   var response = await _apiHelper.postDataWithOutBody(url: url);
+   if(response.statusCode != 200){
+    throw 'Somthing went wrong';
+   }
+   }
+
+  //view order list
+  Future<List<OrderModel>> viewAllOrder() async{
+
+    final url =  Uri.parse(ApiConstant.baseUrl+ApiConstant.orderList+myLoginId);
+
+    var response = await _apiHelper.postDataWithOutBody(url: url);
+    var data = jsonDecode(response.body);
+
+    if(response.statusCode == 200){
+      return data["data"].map((e) =>  OrderModel.fromJson(e)).toList();
+    }else{
+      throw "Somthing went wrong";
     }
 
 
-   }
+ 
+  }
 }

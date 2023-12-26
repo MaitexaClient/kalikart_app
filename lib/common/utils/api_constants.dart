@@ -28,7 +28,7 @@ class ApiConstant{
   static const bannerVideo = '/view-banners/videos';
   static const trendingProduct = '/view-products/trending';
   static const addCreditPoint = '/banner-credit/';
-  static const orderList = '/view-orders/';
+ 
   static const completeOrederList = '/completed-orders/';
   static const addtoCheckOut  = '/add-orders/';
   
@@ -38,6 +38,13 @@ class ApiConstant{
   static const deleteAddress = '/user-del-address/';
   static const editAddres = '/user-address-update/';
   static const getPrimaryAddress = '/user-primary-address/';
+
+
+  //order
+   static const updateOrder = '/update-orders-status/';
+    static const orderList = '/view-orders/';
+   
+   
   
 
 

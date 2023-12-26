@@ -27,6 +27,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<CheckOutController>(context, listen: false).getAddress(context: context);
+      Provider.of<PaymentController>(context, listen: false).initial();
       
     });
     
@@ -97,13 +98,18 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               ),
               PrimaryButton(onPressed: () {
 
+                print('ffff');
+
                 //payment confirmation
 
-                context.read<PaymentController>().createOrder(amount: 1000);
+                //context.read<PaymentController>().createOrder(amount: 1000);
+
+                //confirm 
+                context.read<CheckOutController>().updateOrder(context: context,addressId: value.primaryAddress!.sId!);
       
                 
                 
-              }, buttonText: 'Confirm')
+              }, buttonText: 'Confrm')
           ],
           ),
         ),

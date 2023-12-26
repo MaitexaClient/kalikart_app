@@ -9,17 +9,17 @@ class CheckOutController extends ChangeNotifier {
   CheckOutController({this.cartController});
 
   final _apiService = ApiService();
-  
+
   bool loading = false;
 
-  AddressModel ? primaryAddress;
+  AddressModel? primaryAddress;
 
   //add check out
   void addCheckOut({required BuildContext context}) async {
     try {
       loading = true;
       notifyListeners();
-      
+
       await _apiService.addCheckOut();
 
       loading = false;
@@ -37,23 +37,16 @@ class CheckOutController extends ChangeNotifier {
 
   //get primary address
 
-  void getAddress({required BuildContext context}) async{
-
-    try{
-
-      loading =true;
+  void getAddress({required BuildContext context}) async {
+    try {
+      loading = true;
       notifyListeners();
 
-      primaryAddress =  await _apiService.getPrimaryAddress();
-
-    
+      primaryAddress = await _apiService.getPrimaryAddress();
 
       loading = false;
       notifyListeners();
-
-
-    }catch(e){
-
+    } catch (e) {
       loading = false;
       notifyListeners();
 
@@ -61,13 +54,25 @@ class CheckOutController extends ChangeNotifier {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(e.toString())));
       }
-
-
-
     }
-
-
   }
 
 
+  void updateOrder({required String addressId,required BuildContext context}) async {
+      try {
+        loading = true;
+        notifyListeners();
+        await _apiService.updateOrder(addressId: addressId);
+        loading = false;
+        notifyListeners();
+      } catch (e) {
+        loading = false;
+        notifyListeners();
+
+        if (context.mounted) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(e.toString())));
+        }
+      }
+    }
 }

@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/foundation.dart';
 import 'package:kalicart/common/services/api_services.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -13,25 +11,36 @@ class PaymentController  extends ChangeNotifier{
 
   void initial(){
 
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR,handlePaymentError);
+
+   // _razorpay.on(Razorpay.,handlePaymentSuccess);
+
+    
+
   }
 
 
 
 
 void handlePaymentSuccess(PaymentSuccessResponse response) { 
-  // Do something when payment succeeds 
+
+  print('success');
+  
 } 
   
 void handlePaymentError(PaymentFailureResponse response) { 
-  // Do something when payment fails 
+  print('error');
 } 
   
 void handleExternalWallet(ExternalWalletResponse response) { 
-  // Do something when an external wallet is selected 
+  print('hi');
 }
 
 
 void createOrder({required double amount,}) async {
+ 
+  
    
 
     try{
@@ -42,16 +51,21 @@ void createOrder({required double amount,}) async {
       "receipt": 'idddddd',
     };
     await  _apiService.addPayment(
-      password:  'x0dDkPUM40xjJh3Q1E3',
-      userName:'rzp_test_uw4JbcsNp28aKd',
+      password: 'bCHp3T0NBFwcP92wKBukXrCD',
+      userName:'rzp_test_568BDWRZYY8pyf',
       data: body,
       );
 
       _razorpay.open(await openGateway());
 
+      
+
     }catch(e){
 
+      print('hi amount');
       print(e);
+
+      
 
 
     }
@@ -65,7 +79,7 @@ void createOrder({required double amount,}) async {
  
 Future openGateway() async {
     var options = {
-      'key': '',
+      'key': 'rzp_test_568BDWRZYY8pyf',
       'amount': 100, //in the smallest currency sub-unit.
       'name': 'test',
     
@@ -74,12 +88,18 @@ Future openGateway() async {
         'contact': '923456789',
         'email': 'test@gmail.com'
       },
+      'external': {
+      'wallets': ['paytm']
+    },
       "theme": {
-        "color": '#b3d2ff',
+        "color": "#11A920",
       },
     };
     _razorpay.open(options);
-  }
+}
+
+
+
 
 
 
