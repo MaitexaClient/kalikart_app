@@ -13,6 +13,12 @@ class OrderListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<OrderController>(context, listen: false).getAllOrder(context:context);
+    });
+
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -23,7 +29,11 @@ class OrderListScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Consumer<OrderController>(
-          builder: (context, controller, child) => controller.orderList.isEmpty
+          builder: (context, controller, child) => controller.loading ?  const Center(
+            child: CircularProgressIndicator(color: AppColor.kGreenColor,),
+          ) :
+          
+          controller.orderList.isEmpty
               ? Center(
                   child: ListEmptyWidget(
                     title: 'No  Order Yet!',
@@ -33,7 +43,7 @@ class OrderListScreen extends StatelessWidget {
                 )
               : DefaultTabController(
                   length: 2,
-                  animationDuration: Duration(seconds: 1),
+                  animationDuration: const Duration(seconds: 1),
                   child: Column(
                     children: [
                       Container(
@@ -56,9 +66,9 @@ class OrderListScreen extends StatelessWidget {
                         ),
                       ),
 
-                      const Expanded(child: TabBarView(
+                       Expanded(child: TabBarView(
                         children: [
-                          ActiveOrderListWidget(),
+                          ActiveOrderListWidget(orderList: controller.orderList,),
                           CompletedOrderListWidget()
                         ],
                       ))

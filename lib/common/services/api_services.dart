@@ -570,11 +570,13 @@ class ApiService {
 
     final url =  Uri.parse(ApiConstant.baseUrl+ApiConstant.orderList+myLoginId);
 
-    var response = await _apiHelper.postDataWithOutBody(url: url);
+    var response = await _apiHelper.getData(url: url);
+    
     var data = jsonDecode(response.body);
 
     if(response.statusCode == 200){
-      return data["data"].map((e) =>  OrderModel.fromJson(e)).toList();
+    
+      return data["data"].map<OrderModel>((e) =>  OrderModel.fromJson(e)).toList();
     }else{
       throw "Somthing went wrong";
     }

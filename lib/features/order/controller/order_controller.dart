@@ -11,7 +11,7 @@ class OrderController extends ChangeNotifier {
 
   //get all order list
 
-  void getAllOrderModel({required BuildContext context}) async{
+  void getAllOrder({required BuildContext context}) async{
     try {
       loading = true;
       notifyListeners();
@@ -30,4 +30,8 @@ class OrderController extends ChangeNotifier {
       }
     }
   }
+
+
+
+  
 }
