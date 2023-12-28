@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kalicart/common/models/user_model.dart';
+import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/services/api_services.dart';
 import 'package:kalicart/common/services/db_service.dart';
 
@@ -85,7 +86,7 @@ class ProfileController extends ChangeNotifier {
   void logout(BuildContext context){
 
     Db.removeAuth();
-    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+    Navigator.pushNamedAndRemoveUntil(context, RouteName.loginScreen, (route) => false);
 
 
   }

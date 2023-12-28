@@ -61,6 +61,7 @@ class FavouriteScreen extends StatelessWidget {
                             return Stack(
                               children: [
                                 ProductCard(
+                                  productId: controller.favaerateList[index].productId,
                                   images:
                                       controller.favaerateList[index].image ??
                                           '',
@@ -75,7 +76,7 @@ class FavouriteScreen extends StatelessWidget {
                                   showFaviorateButton: false,
                                   onPressed: () {
                                     Navigator.pushNamed(context,
-                                        RouteName.productDeatailsScreen);
+                                        RouteName.productDeatailsScreen,arguments: controller.favaerateList[index].productId,);
                                   },
                                 ),
                                 Positioned(
@@ -95,7 +96,7 @@ class FavouriteScreen extends StatelessWidget {
                                         ),
                                       ),
                                       onPressed: () {
-                                        print('ffffffff');
+                                        
                                         controller.deleteFavorite(
                                             favoriteId: controller
                                                 .favaerateList[index].sId

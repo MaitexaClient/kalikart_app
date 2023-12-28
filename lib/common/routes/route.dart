@@ -17,6 +17,7 @@ import 'package:kalicart/features/category/view/category_list.dart';
 import 'package:kalicart/features/home/view/home_screen.dart';
 import 'package:kalicart/features/home/view/trending_screen.dart';
 import 'package:kalicart/features/home/view/video_screen.dart';
+import 'package:kalicart/features/onboarding/view/on_boarding_screen.dart';
 import 'package:kalicart/features/order/view/order_list_screen.dart';
 import 'package:kalicart/features/product/view/product_details_screen.dart';
 import 'package:kalicart/features/product/view/product_list.dart';
@@ -33,7 +34,7 @@ class AppRoute {
           if(Db.auth()){
             return MaterialPageRoute(builder: (context) =>  const RootScreen());
           }else{
-            return MaterialPageRoute(builder: (context) => const LoginScreen(),);
+            return MaterialPageRoute(builder: (context) => const OnBoardingScreen(),);
           }
 
       case RouteName.rootScreen:

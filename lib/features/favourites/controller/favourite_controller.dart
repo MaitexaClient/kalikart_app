@@ -9,14 +9,13 @@ class FavouriteController extends ChangeNotifier {
   bool loading = false;
   final _apiService = ApiService();
 
+  //get all faveriot
   void getAllFeverateList(BuildContext context) async {
     try {
       loading = true;
       notifyListeners();
 
       _favaerateList = await _apiService.getAllFavoriteProductList();
-
-      
 
       loading = false;
       notifyListeners();
@@ -46,9 +45,6 @@ class FavouriteController extends ChangeNotifier {
       notifyListeners();
 
     }catch(e){
-
-       
-
 
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
