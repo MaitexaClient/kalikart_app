@@ -5,6 +5,7 @@ import 'package:kalicart/features/cart/view/cart_list_screen.dart';
 import 'package:kalicart/features/favourites/view/favourite_screen.dart';
 import 'package:kalicart/features/home/view/home_screen.dart';
 import 'package:kalicart/features/order/view/order_list_screen.dart';
+import 'package:kalicart/features/order/view/order_view_screen.dart';
 import 'package:kalicart/features/profile/view/profile_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,7 @@ class RootScreen extends StatelessWidget {
     HomeScreen(),
     FavouriteScreen(),
     CartListScreen(),
-    OrderListScreen(),
+    OrderViewScreen(),
     ProfileScreen(),
   ];
 

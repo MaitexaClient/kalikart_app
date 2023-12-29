@@ -19,6 +19,7 @@ import 'package:kalicart/features/home/view/trending_screen.dart';
 import 'package:kalicart/features/home/view/video_screen.dart';
 import 'package:kalicart/features/onboarding/view/on_boarding_screen.dart';
 import 'package:kalicart/features/order/view/order_list_screen.dart';
+import 'package:kalicart/features/order/view/track_order.dart';
 import 'package:kalicart/features/product/view/product_details_screen.dart';
 import 'package:kalicart/features/product/view/product_list.dart';
 import 'package:kalicart/features/product/view/product_list_subcat_screen.dart';
@@ -31,71 +32,121 @@ class AppRoute {
 
     switch (settings.name) {
       case '/':
-          if(Db.auth()){
-            return MaterialPageRoute(builder: (context) =>  const RootScreen());
-          }else{
-            return MaterialPageRoute(builder: (context) => const OnBoardingScreen(),);
-          }
+        if (Db.auth()) {
+          return MaterialPageRoute(builder: (context) => const RootScreen());
+        } else {
+          return MaterialPageRoute(
+            builder: (context) => const OnBoardingScreen(),
+          );
+        }
 
       case RouteName.rootScreen:
-       return  MaterialPageRoute(builder: (context) =>  const RootScreen());
-                  
+        return MaterialPageRoute(builder: (context) => const RootScreen());
+
       case RouteName.loginScreen:
-        
         return MaterialPageRoute(
-          builder: (context) =>  const LoginScreen(),
+          builder: (context) => const LoginScreen(),
         );
       case RouteName.signupScreen:
         return MaterialPageRoute(
-          builder: (context) =>  const  SignUpScreen(),
+          builder: (context) => const SignUpScreen(),
         );
       case RouteName.otpverificationScreen:
         return MaterialPageRoute(
           builder: (context) => const OTPverificationScreen(),
         );
       case RouteName.homeScreen:
-        return MaterialPageRoute(builder: (context) => const HomeScreen(),);
-      case  RouteName.categoryScreen:
-        return MaterialPageRoute(builder: (context) => const CategoryListScreen(),);
+        return MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
+        );
+      case RouteName.categoryScreen:
+        return MaterialPageRoute(
+          builder: (context) => const CategoryListScreen(),
+        );
       case RouteName.trendingScreen:
-        
-        return MaterialPageRoute(builder: (context) =>  TrendingScreen(),);
+        return MaterialPageRoute(
+          builder: (context) => TrendingScreen(),
+        );
       case RouteName.searchScreen:
-        return MaterialPageRoute(builder: (context) => const SearchScreen(),);
+        return MaterialPageRoute(
+          builder: (context) => const SearchScreen(),
+        );
       case RouteName.favouriteScreen:
-        return MaterialPageRoute(builder: (context) => const FavouriteScreen(),);
+        return MaterialPageRoute(
+          builder: (context) => const FavouriteScreen(),
+        );
       case RouteName.productDeatailsScreen:
-         final productId  = args as String;
-        return MaterialPageRoute(builder: (context) =>  ProductDetailsScreen(productId:  productId,),);
+        final productId = args as String;
+        return MaterialPageRoute(
+          builder: (context) => ProductDetailsScreen(
+            productId: productId,
+          ),
+        );
       case RouteName.cartListScreen:
-        return MaterialPageRoute(builder: (context) => const CartListScreen(),);
+        return MaterialPageRoute(
+          builder: (context) => const CartListScreen(),
+        );
       case RouteName.checkOutScreen:
-        return MaterialPageRoute(builder: (context) => const CheckOutScreen(),);
+        return MaterialPageRoute(
+          builder: (context) => const CheckOutScreen(),
+        );
       case RouteName.confirmScreen:
-        return MaterialPageRoute(builder: (context) => const ConfirmScreen(),);
+        return MaterialPageRoute(
+          builder: (context) => const ConfirmScreen(),
+        );
       case RouteName.orderListScreen:
-        return MaterialPageRoute(builder: (context) => const OrderListScreen(),);
+        return MaterialPageRoute(
+          builder: (context) => const OrderListScreen(),
+        );
       case RouteName.productListSubCatScreen:
         String subCatName = args as String;
-        return MaterialPageRoute(builder: (context) =>  ProductListSubCatScreen(subCatName: subCatName,),);
+        return MaterialPageRoute(
+          builder: (context) => ProductListSubCatScreen(
+            subCatName: subCatName,
+          ),
+        );
       case RouteName.productListScreen:
-       final  params = args as Map<String,dynamic>;
-      
-        return MaterialPageRoute(builder: (context) =>  ProductListScreen(categoryName: params['catName'],catId: params['catId'],),);
+        final params = args as Map<String, dynamic>;
+
+        return MaterialPageRoute(
+          builder: (context) => ProductListScreen(
+            categoryName: params['catName'],
+            catId: params['catId'],
+          ),
+        );
       case RouteName.videoScreener:
-        final videoparams  =  args as Map<String,dynamic>;
-        return MaterialPageRoute(builder: (context) => VideoScreen(url: videoparams['url'],bannerId: videoparams['bannerId'],),);
+        final videoparams = args as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (context) => VideoScreen(
+            url: videoparams['url'],
+            bannerId: videoparams['bannerId'],
+          ),
+        );
       case RouteName.walletScreen:
-        return MaterialPageRoute(builder: (context) => const  MyWallet(),);
+        return MaterialPageRoute(
+          builder: (context) => const MyWallet(),
+        );
       //address screen
       case RouteName.addressScreen:
-        return MaterialPageRoute(builder: (context) => const MyAddressListScreen(),);
+        return MaterialPageRoute(
+          builder: (context) => const MyAddressListScreen(),
+        );
       case RouteName.addAddressScreen:
-        return MaterialPageRoute(builder: (context) => const AddUserAddress(),);
+        return MaterialPageRoute(
+          builder: (context) => const AddUserAddress(),
+        );
       case RouteName.editAddressScreen:
-      final  params = args as AddressModel;
-        return MaterialPageRoute(builder: (context) =>  EditUserScreen(data: params,),);
-     
+        final params = args as AddressModel;
+        return MaterialPageRoute(
+          builder: (context) => EditUserScreen(
+            data: params,
+          ),
+        );
+      case RouteName.orderTrackerScreen:
+        return MaterialPageRoute(
+          builder: (context) => const OrderTrackerScreen(),
+        );
+
       default:
         return MaterialPageRoute(
           builder: (context) => const Scaffold(
