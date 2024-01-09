@@ -20,6 +20,7 @@ import 'package:kalicart/features/home/view/video_screen.dart';
 import 'package:kalicart/features/onboarding/view/on_boarding_screen.dart';
 import 'package:kalicart/features/order/view/order_list_screen.dart';
 import 'package:kalicart/features/order/view/track_order.dart';
+import 'package:kalicart/features/payment/view/payment_screen.dart';
 import 'package:kalicart/features/product/view/product_details_screen.dart';
 import 'package:kalicart/features/product/view/product_list.dart';
 import 'package:kalicart/features/product/view/product_list_subcat_screen.dart';
@@ -94,6 +95,8 @@ class AppRoute {
         return MaterialPageRoute(
           builder: (context) => const ConfirmScreen(),
         );
+      case RouteName.paymentConfirmationScreen:
+          return MaterialPageRoute(builder: (context) =>const PaymentScreen(),);
       case RouteName.orderListScreen:
         return MaterialPageRoute(
           builder: (context) => const OrderListScreen(),

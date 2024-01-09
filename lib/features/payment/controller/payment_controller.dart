@@ -1,106 +1,79 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/services/api_services.dart';
+import 'package:kalicart/features/payment/view/payment_screen.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-class PaymentController  extends ChangeNotifier{
-
-
+class PaymentController extends ChangeNotifier {
   final _razorpay = Razorpay();
 
   final _apiService = ApiService();
 
-  void initial(){
+  bool loading = false;
 
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,handlePaymentSuccess);
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR,handlePaymentError);
+  void initial(BuildContext context) {
+    void handlePaymentSuccess(PaymentSuccessResponse response) async {
+      Navigator.pushNamed(context, RouteName.paymentConfirmationScreen);
+    }
 
-   // _razorpay.on(Razorpay.,handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
 
-    
-
+    // _razorpay.on(Razorpay.,handlePaymentSuccess);
   }
 
+  void handlePaymentError(PaymentFailureResponse response) {}
 
+  void handleExternalWallet(ExternalWalletResponse response) {}
 
-
-void handlePaymentSuccess(PaymentSuccessResponse response) { 
-
-  print('success');
-  
-} 
-  
-void handlePaymentError(PaymentFailureResponse response) { 
-  print('error');
-} 
-  
-void handleExternalWallet(ExternalWalletResponse response) { 
-  print('hi');
-}
-
-
-void createOrder({required double amount,}) async {
- 
-  
-   
-
-    try{
-
+  Future<void> createOrder(
+      {required double amount, required BuildContext context}) async {
+    try {
       Map<String, dynamic> body = {
-      "amount": amount * 100,
-      "currency": "INR",
-      "receipt": 'idddddd',
-    };
-    await  _apiService.addPayment(
-      password: 'bCHp3T0NBFwcP92wKBukXrCD',
-      userName:'rzp_test_568BDWRZYY8pyf',
-      data: body,
+        "amount": amount * 100,
+        "currency": "INR",
+        "receipt": 'idddddd',
+      };
+      String resId = await _apiService.addPayment(
+        password: 'bCHp3T0NBFwcP92wKBukXrCD',
+        userName: 'rzp_test_568BDWRZYY8pyf',
+        data: body,
       );
 
-      _razorpay.open(await openGateway());
-
-      
-
-    }catch(e){
-
-      print('hi amount');
-      print(e);
-
-      
-
-
+      await openGateway(resId);
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.toString())));
+      }
     }
-   
   }
 
-
-
-
-
- 
-Future openGateway() async {
+  Future openGateway(String id) async {
     var options = {
       'key': 'rzp_test_568BDWRZYY8pyf',
       'amount': 100, //in the smallest currency sub-unit.
       'name': 'test',
-    
+      'order_id': id,
       'timeout': 60 * 5, // in seconds // 5 minutes
-      'prefill': {
-        'contact': '923456789',
-        'email': 'test@gmail.com'
-      },
+      'prefill': {'contact': '923456789', 'email': 'test@gmail.com'},
       'external': {
-      'wallets': ['paytm']
-    },
+        'wallets': ['paytm']
+      },
       "theme": {
         "color": "#11A920",
       },
     };
     _razorpay.open(options);
-}
+  }
 
+  //navigate confirm screen
 
-
-
-
-
+  navigate(context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PaymentScreen(),
+        ));
+  }
 }

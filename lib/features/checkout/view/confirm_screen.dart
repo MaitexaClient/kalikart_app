@@ -10,7 +10,7 @@ class ConfirmScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const sizedBox = const SizedBox(
+    const sizedBox =  SizedBox(
       height: 20,
     );
     return Scaffold(
@@ -51,5 +51,7 @@ class ConfirmScreen extends StatelessWidget {
         ]),
       ),
     );
+  
+  
   }
 }

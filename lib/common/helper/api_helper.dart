@@ -73,7 +73,7 @@ class ApiHelper {
         'Basic ${base64Encode(utf8.encode('$userName:$password'))}';
     return  http.post(
       Uri.https(
-          "api.razorpay.com", "v1/orders"), //https://api.razorpay.com/v1/orders
+          "api.razorpay.com", "v1/orders"), 
       headers: <String, String>{
         "Content-Type": "application/json",
         'authorization': basicAuth,

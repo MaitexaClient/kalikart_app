@@ -9,9 +9,11 @@ import 'package:kalicart/common/widgets/primary_button.dart';
 import 'package:kalicart/common/widgets/product_card_widget.dart';
 import 'package:kalicart/common/widgets/text_semi_bold.dart';
 import 'package:kalicart/common/widgets/row_text_widget.dart';
+import 'package:kalicart/common/widgets/web_view.dart';
 import 'package:kalicart/features/home/controller/home_controller.dart';
 import 'package:kalicart/features/product/controller/product_controller.dart';
 import 'package:provider/provider.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,11 +27,14 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<HomeController>(context, listen: false).initial(context);
-       Provider.of<ProductDetailsController>(context,listen: false).getAllFavourite(context: context);
+      Provider.of<ProductDetailsController>(context, listen: false)
+          .getAllFavourite(context: context);
     });
 
     super.initState();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               SemiBoldTextStyle(
                                 size: 14.sp,
-                                text: 'location',
+                                text: 'Location',
                                 color: AppColor.kblack,
                               ),
                               const Spacer(),
@@ -94,47 +99,26 @@ class _HomeScreenState extends State<HomeScreen> {
                               items: controller.bannerImages.map((i) {
                                 return Builder(
                                   builder: (BuildContext context) {
-                                    return Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: NetworkImage(i.image!),
-                                                fit: BoxFit.cover)),
-                                        child: Padding(
-                                          padding: EdgeInsets.only(left: 30.w),
-                                          //   child: Column(
-                                          //     crossAxisAlignment:
-                                          //         CrossAxisAlignment.start,
-                                          //     mainAxisAlignment:
-                                          //         MainAxisAlignment.center,
-                                          //     children: [
-                                          //       MediumTextStyle(
-                                          //           size: 15.sp, text: 'Fastbey'),
-                                          //       const SizedBox(
-                                          //         height: 3,
-                                          //       ),
-                                          //       BoldTextStyle(
-                                          //           size: 22.sp, text: 'Combo'),
-                                          //       const SizedBox(
-                                          //         height: 10,
-                                          //       ),
-                                          //       SizedBox(
-                                          //         width: MediaQuery.of(context)
-                                          //                 .size
-                                          //                 .width /
-                                          //             3.5,
-                                          //         child: PrimaryButton(
-                                          //           onPressed: () {},
-                                          //           buttonText: 'Order now',
-                                          //           height: 45.h,
-                                          //           buttonTextSize: 14.sp,
-                                          //         ),
-                                          //       )
-                                          //     ],
-                                          //   ),
-                                          // ),
-                                        ));
+                                    return GestureDetector(
+                                      onTap: () {
+
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewStack(
+                                          url: 'https://www.flipkart.com/',
+                                        ),),);
+       
+                                      },
+                                      child: Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: NetworkImage(i.image!),
+                                                  fit: BoxFit.cover)),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsets.only(left: 30.w),
+                                          )),
+                                    );
                                   },
                                 );
                               }).toList(),
@@ -203,17 +187,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   builder: (BuildContext context) {
                                     return GestureDetector(
                                       onTap: () {
-                                        
-
-                                        Navigator.pushNamed(context, RouteName.videoScreener,arguments: {
-                                          'url' : i.video!,
-                                          'bannerId' : i.sId,
-                                        });
+                                        Navigator.pushNamed(
+                                            context, RouteName.videoScreener,
+                                            arguments: {
+                                              'url': i.video!,
+                                              'bannerId': i.sId,
+                                            });
                                       },
                                       child: Container(
                                           width:
                                               MediaQuery.of(context).size.width,
-                                          decoration:  BoxDecoration(
+                                          decoration: BoxDecoration(
                                               image: DecorationImage(
                                                   image: NetworkImage(
                                                       i.thumbNail!),
@@ -224,17 +208,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                             // mainAxisAlignment:
                                             //     MainAxisAlignment.center,
                                             children: [
-
                                               Center(
                                                 child: const Icon(
-                                                  Icons.play_circle_outline,color: Colors.white,
+                                                  Icons.play_circle_outline,
+                                                  color: Colors.white,
                                                   size: 50,
-                                                  ),
+                                                ),
                                               ),
-
-                                               
-                                             
-                                              
                                               Positioned(
                                                 bottom: -1,
                                                 right: 0,
@@ -259,8 +239,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               }).toList(),
                             ),
-                          
-                          
                           ),
 
                           RowTextWidget(
@@ -282,22 +260,35 @@ class _HomeScreenState extends State<HomeScreen> {
                               itemBuilder: (context, index) => Padding(
                                 padding: const EdgeInsets.only(right: 15),
                                 child: Consumer<ProductDetailsController>(
-                                  builder: (context,productController,child) {
-                                    return ProductCard(
-                                      images:
-                                         controller.trendingList[index].image![0].toString(),
-                                      catName: controller.trendingList[index].subCategory?? '',
-                                      price: controller.trendingList[index].price.toString(),
-                                      productName: controller.trendingList[index].productName.toString(),
-                                      productId: controller.trendingList[index].sId,
-                                      isFavarated:  productController.checkFaviorite(productId:controller.trendingList[index].sId!),
-                                      onPressed: () {
-                                        Navigator.pushNamed(context,
-                                            RouteName.productDeatailsScreen, arguments: controller.trendingList[index].sId.toString());
-                                      },
-                                    );
-                                  }
-                                ),
+                                    builder:
+                                        (context, productController, child) {
+                                  return ProductCard(
+                                    images: controller
+                                        .trendingList[index].image![0]
+                                        .toString(),
+                                    catName: controller
+                                            .trendingList[index].subCategory ??
+                                        '',
+                                    price: controller.trendingList[index].price
+                                        .toString(),
+                                    productName: controller
+                                        .trendingList[index].productName
+                                        .toString(),
+                                    productId:
+                                        controller.trendingList[index].sId,
+                                    isFavarated:
+                                        productController.checkFaviorite(
+                                            productId: controller
+                                                .trendingList[index].sId!),
+                                    onPressed: () {
+                                      Navigator.pushNamed(context,
+                                          RouteName.productDeatailsScreen,
+                                          arguments: controller
+                                              .trendingList[index].sId
+                                              .toString());
+                                    },
+                                  );
+                                }),
                               ),
                             ),
                           ),
@@ -318,17 +309,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   builder: (BuildContext context) {
                                     return GestureDetector(
                                       onTap: () {
-                                        
-
-                                        Navigator.pushNamed(context, RouteName.videoScreener,arguments: {
-                                          'url' : i.video!,
-                                          'bannerId' : i.sId,
-                                        });
+                                        Navigator.pushNamed(
+                                            context, RouteName.videoScreener,
+                                            arguments: {
+                                              'url': i.video!,
+                                              'bannerId': i.sId,
+                                            });
                                       },
                                       child: Container(
                                           width:
                                               MediaQuery.of(context).size.width,
-                                          decoration:  BoxDecoration(
+                                          decoration: BoxDecoration(
                                               image: DecorationImage(
                                                   image: NetworkImage(
                                                       i.thumbNail!),
@@ -339,17 +330,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                             // mainAxisAlignment:
                                             //     MainAxisAlignment.center,
                                             children: [
-
                                               Center(
                                                 child: const Icon(
-                                                  Icons.play_circle_outline,color: Colors.white,
+                                                  Icons.play_circle_outline,
+                                                  color: Colors.white,
                                                   size: 50,
-                                                  ),
+                                                ),
                                               ),
-
-                                               
-                                             
-                                              
                                               Positioned(
                                                 bottom: -1,
                                                 right: 0,
@@ -374,10 +361,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               }).toList(),
                             ),
-                          
-                          
                           ),
-
                         ],
                       )),
                 ),

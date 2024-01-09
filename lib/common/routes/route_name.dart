@@ -21,6 +21,7 @@ class RouteName {
   static const productListSubCatScreen = '/product-list-by-sub-cat';
   static const videoScreener = '/video-screen';
   static const walletScreen = '/wallet-screen';
+  static const paymentConfirmationScreen = '/payment-confirmation-screen';
   //address screen
    static const addressScreen = '/address-screen';
    static const addAddressScreen = '/add-address-screen';

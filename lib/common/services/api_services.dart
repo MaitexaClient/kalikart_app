@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:kalicart/common/helper/api_helper.dart';
 import 'package:kalicart/common/models/address_model.dart';
@@ -541,47 +539,49 @@ class ApiService {
   }
 
   //payment integration
-  Future<void> addPayment(
+  Future<String> addPayment(
       {required String userName,
       required String password,
       required Map<String, dynamic> data}) async {
     var response = await _apiHelper.paymentPost(
-        userName: userName, password: password, data: data);
+      userName: userName,
+      password: password,
+      data: data,
+    );
 
-    if (response.statusCode != 200) {
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body)["id"];
+    } else {
       throw 'Somthing went wrong';
     }
   }
 
   //add order
   Future<void> updateOrder({required addressId}) async {
-    final url = Uri.parse('${ApiConstant.baseUrl +
-        ApiConstant.updateOrder +
-        myLoginId}/$addressId/1');
+    final url = Uri.parse(
+        '${ApiConstant.baseUrl + ApiConstant.updateOrder + myLoginId}/$addressId/1');
 
-   var response = await _apiHelper.postDataWithOutBody(url: url);
-   if(response.statusCode != 200){
-    throw 'Somthing went wrong';
-   }
-   }
+    var response = await _apiHelper.postDataWithOutBody(url: url);
+    if (response.statusCode != 200) {
+      throw 'Somthing went wrong';
+    }
+  }
 
   //view order list
-  Future<List<OrderModel>> viewAllOrder() async{
-
-    final url =  Uri.parse(ApiConstant.baseUrl+ApiConstant.orderList+myLoginId);
+  Future<List<OrderModel>> viewAllOrder() async {
+    final url =
+        Uri.parse(ApiConstant.baseUrl + ApiConstant.orderList + myLoginId);
 
     var response = await _apiHelper.getData(url: url);
-    
+
     var data = jsonDecode(response.body);
 
-    if(response.statusCode == 200){
-    
-      return data["data"].map<OrderModel>((e) =>  OrderModel.fromJson(e)).toList();
-    }else{
+    if (response.statusCode == 200) {
+      return data["data"]
+          .map<OrderModel>((e) => OrderModel.fromJson(e))
+          .toList();
+    } else {
       throw "Somthing went wrong";
     }
-
-
- 
   }
 }

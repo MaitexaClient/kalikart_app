@@ -93,7 +93,7 @@ class Myapp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(414, 896),
-      child: MaterialApp(
+      builder:(context, child) =>  MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             scaffoldBackgroundColor: AppColor.kWhiteColor,

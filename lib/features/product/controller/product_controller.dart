@@ -144,7 +144,6 @@ class ProductDetailsController extends ChangeNotifier {
 
   //get all Favorite
   void getAllFavourite({required BuildContext context}) async {
-    print('fffffffffff');
     try {
       loading = true;
       notifyListeners();
