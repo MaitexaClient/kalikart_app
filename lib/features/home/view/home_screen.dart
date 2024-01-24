@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:kalicart/common/models/category_model.dart';
 import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/card_column_widget.dart';
@@ -13,7 +14,6 @@ import 'package:kalicart/common/widgets/web_view.dart';
 import 'package:kalicart/features/home/controller/home_controller.dart';
 import 'package:kalicart/features/product/controller/product_controller.dart';
 import 'package:provider/provider.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,15 +29,61 @@ class _HomeScreenState extends State<HomeScreen> {
       Provider.of<HomeController>(context, listen: false).initial(context);
       Provider.of<ProductDetailsController>(context, listen: false)
           .getAllFavourite(context: context);
+
+      Provider.of<HomeController>(context, listen: false)
+          .checkLocationPermission();
     });
 
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
+    List<Category> categoryList = [
+      Category(
+          sId: 'id_',
+          category: 'Staples',
+          image:
+              'https://www.pngall.com/wp-content/uploads/4/Grocery-PNG-Free-Download.png'),
+      Category(
+          sId: 'id_',
+          category: 'Snacks & Beverages',
+          image:
+              'https://freepngimg.com/thumb/grocery/41619-7-groceries-free-download-image-thumb.png'),
+      Category(
+        sId: 'id',
+        category: 'Packaged Food',
+        image:
+            'https://freepngimg.com/thumb/grocery/41629-3-groceries-png-download-free-thumb.png',
+      ),
+      Category(
+        sId: 'id',
+        category: 'Fasion',
+        image:
+            'https://png.pngitem.com/pimgs/s/4-41365_transparent-men-fashion-png-model-fashion-png-kids.png',
+      ),
+      Category(
+          sId: 'id',
+          category: 'Electronics',
+          image:
+              'https://png.pngitem.com/pimgs/s/140-1404039_electronics-items-png-consumer-electronics-png-transparent-png.png'),
+      Category(
+          sId: 'id',
+          category: 'Dairy & Eggs',
+          image:
+              'https://png.pngitem.com/pimgs/s/160-1607864_blue-cheese-hd-png-download.png'),
+      Category(
+          sId: 'id',
+          category: 'Home& Kitchen',
+          image:
+              'https://png.pngitem.com/pimgs/s/61-612916_transparent-home-appliances-png-home-appliances-png-png.png'),
+      Category(
+          sId: 'id',
+          category: 'Beauty',
+          image:
+              'https://png.pngitem.com/pimgs/s/38-380342_download-makeup-png-pic-makeup-clipart-transparent-png.png'),
+    ];
+
     return Scaffold(
       body: Consumer<HomeController>(builder: (context, controller, child) {
         return SafeArea(
@@ -65,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               SemiBoldTextStyle(
                                 size: 14.sp,
-                                text: 'Location',
+                                text: controller.location ?? 'Location',
                                 color: AppColor.kblack,
                               ),
                               const Spacer(),
@@ -74,11 +120,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Navigator.pushNamed(
                                       context, RouteName.searchScreen);
                                 },
-                                child: const FaIcon(
-                                  FontAwesomeIcons.magnifyingGlass,
+                                child: Container(
+
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: AppColor.kGray,width: 2),
+                                    
+                                    
+
+                                  ),
+                                  child: const FaIcon(
+                                  FontAwesomeIcons.user,
                                   color: AppColor.kblack40,
                                   size: 20,
                                 ),
+                                )
                               )
                             ],
                           ),
@@ -87,11 +144,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           //curosel slider
                           Container(
-                            height: 165.h,
+                            height: 230.h,
                             clipBehavior: Clip.hardEdge,
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(8),
                                 color: Colors.amber),
                             child: CarouselSlider(
                               options: CarouselOptions(
@@ -101,18 +158,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                   builder: (BuildContext context) {
                                     return GestureDetector(
                                       onTap: () {
-
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewStack(
-                                          url: 'https://www.flipkart.com/',
-                                        ),),);
-       
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const WebViewStack(
+                                              url: 'https://www.flipkart.com/',
+                                            ),
+                                          ),
+                                        );
                                       },
                                       child: Container(
                                           width:
                                               MediaQuery.of(context).size.width,
                                           decoration: BoxDecoration(
                                               image: DecorationImage(
-                                                  image: NetworkImage(i.image!),
+                                                  image: NetworkImage(i),
                                                   fit: BoxFit.cover)),
                                           child: Padding(
                                             padding:
@@ -129,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ,
                           RowTextWidget(
                             leadText: 'Categories',
-                            actionText: 'View all',
+                            actionText: '',
                             action: () {
                               Navigator.pushNamed(
                                   context, RouteName.categoryScreen);
@@ -137,43 +198,42 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           //category
 
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 150.h,
-                            child: controller.categoryList.isEmpty
-                                ? const Center(
-                                    child: Text('No category found'),
-                                  )
-                                : ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: controller.categoryList.length,
-                                    itemBuilder: (context, index) => Padding(
-                                      padding: const EdgeInsets.only(right: 15),
-                                      child: CardColumnWidget(
-                                        onTap: () {
-                                          Navigator.pushNamed(context,
-                                              RouteName.productListScreen,
-                                              arguments: {
-                                                'catName': controller
-                                                    .categoryList[index]
-                                                    .category,
-                                                'catId': controller
-                                                    .categoryList[index].sId
-                                              });
-                                        },
-                                        image: controller
-                                                .categoryList[index].image ??
-                                            '',
-                                        text: controller
-                                            .categoryList[index].category!,
-                                      ),
-                                    ),
+                          controller.categoryList.isEmpty
+                              ? const Center(
+                                  child: Text('No category found'),
+                                )
+                              : GridView.builder(
+                                  shrinkWrap: true,
+
+                                  itemCount: categoryList.length,
+                                  // shrinkWrap: true,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 4,
+                                    childAspectRatio: 0.60,
+                                    // mainAxisSpacing: 34.h,
+                                    crossAxisSpacing: 14.w,
                                   ),
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
+                                      onTap: () {},
+                                      child: CardColumnWidget(
+                                        onTap: () {},
+                                        image: categoryList[index].image ?? '',
+                                        text: categoryList[index].category!,
+                                      ),
+                                    );
+                                  },
+                                ),
+
+                          const SizedBox(
+                            height: 20,
                           ),
+
                           //banner 2
 
                           Container(
-                            height: 165.h,
+                            height: 200.h,
                             clipBehavior: Clip.hardEdge,
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
@@ -208,8 +268,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             // mainAxisAlignment:
                                             //     MainAxisAlignment.center,
                                             children: [
-                                              Center(
-                                                child: const Icon(
+                                              const Center(
+                                                child: Icon(
                                                   Icons.play_circle_outline,
                                                   color: Colors.white,
                                                   size: 50,
@@ -249,7 +309,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   context, RouteName.trendingScreen);
                             },
                           ),
-
                           //trending product
                           SizedBox(
                             width: MediaQuery.of(context).size.width,
@@ -330,8 +389,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             // mainAxisAlignment:
                                             //     MainAxisAlignment.center,
                                             children: [
-                                              Center(
-                                                child: const Icon(
+                                              const Center(
+                                                child: Icon(
                                                   Icons.play_circle_outline,
                                                   color: Colors.white,
                                                   size: 50,

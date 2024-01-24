@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:kalicart/common/models/category_model.dart';
 import 'package:kalicart/common/models/image_banner_model.dart';
 import 'package:kalicart/common/models/product_model.dart';
@@ -9,11 +11,16 @@ import 'package:kalicart/features/product/controller/product_controller.dart';
 class HomeController extends ChangeNotifier {
   bool loading = false;
 
+  String ? location;
 
-  List<Category> categoryList = [];
-  List<ImageBanner> bannerImages = [];
+
+  List categoryList = [];
+  List bannerImages = [];
   List<VideoBanner> bannerVideos = [];
   List<ProductModel> trendingList = [];
+
+
+
 
   String  ? creditPoint;
 
@@ -66,7 +73,11 @@ class HomeController extends ChangeNotifier {
   //get image banner
   Future<void> getImageBanner(BuildContext context) async {
     try {
-     bannerImages = await  _apiService.getBannerImages();
+     bannerImages = [
+      'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/super-store-post-card-design-template-447f89b43aab9470ca3d6fe0442ebddf_screen.jpg?ts=1698449866',
+      'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/easter%2C-event%2C-spring%2C-party-design-template-bb2ea780113fdfa061e370332d3e3c79_screen.jpg?ts=1698501218'
+     
+     ];
     } catch (e) {
       loading = false;
       notifyListeners();
@@ -173,4 +184,48 @@ class HomeController extends ChangeNotifier {
 
     
   }
+
+  //check permission
+    Future<void> checkLocationPermission() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    
+    if (permission == LocationPermission.denied) {
+      await _requestLocationPermission();
+    } else if (permission == LocationPermission.deniedForever) {
+      // Handle permanently denied permission
+    } else {
+      getCurrentLocation();
+     
+    }
+  }
+  //request location permission
+  Future<void> _requestLocationPermission() async {
+    LocationPermission permission = await Geolocator.requestPermission();
+    
+    if (permission == LocationPermission.denied) {
+      // Handle denied permission
+    } else if (permission == LocationPermission.deniedForever) {
+      // Handle permanently denied permission
+    } else {
+
+      getCurrentLocation();
+      
+    }
+  }
+
+  //get current location
+  void getCurrentLocation() async {
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+    List<Placemark> placemarks =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
+
+          var firsAddress = placemarks.first;
+
+    location = "${firsAddress.street},${firsAddress.subLocality},${firsAddress.administrativeArea},${firsAddress.postalCode}";
+    notifyListeners();
+      
+  }
 }
+
+

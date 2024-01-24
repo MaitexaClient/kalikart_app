@@ -20,28 +20,24 @@ class CardColumnWidget extends StatelessWidget {
       child: Column(
         children: [
           Container(
+             
             padding: const EdgeInsets.symmetric(
-                horizontal: 10, vertical: 15),
+                horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
                 color: AppColor.kLightGray,
                 borderRadius: BorderRadius.circular(15)),
-            child: Container(
-              clipBehavior: Clip.hardEdge,
-              decoration: const BoxDecoration(
-                  shape: BoxShape.circle, color: Colors.black),
-              child: CachedNetworkImage(
-                width: 60.h,
-                height: 60.h,
-                imageUrl:
-                    image,
-                fit: BoxFit.cover,
-                placeholder: (context, url) =>
-                    const CircularProgressIndicator(
-                  color: AppColor.kGreenColor,
-                ),
-                errorWidget: (context, url, error) =>
-                    const Icon(Icons.error),
+            child: CachedNetworkImage(
+             width: 85.h,
+              height: 85.h,
+              imageUrl:
+                  image,
+              fit: BoxFit.cover,
+              placeholder: (context, url) =>
+                  const CircularProgressIndicator(
+                color: AppColor.kGreenColor,
               ),
+              errorWidget: (context, url, error) =>
+                  const Icon(Icons.error),
             ),
           ),
           const SizedBox(
@@ -50,6 +46,8 @@ class CardColumnWidget extends StatelessWidget {
           RegularTextStyle(
             text: text,
             size: 14.sp,
+            textAlign: TextAlign.center,
+            color: Colors.grey,
           )
         ],
       ),
