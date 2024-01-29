@@ -39,6 +39,7 @@ class CardColumnWidget extends StatelessWidget {
               errorWidget: (context, url, error) =>
                   const Icon(Icons.error),
             ),
+         
           ),
           const SizedBox(
             height: 5,

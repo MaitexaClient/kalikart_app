@@ -7,6 +7,7 @@ import 'package:kalicart/features/home/view/home_screen.dart';
 import 'package:kalicart/features/order/view/order_list_screen.dart';
 import 'package:kalicart/features/order/view/order_view_screen.dart';
 import 'package:kalicart/features/profile/view/profile_screen.dart';
+import 'package:kalicart/features/search/view/search_screen.dart';
 import 'package:provider/provider.dart';
 
 class RootScreen extends StatelessWidget {
@@ -15,6 +16,7 @@ class RootScreen extends StatelessWidget {
    
   final List<Widget> _pages = const  [
     HomeScreen(),
+    SearchScreen(),
     FavouriteScreen(),
     CartListScreen(),
     OrderViewScreen(),
@@ -47,6 +49,12 @@ class RootScreen extends StatelessWidget {
               
             ),
             BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              activeIcon: Icon(Icons.search),
+              label: ''
+            
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.favorite_border),
               activeIcon: Icon(Icons.favorite),
               label: ''
@@ -70,6 +78,7 @@ class RootScreen extends StatelessWidget {
               label: ''
             
             ),
+            
 
             
           ],
