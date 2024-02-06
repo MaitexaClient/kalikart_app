@@ -7,7 +7,6 @@ import 'package:kalicart/common/widgets/regular_text.dart';
 import 'package:kalicart/common/widgets/row_product_card.dart';
 import 'package:kalicart/common/widgets/text_bold.dart';
 import 'package:kalicart/common/widgets/text_semi_bold.dart';
-import 'package:kalicart/features/cart/widget/sub_row_text_widget.dart';
 import 'package:kalicart/features/checkout/controller/check_out_controller.dart';
 import 'package:kalicart/features/payment/controller/payment_controller.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +24,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<CheckOutController>(context, listen: false)
           .getAddress(context: context);
+
       Provider.of<PaymentController>(context, listen: false).initial(context);
     });
 
@@ -98,76 +98,220 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Container(
-                      
-                    ),
                     SemiBoldTextStyle(size: 18.sp, text: 'Order list'),
                     Expanded(
                       child: ListView.builder(
-                        itemCount: value
-                            .cartController?.allCartData?.cartProducts?.length,
-                        itemBuilder: (context, index) => Container(
-                            margin: const EdgeInsets.only(top: 20),
-                            child: RowProductCard(
-                              productName: value.cartController?.allCartData
-                                  ?.cartProducts?[index].productName,
-                              image: value.cartController?.allCartData
-                                  ?.cartProducts?[index].image,
-                              categoryName: value.cartController?.allCartData
-                                  ?.cartProducts?[index].subCategory,
-                              price: value.cartController?.allCartData
-                                  ?.cartProducts?[index].price
-                                  .toString(),
-                            ))
-                      ),
+                          itemCount: value.cartController?.allCartData
+                              ?.cartProducts?.length,
+                          itemBuilder: (context, index) => Container(
+                              margin: const EdgeInsets.only(top: 20),
+                              child: RowProductCard(
+                                productName: value.cartController?.allCartData
+                                    ?.cartProducts?[index].productName,
+                                image: value.cartController?.allCartData
+                                    ?.cartProducts?[index].image,
+                                categoryName: value.cartController?.allCartData
+                                    ?.cartProducts?[index].subCategory,
+                                price: value.cartController?.allCartData
+                                    ?.cartProducts?[index].price
+                                    .toString(),
+                              ))),
                     ),
-                     SubRowTextWidget(
-                                prfixText: 'total',
-                                suffixText: '${value.cartController?.allCartData?.total!}',
-                              ),
-                              const Divider(
-                                thickness: 1,
-                                color: AppColor.kGray,
-                              ),
-                              const SubRowTextWidget(
-                                prfixText: 'offer',
-                                suffixText: '0',
-                              ),
-                              const Divider(
-                                thickness: 1,
-                                color: AppColor.kGray,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SemiBoldTextStyle(size: 18.sp, text: 'Total'),
-                                  SemiBoldTextStyle(
-                                      size: 18.sp,
-                                      text:'₹${value.cartController?.allCartData?.total}'),
-                                ],
-                              ),
-                    PrimaryButton(
-                      onPressed: () async {
-                        //payment confirmation
+                    // SubRowTextWidget(
+                    //   prfixText: 'Total',
+                    //   suffixText:
+                    //       '${value.cartController?.allCartData?.total!}',
+                    // ),
+                    // const Divider(
+                    //   thickness: 1,
+                    //   color: AppColor.kGray,
+                    // ),
+                    // const SubRowTextWidget(
+                    //   prfixText: 'Offer',
+                    //   suffixText: '0',
+                    // ),
+                    // const Divider(
+                    //   thickness: 1,
+                    //   color: AppColor.kGray,
+                    // ),
 
-                        await context.read<PaymentController>().createOrder(
-                              amount: value.cartController!.allCartData!.total!
-                                  .toDouble(),
-                              context: context,
-                            );
+                    const SizedBox(
+                      height: 30,
+                    ),
 
-                        //confirm
-                        if (context.mounted) {
-                          context.read<CheckOutController>().updateOrder(
-                              context: context,
-                              addressId: value.primaryAddress!.sId!,
-
-                              );
-                        }
+                    SemiBoldTextStyle(
+                      size: 18.sp,
+                      text: 'Payment method',
+                    ),
+                    RadioListTile<int>(
+                      title: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            height: 40,
+                            width: 40,
+                            child: Image.asset(
+                              'assets/images/razorpay.png',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          const Text('Razorpay'),
+                        ],
+                      ),
+                      value: 1,
+                      groupValue: value.selectedOption,
+                      onChanged: (val) {
+                        value.changePaymentMethod(val!);
                       },
-                      buttonText: 'Confirm',
+                    ),
+
+                    if (value.selectedOption == 1)
+                      PrimaryButton(
+                          onPressed: () async {
+                          try{
+
+                              await context
+                                .read<CheckOutController>()
+                                .addCheckOut(
+                                  context: context,
+                                );
+                            //payment confirmation
+
+                            //confirm
+                            if (context.mounted) {
+                              await context
+                                  .read<PaymentController>()
+                                  .createOrder(
+                                    amount: value
+                                        .cartController!.allCartData!.total!
+                                        .toInt(),
+                                    context: context,
+                                  );
+
+                              if (context.mounted) {
+                                await context
+                                    .read<CheckOutController>()
+                                    .updateOrder(
+                                      context: context,
+                                      addressId: value.primaryAddress!.sId!,
+                                    );
+                              }
+
+                              if (context.mounted) {
+                                Navigator.pushNamed(context,
+                                    RouteName.paymentConfirmationScreen);
+                              }
+                            }
+
+                          }catch(e){
+
+                          }
+                          },
+                          buttonText: 'Proceed'),
+                    RadioListTile<int>(
+                      title: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(
+                            height: 30,
+                            width: 30,
+                            child: Image.asset(
+                              'assets/images/mywallet.png',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const Text(' Use credit point'),
+                        ],
+                      ),
+                      value: 2,
+                      groupValue: value.selectedOption,
+                      onChanged: (val) {
+                        value.changePaymentMethod(val!);
+                      },
+                    ),
+
+                    if (value.selectedOption == 2)
+                      PrimaryButton(
+                          onPressed: () async {
+                            try{
+
+                              final price = value
+                                .cartController!.allCartData!.total!
+                                .toDouble();
+
+                            await context
+                                .read<CheckOutController>()
+                                .walletCheckOut(context: context, price: price);
+
+                            if(context.mounted){
+                              if (context.read<CheckOutController>().finalPrice !=
+                                0) {
+                              await context
+                                  .read<PaymentController>()
+                                  .createOrder(
+                                    amount: value.finalPrice,
+                                    context: context,
+                                  );
+                            }else{
+
+                              
+                              
+                            }
+                            }
+                           await  context.read<CheckOutController>().updateOrder(
+                                  context: context,
+                                  addressId: value.primaryAddress!.sId!,
+                                );
+
+                            if (context.mounted) {
+                              Navigator.pushNamed(
+                                  context, RouteName.paymentConfirmationScreen);
+                            }
+
+                            }catch(e){
+
+                            }
+                          },
+                          buttonText: 'Proceed'),
+
+                    const SizedBox(
+                      height: 40,
                     )
+
+                    // PrimaryButton(
+                    //   onPressed: () async {
+                    //     //payment confirmation
+
+                    //     await context.read<PaymentController>().createOrder(
+                    //           amount: value.cartController!.allCartData!.total!
+                    //               .toDouble(),
+                    //           context: context,
+                    //         );
+
+                    //     //confirm
+                    //     if (context.mounted) {
+                    //       context.read<CheckOutController>().updateOrder(
+                    //             context: context,
+                    //             addressId: value.primaryAddress!.sId!,
+                    //           );
+                    //     }
+                    //   },
+                    //   buttonText: 'Confirm',
+                    // )
+                    //SizedBox(height: 40,),
+                    //  Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     SemiBoldTextStyle(size: 18.sp, text: 'Total'),
+                    //     SemiBoldTextStyle(
+                    //         size: 18.sp,
+                    //         text:
+                    //             '₹${value.cartController?.allCartData?.total}'),
+                    //   ],
+                    // ),
                   ],
                 ),
         ),

@@ -43,6 +43,14 @@ class ApiConstant{
   //order
    static const updateOrder = '/update-orders-status/';
     static const orderList = '/view-orders/';
+  
+
+  //use  wallet 
+   static  const  useWalletAmount = '/use-wallet/';
+  
+
+  //user wallet details
+  static const  userWallet = '/user-credit-details/';
    
    
   

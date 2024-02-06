@@ -6,6 +6,8 @@ import 'package:kalicart/common/widgets/custom_outlined_button.dart';
 import 'package:kalicart/common/widgets/medium_text.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
 import 'package:kalicart/features/cart/view/cart_list_screen.dart';
+import 'package:kalicart/features/product/controller/product_controller.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetailsScreenNew extends StatelessWidget {
   const ProductDetailsScreenNew({
@@ -17,6 +19,7 @@ class ProductDetailsScreenNew extends StatelessWidget {
     required this.price,
     required this.discountedPrice,
     required this.brandName,
+    required this.productId,
   });
 
   final String title;
@@ -26,6 +29,7 @@ class ProductDetailsScreenNew extends StatelessWidget {
   final String price;
   final String discountedPrice;
   final String brandName;
+  final String productId;
 
   @override
   Widget build(BuildContext context) {
@@ -129,13 +133,11 @@ class ProductDetailsScreenNew extends StatelessWidget {
                               child: CustomOutlineButton(
                                 onPressed: () {
                                   //add to cart
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const CartListScreen(),
-                                    ),
-                                  );
+                                  context.read<ProductDetailsController>().addCart(
+                                    productId: productId, 
+                                    price: price, 
+                                    context: context
+                                    );
                                 },
                               ),
                             ),

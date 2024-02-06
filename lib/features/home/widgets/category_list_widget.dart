@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kalicart/common/models/category_model.dart';
+import 'package:kalicart/common/utils/app_color.dart';
+import 'package:kalicart/common/widgets/animate_icon.dart';
 import 'package:kalicart/common/widgets/card_column_widget.dart';
+import 'package:kalicart/features/home/controller/home_controller.dart';
 import 'package:kalicart/features/product/view/product_list_new.dart';
+import 'package:provider/provider.dart';
+import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 
 class CategoryListWidget extends StatelessWidget {
   CategoryListWidget({super.key});
@@ -52,41 +57,67 @@ class CategoryListWidget extends StatelessWidget {
             'https://png.pngitem.com/pimgs/s/38-380342_download-makeup-png-pic-makeup-clipart-transparent-png.png'),
   ];
 
+   
+
   @override
   Widget build(BuildContext context) {
-    return categoryList.isEmpty
+    final controller = context.watch<HomeController>();
+
+    return controller.categoryList.isEmpty
         ? const Center(
             child: Text('No category found'),
           )
-        : GridView.builder(
+        : GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
 
-            itemCount: categoryList.length,
-            // shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4,
+            crossAxisCount: 4,
               childAspectRatio: 0.60,
               // mainAxisSpacing: 34.h,
               crossAxisSpacing: 14.w,
-            ),
-            itemBuilder: (context, index) {
-              return GestureDetector(
+
+            
+           children: List.generate(controller.gridViewItems().length, (index) => GestureDetector(
                 onTap: () {},
                 child: CardColumnWidget(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  ProductListNew(name: categoryList[index].category,),
+                        builder: (context) => ProductListNew(
+                          name: controller.gridViewItems()[index].category,
+                          catId: controller.gridViewItems()[index].sId!,
+                        ),
                       ),
                     );
                   },
-                  image: categoryList[index].image ?? '',
-                  text: categoryList[index].category!,
+                  image: controller.gridViewItems()[index].image ?? '',
+                  text: controller.gridViewItems()[index].category!,
                 ),
-              );
-            },
+              )
+            
+            )..add(
+              GestureDetector(
+                onTap: () {
+                  controller.seeMoreOrLess();
+                },
+                child: Container(
+                  
+                           
+                          padding: const EdgeInsets.symmetric(
+                  horizontal: 10, vertical: 5),
+                          decoration: BoxDecoration(
+                  color: AppColor.kLightGray,
+                  borderRadius: BorderRadius.circular(15)),
+                   child :        WidgetAnimator(
+    atRestEffect: WidgetRestingEffects.wave(),
+    child: Icon(
+      controller.displayAll ? Icons.keyboard_arrow_up :  Icons.keyboard_arrow_down
+    )
+  )
+              
+                          ),
+              ),),
           );
   }
 }

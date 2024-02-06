@@ -48,10 +48,13 @@ void main() async {
           create: (_) => ProductDetailsController(),
         ),
         ChangeNotifierProvider(
-          create: (_) => CartController(),
+          create: (_) => CartController(
+                      ),
         ),
         ChangeNotifierProvider(
-          create: (_) => CheckOutController(),
+          create: (context) => CheckOutController(
+            paymentController: context.read<PaymentController>()
+          ),
         ),
         ChangeNotifierProvider(
           create: (_) => OrderController(),

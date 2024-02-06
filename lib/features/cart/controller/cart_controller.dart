@@ -122,7 +122,7 @@ class CartController extends ChangeNotifier {
       loading = true;
       notifyListeners();
 
-      await _apiService.addCheckOut();
+     // await _apiService.addCheckOut();
       if(context.mounted){
 
         Navigator.pushNamed(context, RouteName.checkOutScreen);

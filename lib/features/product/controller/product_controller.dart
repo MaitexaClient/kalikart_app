@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:kalicart/common/models/faviorate_model.dart';
 import 'package:kalicart/common/models/product_model.dart';
@@ -16,6 +18,7 @@ class ProductDetailsController extends ChangeNotifier {
 
   //get all product by caegory
   void getAllProductByCat(BuildContext context, String catId) async {
+  
     try {
       loading = true;
       notifyListeners();
@@ -99,7 +102,11 @@ class ProductDetailsController extends ChangeNotifier {
       await _apiService.addTocart(
           productId: productId, loginId: loginId, price: price);
 
+      notifyListeners();
+
       if (context.mounted) {
+
+        print('assdddd');
         await Navigator.pushNamed(context, RouteName.cartListScreen);
       }
       loading = false;

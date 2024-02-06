@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/custom_outlined_button.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
+import 'package:kalicart/features/product/controller/product_controller.dart';
+import 'package:provider/provider.dart';
 
 class ProductCardNew extends StatelessWidget {
   final  String productName;
@@ -9,11 +11,13 @@ class ProductCardNew extends StatelessWidget {
   final  String originalPrice;
   final  String discountedPrice;
   final  String dukesText;
+  final String productId;
 
-  const ProductCardNew({Key? key, required this.productName, required this.unit, required this.originalPrice, required this.discountedPrice, required this.dukesText}) : super(key: key);
+  const ProductCardNew({Key? key, required this.productName, required this.unit, required this.originalPrice, required this.discountedPrice, required this.dukesText,required  this.productId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    
     return Padding(
       padding: const EdgeInsets.only(right: 15, left: 15, bottom: 15, top: 0),
       child: Column(
@@ -84,6 +88,11 @@ class ProductCardNew extends StatelessWidget {
                   child: CustomOutlineButton(
                     onPressed: () {
                       //add to cart
+                      context.read<ProductDetailsController>().addCart(
+                        productId: productId, 
+                        price: discountedPrice != '0' ? discountedPrice : originalPrice, 
+                        context: context
+                        );
                     },
                   ),
                 ),

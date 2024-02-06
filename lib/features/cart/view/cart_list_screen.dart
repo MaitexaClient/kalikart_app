@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kalicart/common/routes/route_name.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/list_empty_widget.dart';
 import 'package:kalicart/common/widgets/primary_button.dart';
@@ -202,7 +203,7 @@ class CartListScreen extends StatelessWidget {
                               PrimaryButton(
                                   onPressed: () {
 
-                                    controller.addCheckOut(context: context);
+                                        Navigator.pushNamed(context, RouteName.checkOutScreen);
                                    
                                   },
                                   buttonText: 'Check out')

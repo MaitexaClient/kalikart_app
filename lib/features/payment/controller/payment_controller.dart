@@ -13,7 +13,7 @@ class PaymentController extends ChangeNotifier {
 
   void initial(BuildContext context) {
     void handlePaymentSuccess(PaymentSuccessResponse response) async {
-      Navigator.pushNamed(context, RouteName.paymentConfirmationScreen);
+      // Navigator.pushNamed(context, RouteName.paymentConfirmationScreen);
     }
 
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
@@ -27,7 +27,7 @@ class PaymentController extends ChangeNotifier {
   void handleExternalWallet(ExternalWalletResponse response) {}
 
   Future<void> createOrder(
-      {required double amount, required BuildContext context}) async {
+      {required int amount, required BuildContext context}) async {
     try {
       Map<String, dynamic> body = {
         "amount": amount * 100,
@@ -76,4 +76,5 @@ class PaymentController extends ChangeNotifier {
           builder: (context) => PaymentScreen(),
         ));
   }
+  
 }

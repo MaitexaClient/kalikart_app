@@ -27,6 +27,7 @@ class ExclusiveWidget extends StatelessWidget {
           return GestureDetector(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailsScreenNew(
+                    
                     title: "Honey: Nature's Sweet Elixir",
                     quantity:  '1 L',
                     price: '₹80',

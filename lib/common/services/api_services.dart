@@ -405,6 +405,58 @@ class ApiService {
     }
   }
 
+
+  Future<int> useWallet({required double price,required int walletAmount}) async {
+
+    final url =
+        Uri.parse(ApiConstant.baseUrl + ApiConstant.useWalletAmount +price.toString()+ '/' + walletAmount.toString());
+
+    var response = await _apiHelper.getData(url: url);
+
+    if (response.statusCode == 200) {
+      var  data = jsonDecode(response.body);
+
+      return data['final_price'];
+
+      
+    } else {
+      throw 'somthing went wrong';
+    }
+
+
+     
+
+
+  }
+
+
+  Future<int> userWalletDetails() async{
+
+    final url =
+        Uri.parse(ApiConstant.baseUrl + ApiConstant.userWallet + myLoginId);
+
+    var response = await _apiHelper.getData(url: url);
+
+    if (response.statusCode == 200) {
+      
+      var data = jsonDecode(response.body);
+
+      print(data);
+
+      return data['data']['user_credit_points_price'];
+
+    } else {
+      throw 'somthing went wrong';
+    }
+
+
+
+ 
+
+  }
+
+
+
   // //completed orders list
   // Future<List> getCompletedOrders() async{
   //   final url = Uri.parse(ApiConstant.baseUrl+ApiConstant.completeOrederList+myLoginId);

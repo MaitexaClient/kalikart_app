@@ -2,15 +2,36 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kalicart/common/utils/app_color.dart';
 import 'package:kalicart/common/widgets/custom_outlined_button.dart';
+import 'package:kalicart/common/widgets/loading_indicator.dart';
 import 'package:kalicart/common/widgets/regular_text.dart';
 import 'package:kalicart/features/cart/view/cart_list_screen.dart';
+import 'package:kalicart/features/product/controller/product_controller.dart';
 import 'package:kalicart/features/product/view/product_details_screen_new.dart';
 import 'package:kalicart/features/search/view/search_screen.dart';
+import 'package:provider/provider.dart';
 
-class ProductListNew extends StatelessWidget {
-  ProductListNew({Key? key, required this.name}) : super(key: key);
+class ProductListNew extends StatefulWidget {
+  const ProductListNew({Key? key, required this.name, required this.catId})
+      : super(key: key);
+
+  final String catId;
 
   final String? name;
+
+  @override
+  State<ProductListNew> createState() => _ProductListNewState();
+}
+
+class _ProductListNewState extends State<ProductListNew> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((v) {
+      Provider.of<ProductDetailsController>(context, listen: false)
+          .getAllProductByCat(context, widget.catId);
+    });
+
+    super.initState();
+  }
 
   List trendingList = [
     'https://www.seekpng.com/png/full/377-3771491_doritos-png-doritos-transparent-png-2012-pepsico-annual.png',
@@ -20,7 +41,17 @@ class ProductListNew extends StatelessWidget {
   ];
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  int? check;
+
+  @override
   Widget build(BuildContext context) {
+    final controller = context.watch<ProductDetailsController>();
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -29,7 +60,7 @@ class ProductListNew extends StatelessWidget {
         iconTheme: const IconThemeData(color: AppColor.kblack),
         centerTitle: true,
         title: Text(
-          name ?? 'category',
+          widget.name ?? 'category',
           style: const TextStyle(color: Colors.black),
         ),
         actions: [
@@ -38,7 +69,7 @@ class ProductListNew extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SearchScreen(),
+                    builder: (context) => const SearchScreen(),
                   ));
             },
             child: Container(
@@ -60,24 +91,31 @@ class ProductListNew extends StatelessWidget {
       ),
       body: GridView.builder(
         scrollDirection: Axis.vertical,
-        itemCount: trendingList.length,
-        // Replace with the actual number of products
+        itemCount: controller.productList.length,
         itemBuilder: (context, index) {
-          // Replace the Card with your product widget
+          var customOutlineButton = CustomOutlineButton(
+            onPressed: () {
+              check = index;
+              controller.addCart(
+                  productId: controller.productList[index].sId!,
+                  price: controller.productList[index].price!.toString(),
+                  context: context);
+            },
+          );
           return GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => ProductDetailsScreenNew(
+                    productId: controller.productList[index].sId!,
                     title: "Honey: Nature's Sweet Elixir",
-                    quantity:  '1 L',
+                    quantity: '1 L',
                     price: '₹80',
                     brandName: 'brand name',
                     discountedPrice: '₹180',
                     imageUrl: trendingList[index],
                     productTitle: "Honey: Nature's Sweet Elixir",
-
                   ),
                 ),
               );
@@ -94,7 +132,7 @@ class ProductListNew extends StatelessWidget {
                       padding: const EdgeInsets.all(20),
                       alignment: Alignment.center,
                       child: CachedNetworkImage(
-                        imageUrl: trendingList[index],
+                        imageUrl: controller.productList[index].image![0],
                         fit: BoxFit.contain,
                         placeholder: (context, url) => const Center(
                           child: CircularProgressIndicator(
@@ -171,16 +209,11 @@ class ProductListNew extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  child: CustomOutlineButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                CartListScreen(),
-                                          ));
-                                    },
-                                  ),
+                                  child: controller.loading
+                                      ? check == index
+                                          ? const LoadingIndicator()
+                                          : customOutlineButton
+                                      : customOutlineButton,
                                 ),
                               )
                             ],

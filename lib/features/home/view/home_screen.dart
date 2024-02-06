@@ -73,7 +73,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               const Spacer(),
                               GestureDetector(
                                   onTap: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const  ProfileScreen(),));
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ProfileScreen(),
+                                        ));
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.all(10),
@@ -91,26 +96,23 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
 
-
                           Container(
                             height: 60,
                             width: MediaQuery.of(context).size.width,
-
                             margin: const EdgeInsets.symmetric(vertical: 15),
-                           
                             decoration: BoxDecoration(
-                              border: Border.all(color: AppColor.kGray),
-                              borderRadius: BorderRadius.circular(10)
-                            ),
-
-                            child: Center(child: Text(
+                                border: Border.all(color: AppColor.kGray),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: const Center(
+                                child: Text(
                               'Logo',
-                              style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,letterSpacing: 10),
-                              )),
-                            
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 10),
+                            )),
                           ),
-                         
-                          
+
                           //curosel slider
                           Container(
                             height: 230.h,
@@ -142,8 +144,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                               MediaQuery.of(context).size.width,
                                           decoration: BoxDecoration(
                                               image: DecorationImage(
-                                                  image: NetworkImage(i),
-                                                  fit: BoxFit.cover)),
+                                                  image: NetworkImage(i.image!),
+                                                  fit: BoxFit.cover,
+                                                  ),
+                                                  ),
                                           child: Padding(
                                             padding:
                                                 EdgeInsets.only(left: 30.w),
@@ -166,10 +170,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                           ),
 
-
                           //category list
                           CategoryListWidget(),
 
+                         
 
                           RowTextWidget(
                             leadText: 'Earn your reward',
@@ -179,8 +183,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   context, RouteName.trendingScreen);
                             },
                           ),
-
-                          
 
                           VideoBannerWidget(
                             videoBannerList: controller.bannerVideos,
